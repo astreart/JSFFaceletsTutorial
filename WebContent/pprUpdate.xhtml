@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:form>
+	<h:panelGrid columns="4" cellpadding="5">
+		<h:outputLabel for="name" value="Name:" style="font-weight:bold" />
+
+		<p:inputText id="name" value="#{pprBean.firstname}" />
+
+		<p:commandButton value="Submit" update="display" />
+		<h:outputText value="#{pprBean.firstname}" id="display" />
+
+	</h:panelGrid>
+
+	<h:outputLabel for="city" value="City: *" />
+	<h:selectOneMenu id="city" value="#{pprBean.city}" required="true">
+		<f:selectItem itemLabel="Select One" itemValue="" />
+		<f:selectItems value="#{pprBean.cities}" />
+	</h:selectOneMenu>
+	<p:message for="city" />
+	<h:outputText value="#{pprBean.city}" />
+
+</h:form>
+
+</html>

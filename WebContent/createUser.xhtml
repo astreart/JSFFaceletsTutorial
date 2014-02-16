@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml">
+		<h:head>
+		</h:head>
+		<h:body>
+			<h:form>
+				
+
+				<h:outputLabel for="username" value="Username:"
+					styleClass="reg-label" />
+				<p:inputText id="username" value="#{dateBean.user.username}" />
+
+				<h:outputLabel for="email" value="email"
+					styleClass="reg-label" />
+				<p:inputText id="email" value="#{dateBean.user.email}" />
+				<p:commandButton value="add User" id="submitBtn"
+					actionListener="#{dateBean.addUser}" styleClass="ui-priority-primary" />
+				<p:commandButton value="List Users" id="listBtn"
+					actionListener="#{dateBean.listUsers}" styleClass="ui-priority-primary" />
+			</h:form>
+		</h:body>
+	</ui:composition>
+</f:view>
+</html>

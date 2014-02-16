@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Name"></h:outputText>
+				<h:inputText value="#{loginBean.name}"></h:inputText>
+				<h:outputText value="Password"></h:outputText>
+				<h:inputSecret value="#{loginBean.password}"></h:inputSecret>
+			</h:panelGrid>
+			<h:commandButton value="Login" action="login"></h:commandButton>
+
+			<p:inputText />
+
+		</h:form>
+
+		<h:link value="confirmDialog" outcome="confirmDialog" />
+		<br />
+		<h:link value="pprUpdate" outcome="pprUpdate" />
+		<br />
+		<h:link value="pprPartialTree" outcome="pprPartialTree" />
+		<br />
+		<h:link value="Select Boolean Button" outcome="selectBooleanButton" />
+		<br />
+		<h:link value="Calendar" outcome="calendarNavigator" />
+		<br />
+
+		<h:form id="form">
+
+			<p:editor id="editor" value="#{editorBean.value}" width="600" />
+
+			<h:panelGrid columns="2" style="margin-top:10px">
+				<p:commandButton id="submitButton" value="Submit" update="display"
+					oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+				<p:commandButton id="clearButton" type="button" value="Clear"
+					onclick="PF('editor').clear()" icon="ui-icon-close" />
+			</h:panelGrid>
+
+			<p:dialog header="Content" widgetVar="dlg" showEffect="fade"
+				hideEffect="fade" modal="true">
+				<h:outputText id="display" value="#{editorBean.value}"
+					escape="false" />
+			</p:dialog>
+
+			<h3>Remaining Chars</h3>
+			<p:inputTextarea rows="5" cols="30" counter="counter" maxlength="10"
+				counterTemplate="{1} characters remaining." autoResize="false" />
+			<h:outputText id="counter" />
+
+			<h:outputText value="Readonly:" />
+			<p:rating value="#{pprBean.rating}" stars="5" onRate="alert('You rated ' + value)"/> 
+		
+		<br/>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
