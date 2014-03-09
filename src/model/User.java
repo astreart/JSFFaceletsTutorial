@@ -1,27 +1,107 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 @Entity
-public class User {
+@Table(name = "user", catalog = "masterThesis", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "USERNAME"),
+		@UniqueConstraint(columnNames = "EMAIL"),
+		@UniqueConstraint(columnNames = "WEBSITE") })
+public class User implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", unique = true, nullable = false)
 	private long id;
-	@Column(name = "username")
+	@Column(name = "username", unique = true, nullable = false, length = 30)
 	private String username;
-	@Column(name = "email")
-	private String email;
-	@Column(name = "first_name")
+	@Column(name = "first_name", length = 30)
 	private String firstName;
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false, length = 30)
 	private String lastName;
-	@Column(name = "address")
+	@Column(name = "email", nullable = false, length = 70)
+	private String email;
+	@Column(name = "address", length = 30)
 	private String address;
+	// ///////////////////////////////////////////////////////
+	@Column(name = "password", nullable = false, length = 15)
+	private String password;
+	@Column(name = "phone", nullable = false, length = 15)
+	private String phone;
+	@Column(name = "working_time", length = 150)
+	private String workingTime;
+	@Column(name = "website", length = 100)
+	 private String website;
+	@Column(name = "city", length = 30)
+	private String city;
+	@Column(name = "is_agency", length = 1)
+	private Boolean isAgency;
+
+	private Set<EventType> eventTypes = new HashSet<EventType>(0);
+
+	public User() {
+		super();
+	}
+
+	public User(User user) {
+		super();
+		this.username = user.username;
+		this.email = user.email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getWorkingTime() {
+		return workingTime;
+	}
+
+	public void setWorkingTime(String workingTime) {
+		this.workingTime = workingTime;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Boolean getIsAgency() {
+		return isAgency;
+	}
+
+	public void setIsAgency(Boolean isAgency) {
+		this.isAgency = isAgency;
+	}
 
 	public long getId() {
 		return id;
@@ -46,20 +126,38 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
-	public User() {
-		super();
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public User(User user) {
-		super();
-		this.username = user.username;
-		this.email = user.email;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
 
 	@Override
 	public String toString() {
@@ -90,28 +188,14 @@ public class User {
 		return true;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "agency_event_type", catalog = "masterThesis", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
+	public Set<EventType> getEventTypes() {
+		return eventTypes;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEventTypes(Set<EventType> eventTypes) {
+		this.eventTypes = eventTypes;
 	}
 
 }
