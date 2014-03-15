@@ -3,7 +3,7 @@
  * 
  */
 
-package com.tutorial;
+package bg.fmi.master.thesis.beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

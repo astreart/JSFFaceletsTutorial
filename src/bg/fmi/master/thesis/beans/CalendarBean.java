@@ -1,4 +1,4 @@
-package com.tutorial;
+package bg.fmi.master.thesis.beans;
 
 import java.util.Date;  
 

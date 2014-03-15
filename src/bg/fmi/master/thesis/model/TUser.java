@@ -1,4 +1,4 @@
-package model;
+package bg.fmi.master.thesis.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ import javax.persistence.JoinTable;
 		@UniqueConstraint(columnNames = "USERNAME"),
 		@UniqueConstraint(columnNames = "EMAIL"),
 		@UniqueConstraint(columnNames = "WEBSITE") })
-public class User implements java.io.Serializable {
+public class TUser implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,27 +53,27 @@ public class User implements java.io.Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "agency_event_type", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
-	private Set<EventType> eventTypes; // = new HashSet<EventType>(0);
+	private Set<TEventType> tEventTypes; // = new HashSet<TEventType>(0);
 
-	public User() {
+	public TUser() {
 		super();
 	}
 
-	public User(User user) {
+	public TUser(TUser tUser) {
 		super();
-		this.username = user.username;
-		this.email = user.email;
+		this.username = tUser.username;
+		this.email = tUser.email;
 	}
 
-	public User(long id, String address, String city, String email,
-			Set<EventType> eventTypes, String firstName, Boolean isAgency,
+	public TUser(long id, String address, String city, String email,
+			Set<TEventType> tEventTypes, String firstName, Boolean isAgency,
 			String lastName, String password, String phone, String username,
 			String website, String workingTime) {
 		this.id = id;
 		this.address = address;
 		this.city = city;
 		this.email = email;
-		this.eventTypes = eventTypes;
+		this.tEventTypes = tEventTypes;
 		this.firstName = firstName;
 		this.isAgency = isAgency;
 		this.lastName = lastName;
@@ -183,7 +183,7 @@ public class User implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email
+		return "TUser [id=" + id + ", username=" + username + ", email=" + email
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", address=" + address + "]";
 	}
@@ -204,35 +204,35 @@ public class User implements java.io.Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		TUser other = (TUser) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
 
-	public Set<EventType> getEventTypes() {
-		return eventTypes;
+	public Set<TEventType> getEventTypes() {
+		return tEventTypes;
 	}
 
-	public void setEventTypes(Set<EventType> eventTypes) {
-		this.eventTypes = eventTypes;
+	public void setEventTypes(Set<TEventType> tEventTypes) {
+		this.tEventTypes = tEventTypes;
 	}
 	
-	public void addEventType(EventType eventType) {
+	public void addEventType(TEventType tEventType) {
 	    //prevent endless loop
-	    if (eventTypes.contains(eventType))
+	    if (tEventTypes.contains(tEventType))
 	      return ;
 	    //add new eventType
-	    eventTypes.add(eventType);    
+	    tEventTypes.add(tEventType);    
 	  }
 
 	 
-	  public void removeEventType(EventType eventType) {
+	  public void removeEventType(TEventType tEventType) {
 	    //prevent endless loop
-	    if (!eventTypes.contains(eventTypes))
+	    if (!tEventTypes.contains(tEventTypes))
 	      return ;
 	    //remove the eventType
-	    eventTypes.remove(eventTypes);
+	    tEventTypes.remove(tEventTypes);
 	    //remove myself from the follower
 	  }
 }

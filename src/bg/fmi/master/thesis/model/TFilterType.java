@@ -1,4 +1,6 @@
-package model;
+package bg.fmi.master.thesis.model;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,12 +8,14 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Номенклатура на типа филтър (възможни стойности: цена, брой гости и други)
+ * Тип филтър (възможни стойности: цена, брой гости и други)
  */
 @Entity
 @Table(name = "T_FILTER_TYPE")
@@ -50,9 +54,11 @@ public class TFilterType implements java.io.Serializable {
 		this.filterTypeDesc = filterTypeDesc;
 		this.tRequestFilters = tRequestFilters;
 	}
-	
+
+	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_FILTER_TYPE", allocationSize = 1)
 	@Id
-	@Column(name = "ID", unique = true, nullable = false)
+	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
+	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
 	}
@@ -69,7 +75,7 @@ public class TFilterType implements java.io.Serializable {
 	public void setFilterTypeName(String filterTypeName) {
 		this.filterTypeName = filterTypeName;
 	}
-	
+
 	@Column(name = "FILTER_TYPE_DESC", nullable = false, length = 200)
 	public String getFilterTypeDesc() {
 		return this.filterTypeDesc;
@@ -78,8 +84,8 @@ public class TFilterType implements java.io.Serializable {
 	public void setFilterTypeDesc(String filterTypeDesc) {
 		this.filterTypeDesc = filterTypeDesc;
 	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "filterType")
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tFilterType")
 	public Set<TRequestFilter> getReqFilters() {
 		return this.tRequestFilters;
 	}
@@ -112,7 +118,5 @@ public class TFilterType implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-
 
 }

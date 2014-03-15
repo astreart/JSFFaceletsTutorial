@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml">
+		<h:head>
+		</h:head>
+		<h:body>
+			<h:form id="form">
+
+
+				<p:growl id="growl" showDetail="true" />
+
+				<p:dataTable id="users" var="user"
+					value="#{editUsersBean.usersModel}" paginator="true" rows="10"
+					selection="#{editUsersBean.selectedUser}" selectionMode="single">
+
+					<p:ajax event="rowSelect" listener="#{editUsersBean.onRowSelect}"
+						update=":form:display :form:growl"
+						oncomplete="PF('userDialog').show()" />
+					<p:ajax event="rowUnselect" listener="#{editUsersBean.onRowUnselect}"
+						update=":form:growl" />
+
+					<f:facet name="header">  
+            Select a row to display a message  
+        </f:facet>
+
+					<p:column headerText="Username">  
+            #{user.username}  
+        </p:column>
+
+					<p:column headerText="First Name">  
+            #{user.firstName}  
+        </p:column>
+
+					<p:column headerText="Last Name">  
+            #{user.lastName}  
+        </p:column>
+
+					<p:column headerText="Email">  
+            #{user.email}  
+        </p:column>
+				</p:dataTable>
+
+				<p:dialog id="dialog" header="User Details" widgetVar="userDialog"
+					resizable="false" showEffect="fade" hideEffect="explode">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">						
+
+						<h:outputText value="First Name:" />
+						<p:inputText value="#{editUsersBean.selectedUser.firstName}" />
+
+						<h:outputText value="Last Name:" />
+						<p:inputText value="#{editUsersBean.selectedUser.lastName}" />
+
+						<h:outputText value="Address:" />
+						<p:inputText value="#{editUsersBean.selectedUser.address}" />
+						
+						<p:commandButton value="Save Changes" id="listBtn"
+					actionListener="#{editUsersBean.saveChanges}" oncomplete="PF('userDialog').hide()"
+					 update="users" styleClass="ui-priority-primary" />
+						
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</h:body>
+	</ui:composition>
+</f:view>
+</html>

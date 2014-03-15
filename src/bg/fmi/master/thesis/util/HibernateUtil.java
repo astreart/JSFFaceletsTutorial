@@ -1,4 +1,4 @@
-package util;
+package bg.fmi.master.thesis.util;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

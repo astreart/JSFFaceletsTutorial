@@ -1,4 +1,4 @@
-package com.tutorial;
+package bg.fmi.master.thesis.beans;
 
 import javax.faces.application.FacesMessage;  
 import javax.faces.context.FacesContext;  
