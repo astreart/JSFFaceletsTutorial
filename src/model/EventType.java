@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "event_type", catalog = "masterThesis")
+@Table(name = "event_type")
 public class EventType implements java.io.Serializable{
 	
 	@Id
@@ -24,7 +24,9 @@ public class EventType implements java.io.Serializable{
 	private String name;
 	@Column(name = "desc", nullable = false)
 	private String desc;
-	private Set<User> users = new HashSet<User>(0);
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "eventTypes")
+	private Set<User> users;// = new HashSet<User>(0);
 
 	
 	public EventType() {
@@ -65,7 +67,7 @@ public class EventType implements java.io.Serializable{
 		this.desc = desc;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "eventTypes")
+
 	public Set<User> getUsers() {
 		return users;
 	}

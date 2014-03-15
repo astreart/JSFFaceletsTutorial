@@ -1,49 +1,47 @@
 package util;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.Session;
 
 import model.EventType;
 import model.User;
-
+import util.HibernateUtil;
 
 public class App {
-	private static final String PERSISTENCE_UNIT_NAME = "myapp";
-	private static EntityManagerFactory factory;
+	
 
 	public static void main(String[] args) {
-	
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-	    EntityManager em = factory.createEntityManager();
- 
-	    em.getTransaction().begin();
+
+		System.out.println("Hibernate many to many (Annotation)");
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+
+		User newUser = new User();
+		newUser.setId('1');
+		newUser.setUsername("Ivan");
+		newUser.setPassword("123456");
+		newUser.setLastName("Ivanov");
+		newUser.setEmail("ivan@abv.bg");
+		newUser.setPhone("+359888100100");
 		
-       // user.setUsername("PADINI");
-        
 
-	    
-	    
-	    User newUser = new User();
-	    em.persist(newUser);
-        
-        EventType eventType = new EventType("CONSUMER", "CONSUMER COMPANY");
-        EventType eventType2 = new EventType("INVESTMENT", "INVESTMENT COMPANY");
- 
-        Set<EventType> eventTypes = new HashSet<EventType>();
-        eventTypes.add(eventType);
-        eventTypes.add(eventType2);
- 
-        newUser.setEventTypes(eventTypes);
-        
-        em.persist(newUser);
-	    em.getTransaction().commit();
+		EventType eventType = new EventType("CONSUMER", "CONSUMER COMPANY");
+		EventType eventType2 = new EventType("INVESTMENT", "INVESTMENT COMPANY");
 
-	System.out.println("Done");
+		Set<EventType> eventTypes = new HashSet<EventType>();
+		eventTypes.add(eventType);
+		eventTypes.add(eventType2);
+
+		newUser.setEventTypes(eventTypes);
+
+		em.merge(newUser);
+
+		em.getTransaction().commit();
+		System.out.println("Done");
+		em.close();
 	}
-
 }

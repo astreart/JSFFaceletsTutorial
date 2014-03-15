@@ -17,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
 @Entity
-@Table(name = "user", catalog = "masterThesis", uniqueConstraints = {
+@Table(name = "user", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "USERNAME"),
 		@UniqueConstraint(columnNames = "EMAIL"),
 		@UniqueConstraint(columnNames = "WEBSITE") })
@@ -45,13 +45,15 @@ public class User implements java.io.Serializable {
 	@Column(name = "working_time", length = 150)
 	private String workingTime;
 	@Column(name = "website", length = 100)
-	 private String website;
+	private String website;
 	@Column(name = "city", length = 30)
 	private String city;
 	@Column(name = "is_agency", length = 1)
 	private Boolean isAgency;
 
-	private Set<EventType> eventTypes = new HashSet<EventType>(0);
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "agency_event_type", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
+	private Set<EventType> eventTypes; // = new HashSet<EventType>(0);
 
 	public User() {
 		super();
@@ -61,6 +63,26 @@ public class User implements java.io.Serializable {
 		super();
 		this.username = user.username;
 		this.email = user.email;
+	}
+
+	public User(long id, String address, String city, String email,
+			Set<EventType> eventTypes, String firstName, Boolean isAgency,
+			String lastName, String password, String phone, String username,
+			String website, String workingTime) {
+		this.id = id;
+		this.address = address;
+		this.city = city;
+		this.email = email;
+		this.eventTypes = eventTypes;
+		this.firstName = firstName;
+		this.isAgency = isAgency;
+		this.lastName = lastName;
+		this.password = password;
+		this.phone = phone;
+		this.username = username;
+		this.website = website;
+		this.workingTime = workingTime;
+
 	}
 
 	public String getPassword() {
@@ -188,8 +210,6 @@ public class User implements java.io.Serializable {
 		return true;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "agency_event_type", catalog = "masterThesis", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
 	public Set<EventType> getEventTypes() {
 		return eventTypes;
 	}
@@ -197,5 +217,22 @@ public class User implements java.io.Serializable {
 	public void setEventTypes(Set<EventType> eventTypes) {
 		this.eventTypes = eventTypes;
 	}
+	
+	public void addEventType(EventType eventType) {
+	    //prevent endless loop
+	    if (eventTypes.contains(eventType))
+	      return ;
+	    //add new eventType
+	    eventTypes.add(eventType);    
+	  }
 
+	 
+	  public void removeEventType(EventType eventType) {
+	    //prevent endless loop
+	    if (!eventTypes.contains(eventTypes))
+	      return ;
+	    //remove the eventType
+	    eventTypes.remove(eventTypes);
+	    //remove myself from the follower
+	  }
 }
