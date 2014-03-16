@@ -1,5 +1,7 @@
 package bg.fmi.master.thesis.model;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,124 +9,141 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 
 @Entity
-@Table(name = "user", uniqueConstraints = {
+@Table(name = "T_USER", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "USERNAME"),
-		@UniqueConstraint(columnNames = "EMAIL"),
-		@UniqueConstraint(columnNames = "WEBSITE") })
+		@UniqueConstraint(columnNames = "PHONE"),
+		@UniqueConstraint(columnNames = "EMAIL") })
 public class TUser implements java.io.Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID", unique = true, nullable = false)
+	/*
+	 * ИД на потребителя
+	 */
 	private long id;
-	@Column(name = "username", unique = true, nullable = false, length = 30)
+
+	/*
+	 * Потребителско име
+	 */
 	private String username;
-	@Column(name = "first_name", length = 30)
-	private String firstName;
-	@Column(name = "last_name", nullable = false, length = 30)
-	private String lastName;
-	@Column(name = "email", nullable = false, length = 70)
-	private String email;
-	@Column(name = "address", length = 30)
-	private String address;
-	// ///////////////////////////////////////////////////////
-	@Column(name = "password", nullable = false, length = 15)
+
+	/*
+	 * Парола
+	 */
 	private String password;
-	@Column(name = "phone", nullable = false, length = 15)
+
+	/*
+	 * Собствено име
+	 */
+	private String firstName;
+
+	/*
+	 * Фамилно име
+	 */
+	private String lastName;
+
+	/*
+	 * Телефон
+	 */
 	private String phone;
-	@Column(name = "working_time", length = 150)
-	private String workingTime;
-	@Column(name = "website", length = 100)
-	private String website;
-	@Column(name = "city", length = 30)
-	private String city;
-	@Column(name = "is_agency", length = 1)
-	private Boolean isAgency;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "agency_event_type", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
-	private Set<TEventType> tEventTypes; // = new HashSet<TEventType>(0);
+	/*
+	 * Имейл
+	 */
+	private String email;
 
+	/*
+	 * Роля на потребителя в системата
+	 */
+	private TRole tRole;
+
+	/**
+	 * Заявки, направени от даден потребител
+	 */
+	private Set<TRequest> userRequests = new HashSet<TRequest>(0);
+
+	/**
+	 * Заявки, взети от дадена агенция
+	 */
+	private Set<TRequest> executedRequests = new HashSet<TRequest>(0);
+
+	/**
+	 * Типове събития, които огранизира дадена агенция
+	 */
+	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
+			0);
+
+	/**
+	 * Агенции, до които е направено запитването
+	 */
+	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
+	
+	/*
+	 * Изпратени съобщения
+	 */
+	private Set<TMessage> sentMessages = new HashSet<TMessage>(0);
+	
+	/*
+	 * Получени съобщения
+	 */
+	private Set<TMessageUser> receivedMessages = new HashSet<TMessageUser>(0);
+	
 	public TUser() {
-		super();
 	}
 
-	public TUser(TUser tUser) {
-		super();
-		this.username = tUser.username;
-		this.email = tUser.email;
-	}
-
-	public TUser(long id, String address, String city, String email,
-			Set<TEventType> tEventTypes, String firstName, Boolean isAgency,
-			String lastName, String password, String phone, String username,
-			String website, String workingTime) {
-		this.id = id;
-		this.address = address;
-		this.city = city;
-		this.email = email;
-		this.tEventTypes = tEventTypes;
-		this.firstName = firstName;
-		this.isAgency = isAgency;
-		this.lastName = lastName;
-		this.password = password;
-		this.phone = phone;
+	public TUser(String username, String password, String firstName,
+			String lastName, String phone, String email) {
 		this.username = username;
-		this.website = website;
-		this.workingTime = workingTime;
-
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.phone = phone;
+		this.email = email;
 	}
 
-	public String getWorkingTime() {
-		return workingTime;
+	public TUser(String username, String password, String firstName,
+			String lastName, String phone, String email, TRole tRole) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.tRole = tRole;
+	}	
+
+	public TUser(String username, String password, String firstName,
+			String lastName, String phone, String email, TRole tRole,
+			Set<TRequest> userRequests, Set<TRequest> executedRequests,
+			Set<TAgencyEventType> tAgencyEventTypes,
+			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
+			Set<TMessageUser> receivedMessages) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.tRole = tRole;
+		this.userRequests = userRequests;
+		this.executedRequests = executedRequests;
+		this.tAgencyEventTypes = tAgencyEventTypes;
+		this.tAgencyRequests = tAgencyRequests;
+		this.sentMessages = sentMessages;
+		this.receivedMessages = receivedMessages;
 	}
 
-	public void setWorkingTime(String workingTime) {
-		this.workingTime = workingTime;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Boolean getIsAgency() {
-		return isAgency;
-	}
-
-	public void setIsAgency(Boolean isAgency) {
-		this.isAgency = isAgency;
-	}
-
+	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER", allocationSize = 1)
+	@Id
+	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
+	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public long getId() {
 		return id;
 	}
@@ -133,6 +152,7 @@ public class TUser implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "USERNAME", nullable = false, length = 30)
 	public String getUsername() {
 		return username;
 	}
@@ -141,14 +161,16 @@ public class TUser implements java.io.Serializable {
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
+	@Column(name = "PASSWORD", nullable = false, length = 15)
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
+	@Column(name = "FIRSTNAME", nullable = false, length = 15)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -157,6 +179,7 @@ public class TUser implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
+	@Column(name = "LASTNAME", nullable = false, length = 15)
 	public String getLastName() {
 		return lastName;
 	}
@@ -165,27 +188,93 @@ public class TUser implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getAddress() {
-		return address;
+	@Column(name = "phone", nullable = false, length = 15)
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public String getWebsite() {
-		return website;
+	@Column(name = "EMAIL", nullable = false, length = 70)
+	public String getEmail() {
+		return email;
 	}
 
-	public void setWebsite(String website) {
-		this.website = website;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "T_ROLE_ID", nullable = false)
+	public TRole getTRole() {
+		return tRole;
+	}
+
+	public void setTRole(TRole tRole) {
+		this.tRole = tRole;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+	public Set<TRequest> getUserRequests() {
+		return userRequests;
+	}
+
+	public void setUserRequests(Set<TRequest> userRequests) {
+		this.userRequests = userRequests;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hiredAgency")
+	public Set<TRequest> getExecutedRequests() {
+		return executedRequests;
+	}
+
+	public void setExecutedRequests(Set<TRequest> executedRequests) {
+		this.executedRequests = executedRequests;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
+	public Set<TAgencyEventType> getTAgencyEventTypes() {
+		return tAgencyEventTypes;
+	}
+
+	public void setTAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
+		this.tAgencyEventTypes = tAgencyEventTypes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
+	public Set<TAgencyRequest> getTAgencyRequests() {
+		return tAgencyRequests;
+	}
+
+	public void setTAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
+		this.tAgencyRequests = tAgencyRequests;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
+	public Set<TMessage> getSentMessages() {
+		return sentMessages;
+	}
+
+	public void setSentMessages(Set<TMessage> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tMessageUsers")
+	public Set<TMessageUser> getReceivedMessages() {
+		return receivedMessages;
+	}
+
+	public void setReceivedMessages(Set<TMessageUser> receivedMessages) {
+		this.receivedMessages = receivedMessages;
 	}
 
 	@Override
 	public String toString() {
-		return "TUser [id=" + id + ", username=" + username + ", email=" + email
-				+ ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + "]";
+		return "TUser [id=" + id + ", username=" + username + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", phone=" + phone
+				+ ", email=" + email;
 	}
 
 	@Override
@@ -209,30 +298,4 @@ public class TUser implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
-	public Set<TEventType> getEventTypes() {
-		return tEventTypes;
-	}
-
-	public void setEventTypes(Set<TEventType> tEventTypes) {
-		this.tEventTypes = tEventTypes;
-	}
-	
-	public void addEventType(TEventType tEventType) {
-	    //prevent endless loop
-	    if (tEventTypes.contains(tEventType))
-	      return ;
-	    //add new eventType
-	    tEventTypes.add(tEventType);    
-	  }
-
-	 
-	  public void removeEventType(TEventType tEventType) {
-	    //prevent endless loop
-	    if (!tEventTypes.contains(tEventTypes))
-	      return ;
-	    //remove the eventType
-	    tEventTypes.remove(tEventTypes);
-	    //remove myself from the follower
-	  }
 }

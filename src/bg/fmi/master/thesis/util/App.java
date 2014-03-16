@@ -37,7 +37,7 @@ public class App {
 		tEventTypes.add(tEventType);
 		tEventTypes.add(eventType2);
 
-		newUser.setEventTypes(tEventTypes);
+	    //newUser.setTAgencyEventTypes(tAgencyEventTypes)(tEventTypes);
 
 		em.merge(newUser);
 

@@ -80,18 +80,16 @@ public class TRequest implements java.io.Serializable {
 	TRequest() {
 	}
 
-	TRequest(Long id, TUser author, String description, Date requestDate) {
-		this.id = id;
+	TRequest(TUser author, String description, Date requestDate) {
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;
 	}
 
-	TRequest(Long id, TUser author, String description, Date requestDate,
+	TRequest(TUser author, String description, Date requestDate,
 			TUser hiredAgency, int assessment, Boolean isActive,
 			Boolean isCancelled, Set<TAgencyRequest> tAgencyRequests,
 			Set<TRequestFilter> tRequestFilter) {
-		this.id = id;
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;

@@ -41,15 +41,13 @@ public class TFilterType implements java.io.Serializable {
 	public TFilterType() {
 	}
 
-	public TFilterType(Long id, String filterTypeName, String filterTypeDesc) {
-		this.id = id;
+	public TFilterType(String filterTypeName, String filterTypeDesc) {
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
 	}
 
-	public TFilterType(Long id, String filterTypeName, String filterTypeDesc,
+	public TFilterType(String filterTypeName, String filterTypeDesc,
 			Set<TRequestFilter> tRequestFilters) {
-		this.id = id;
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
 		this.tRequestFilters = tRequestFilters;

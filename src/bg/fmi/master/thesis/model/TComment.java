@@ -23,7 +23,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "T_COMMENT")
-public class Comment {
+public class TComment {
 
 	/**
 	 * ИД на коментар
@@ -50,10 +50,10 @@ public class Comment {
 	 */
 	private Boolean isNegative;
 
-	Comment() {
+	TComment() {
 	}
 
-	Comment(Long id, TRequest tRequest, String commentBody, Date commentDate,
+	TComment(Long id, TRequest tRequest, String commentBody, Date commentDate,
 			Boolean isNegative) {
 		this.id = id;
 		this.tRequest = tRequest;
@@ -129,7 +129,7 @@ public class Comment {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Comment other = (Comment) obj;
+		TComment other = (TComment) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
