@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_AGENCY_REQUEST")
-public class TAgencyRequest {
+public class TAgencyRequest implements java.io.Serializable{
 
 	/**
 	 * ИД на филтър
@@ -37,8 +37,7 @@ public class TAgencyRequest {
 	TAgencyRequest(){
 	}
 	
-	TAgencyRequest(Long id, TRequest tRequest, TUser tUser){
-		this.id = id;
+	TAgencyRequest(TRequest tRequest, TUser tUser){
 		this.tRequest = tRequest;
 		this.tUser = tUser;
 	}

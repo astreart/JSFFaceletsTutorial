@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "T_MESSAGE_USER")
-public class TMessageUser {
+public class TMessageUser implements java.io.Serializable{
 	
 	/**
 	 * ИД на записа

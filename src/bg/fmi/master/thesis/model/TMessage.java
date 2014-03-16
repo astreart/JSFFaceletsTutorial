@@ -21,9 +21,12 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+/*
+ * Таблица, съхраняваща съобщенията
+ */
 @Entity
 @Table(name = "T_MESSAGE")
-public class TMessage {
+public class TMessage implements java.io.Serializable{
 
 	/*
 	 * ИД на съобщението
@@ -95,7 +98,7 @@ public class TMessage {
 		this.isRead = isRead;
 		this.tMessage = tMessage;
 	}
-	
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_MESSAGE", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
@@ -109,7 +112,7 @@ public class TMessage {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "T_USER_ID")
+	@JoinColumn(name = "T_USER_ID", nullable = false)
 	public TUser getTUser() {
 		return tUser;
 	}
@@ -118,7 +121,7 @@ public class TMessage {
 		this.tUser = tUser;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receiver")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
 	public Set<TMessageUser> getTMessageUsers() {
 		return tMessageUsers;
 	}
@@ -128,7 +131,7 @@ public class TMessage {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "T_REQUEST_ID")
+	@JoinColumn(name = "T_REQUEST_ID", nullable = false)
 	public TRequest getTRequest() {
 		return tRequest;
 	}
@@ -169,7 +172,7 @@ public class TMessage {
 		return isRead;
 	}
 
-	@Column(name = "IS_READ", length = 1)
+	@Column(name = "IS_READ", length = 1, nullable = false)
 	@Type(type = "yes_no")
 	public void setIsRead(Boolean isRead) {
 		this.isRead = isRead;

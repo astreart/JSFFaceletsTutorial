@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "T_AGENCY_EVENT_TYPE")
-public class TAgencyEventType {
+public class TAgencyEventType implements java.io.Serializable{
 	
 	/**
 	 * ИД на записа
@@ -39,12 +39,12 @@ public class TAgencyEventType {
 	TAgencyEventType() {
 	}
 	
-	TAgencyEventType(Long id, TUser agency, TEventType tEventType){
-		this.id = id;
+	public TAgencyEventType(TUser agency, TEventType tEventType) {
+		super();
 		this.agency = agency;
 		this.tEventType = tEventType;
 	}
-	
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY_EVENT_TYPE", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")

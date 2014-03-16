@@ -45,15 +45,12 @@ public class TEventType implements java.io.Serializable {
 	public TEventType() {
 	}
 
-	public TEventType(Long id, String name, String description) {
-		this.id = id;
+	public TEventType(String name, String description) {
 		this.eventTypeName = name;
-		this.eventTypeDesc = description;
 	}
 
-	public TEventType(Long id, String name, String description,
+	public TEventType(String name, String description,
 			Set<TAgencyEventType> tAgencyEventTypes) {
-		this.id = id;
 		this.eventTypeName = name;
 		this.eventTypeDesc = description;
 		this.tAgencyEventTypes = tAgencyEventTypes;
@@ -89,11 +86,11 @@ public class TEventType implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tEventType")
-	public Set<TAgencyEventType> gettAgencyEventTypes() {
+	public Set<TAgencyEventType> getTAgencyEventTypes() {
 		return tAgencyEventTypes;
 	}
 
-	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
+	public void setTAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
 

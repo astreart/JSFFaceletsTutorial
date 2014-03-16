@@ -84,28 +84,23 @@ public class TUser implements java.io.Serializable {
 	 * Агенции, до които е направено запитването
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
-	
+
 	/*
 	 * Изпратени съобщения
 	 */
 	private Set<TMessage> sentMessages = new HashSet<TMessage>(0);
-	
+
 	/*
 	 * Получени съобщения
 	 */
 	private Set<TMessageUser> receivedMessages = new HashSet<TMessageUser>(0);
-	
-	public TUser() {
-	}
 
-	public TUser(String username, String password, String firstName,
-			String lastName, String phone, String email) {
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone = phone;
-		this.email = email;
+	/*
+	 * Агенции за организиране на събития
+	 */
+	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
+
+	public TUser() {
 	}
 
 	public TUser(String username, String password, String firstName,
@@ -117,14 +112,15 @@ public class TUser implements java.io.Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.tRole = tRole;
-	}	
+	}
 
 	public TUser(String username, String password, String firstName,
 			String lastName, String phone, String email, TRole tRole,
 			Set<TRequest> userRequests, Set<TRequest> executedRequests,
 			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
-			Set<TMessageUser> receivedMessages) {
+			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -138,6 +134,7 @@ public class TUser implements java.io.Serializable {
 		this.tAgencyRequests = tAgencyRequests;
 		this.sentMessages = sentMessages;
 		this.receivedMessages = receivedMessages;
+		this.tAgencies = tAgencies;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER", allocationSize = 1)
@@ -251,7 +248,7 @@ public class TUser implements java.io.Serializable {
 	public void setTAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
 		this.tAgencyRequests = tAgencyRequests;
 	}
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
 	public Set<TMessage> getSentMessages() {
 		return sentMessages;
@@ -261,13 +258,22 @@ public class TUser implements java.io.Serializable {
 		this.sentMessages = sentMessages;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tMessageUsers")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
 	public Set<TMessageUser> getReceivedMessages() {
 		return receivedMessages;
 	}
 
 	public void setReceivedMessages(Set<TMessageUser> receivedMessages) {
 		this.receivedMessages = receivedMessages;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
+	public Set<TAgency> getТAgencies() {
+		return tAgencies;
+	}
+
+	public void setТAgencies(Set<TAgency> tAgencies) {
+		this.tAgencies = tAgencies;
 	}
 
 	@Override

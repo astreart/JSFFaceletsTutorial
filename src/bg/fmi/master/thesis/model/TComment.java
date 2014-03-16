@@ -23,7 +23,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "T_COMMENT")
-public class TComment {
+public class TComment implements java.io.Serializable{
 
 	/**
 	 * ИД на коментар
@@ -52,16 +52,16 @@ public class TComment {
 
 	TComment() {
 	}
-
-	TComment(Long id, TRequest tRequest, String commentBody, Date commentDate,
+	
+	public TComment(TRequest tRequest, String commentBody, Date commentDate,
 			Boolean isNegative) {
-		this.id = id;
+		super();
 		this.tRequest = tRequest;
 		this.commentBody = commentBody;
 		this.commentDate = commentDate;
 		this.isNegative = isNegative;
 	}
-
+	
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_COMMENT", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
@@ -103,7 +103,7 @@ public class TComment {
 		this.commentDate = commentDate;
 	}
 
-	@Column(name = "IS_NEGATIVE", length = 1)
+	@Column(name = "IS_NEGATIVE", length = 1, nullable = false)
 	@Type(type = "yes_no")
 	public Boolean getIsNegative() {
 		return isNegative;

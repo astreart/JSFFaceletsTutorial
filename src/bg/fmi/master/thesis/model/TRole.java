@@ -10,15 +10,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
+
+/*
+ * Таблица с видовете роли, които 1 потребител може да има в системата
+ */
 
 @Entity
 @Table(name = "T_ROLE")
-public class TRole {
+public class TRole implements java.io.Serializable{
 
 	/*
 	 * ИД на ролята
@@ -38,8 +40,14 @@ public class TRole {
 	TRole(){
 	}
 	
-	TRole(Long id, String roleName){
+	TRole(String roleName){
 		this.roleName = roleName;
+	}
+
+	public TRole(String roleName, Set<TUser> tUsers) {
+		super();
+		this.roleName = roleName;
+		this.tUsers = tUsers;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_ROLE", allocationSize = 1)
@@ -63,7 +71,7 @@ public class TRole {
 		this.roleName = roleName;
 	}
 
-	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "tRole")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRole")
 	public Set<TUser> getТUsers() {
 		return tUsers;
 	}

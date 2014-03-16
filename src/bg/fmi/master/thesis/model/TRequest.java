@@ -84,12 +84,13 @@ public class TRequest implements java.io.Serializable {
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;
-	}
+	}	
 
-	TRequest(TUser author, String description, Date requestDate,
+	public TRequest(TUser author, String description, Date requestDate,
 			TUser hiredAgency, int assessment, Boolean isActive,
-			Boolean isCancelled, Set<TAgencyRequest> tAgencyRequests,
-			Set<TRequestFilter> tRequestFilter) {
+			Boolean isCancelled, Set<TRequestFilter> tRequestFilters,
+			Set<TAgencyRequest> tAgencyRequests) {
+		super();
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;
@@ -97,8 +98,8 @@ public class TRequest implements java.io.Serializable {
 		this.assessment = assessment;
 		this.isActive = isActive;
 		this.isCancelled = isCancelled;
+		this.tRequestFilters = tRequestFilters;
 		this.tAgencyRequests = tAgencyRequests;
-		this.tRequestFilters = tRequestFilter;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_REQUEST", allocationSize = 1)
@@ -182,20 +183,20 @@ public class TRequest implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TAgencyRequest> gettAgencyRequests() {
+	public Set<TAgencyRequest> get“AgencyRequests() {
 		return tAgencyRequests;
 	}
 
-	public void settAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
+	public void set“AgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
 		this.tAgencyRequests = tAgencyRequests;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TRequestFilter> gettRequestFilters() {
+	public Set<TRequestFilter> get“RequestFilters() {
 		return tRequestFilters;
 	}
 
-	public void settRequestFilters(Set<TRequestFilter> tRequestFilters) {
+	public void set“RequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
 

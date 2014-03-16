@@ -44,11 +44,6 @@ public class TRequestFilter implements java.io.Serializable {
 	TRequestFilter() {
 	}
 
-	TRequestFilter(TFilterType tFilterType, TRequest tRequest) {
-		this.tFilterType = tFilterType;
-		this.tRequest = tRequest;
-	}
-
 	TRequestFilter(TFilterType tFilterType, TRequest tRequest,
 			String filterValue) {
 		this.tFilterType = tFilterType;
@@ -74,7 +69,7 @@ public class TRequestFilter implements java.io.Serializable {
 		return this.tRequest;
 	}
 
-	public void setTRequesy(TRequest tRequest) {
+	public void setTRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
 	}
 
@@ -88,7 +83,7 @@ public class TRequestFilter implements java.io.Serializable {
 		this.tFilterType = tFilterType;
 	}
 
-	@Column(name = "FILTER_VALUE", length = 4000)
+	@Column(name = "FILTER_VALUE", length = 4000, nullable = false)
 	public String getFilterValue() {
 		return this.filterValue;
 	}

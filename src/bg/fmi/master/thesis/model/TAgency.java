@@ -11,9 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+import javax.persistence.UniqueConstraint;
 
+/*
+ * Таблица, пазеща специфична информация за агенция за организиране на събития
+ */
 @Entity
-@Table(name = "T_AGENCY")
+@Table(name = "T_AGENCY", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "ADDRESS") })
 public class TAgency implements java.io.Serializable {
 
 	/**
@@ -56,14 +61,15 @@ public class TAgency implements java.io.Serializable {
 		this.information = infirmation;
 	}
 	
-	TAgency(TUser tUser, String website, String city, String address, String infirmation){
+	TAgency(TUser tUser, String website, String city, String address, String infоrmation){
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
 		this.address = address;
-		this.information = infirmation;
+		this.information = infоrmation;
 	}
-
+	
+	
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
