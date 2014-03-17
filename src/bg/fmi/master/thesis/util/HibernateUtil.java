@@ -11,12 +11,18 @@ public class HibernateUtil {
 	private static final String PERSISTENCE_UNIT_NAME = "myapp";
 	private static EntityManagerFactory factory;
 	private static EntityManager em = buildSessionFactory();
- 
+	
+	
 	private static EntityManager buildSessionFactory() {
 		try {
 			
+			System.out.println("Hibernate Util");
+			
 			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+			System.out.println("Hibernate Util2");
 			EntityManager em = factory.createEntityManager();
+			
+			System.out.println("createEntityManager");
 			
 			return em;
  

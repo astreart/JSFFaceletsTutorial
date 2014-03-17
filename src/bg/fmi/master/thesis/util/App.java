@@ -7,13 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.hibernate.Session;
 
+import bg.fmi.master.thesis.model.TAgencyEventType;
 import bg.fmi.master.thesis.model.TEventType;
+import bg.fmi.master.thesis.model.TRole;
 import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
-
 public class App {
-	
 
 	public static void main(String[] args) {
 
@@ -21,23 +21,21 @@ public class App {
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 
-		TUser newUser = new TUser();
-		newUser.setId('1');
-		newUser.setUsername("Ivan");
-		newUser.setPassword("123456");
-		newUser.setLastName("Ivanov");
-		newUser.setEmail("ivan@abv.bg");
-		newUser.setPhone("+359888100100");
+		System.out.println("begin");
 		
-
-		TEventType tEventType = new TEventType((long) 1,"CONSUMER", "CONSUMER COMPANY");
-		TEventType eventType2 = new TEventType((long) 2,"INVESTMENT", "INVESTMENT COMPANY");
+		TRole tRole = new TRole("Agency");
+		
+		TUser newUser = new TUser("ivan123", "1234", "Ivan", "Ivanov", "91933", "2341", tRole);
+		
+		System.out.println(newUser);
+		
+		TEventType tEventType = new TEventType("CONSUMER", "CONSUMER COMPANY");
 
 		Set<TEventType> tEventTypes = new HashSet<TEventType>();
 		tEventTypes.add(tEventType);
-		tEventTypes.add(eventType2);
 
-	    //newUser.setTAgencyEventTypes(tAgencyEventTypes)(tEventTypes);
+		TAgencyEventType tAgencyEventType = new TAgencyEventType(newUser,
+				tEventType);
 
 		em.merge(newUser);
 

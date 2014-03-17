@@ -4,11 +4,12 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.HashSet;
 import java.util.Set;
-
+import bg.fmi.master.thesis.model.TRole;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -62,8 +63,8 @@ public class TUser implements java.io.Serializable {
 	/*
 	 * Роля на потребителя в системата
 	 */
-	private TRole tRole;
-
+	private TRole userRole;
+	
 	/**
 	 * Заявки, направени от даден потребител
 	 */
@@ -104,18 +105,18 @@ public class TUser implements java.io.Serializable {
 	}
 
 	public TUser(String username, String password, String firstName,
-			String lastName, String phone, String email, TRole tRole) {
+			String lastName, String phone, String email, TRole userRole) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
 		this.email = email;
-		this.tRole = tRole;
+		this.userRole = userRole;
 	}
 
 	public TUser(String username, String password, String firstName,
-			String lastName, String phone, String email, TRole tRole,
+			String lastName, String phone, String email, TRole userRole,
 			Set<TRequest> userRequests, Set<TRequest> executedRequests,
 			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
@@ -127,7 +128,7 @@ public class TUser implements java.io.Serializable {
 		this.lastName = lastName;
 		this.phone = phone;
 		this.email = email;
-		this.tRole = tRole;
+		this.userRole = userRole;
 		this.userRequests = userRequests;
 		this.executedRequests = executedRequests;
 		this.tAgencyEventTypes = tAgencyEventTypes;
@@ -137,10 +138,26 @@ public class TUser implements java.io.Serializable {
 		this.tAgencies = tAgencies;
 	}
 
-	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER", allocationSize = 1)
+	public TUser(TUser tUser) {
+		super();
+		this.username = tUser.username;
+		this.email = tUser.email;
+	}
+
+	/*
+	 * @SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER",
+	 * allocationSize = 1)
+	 * 
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = SEQUENCE, generator = "generator")
+	 * 
+	 * @Column(name = "ID", unique = true, nullable = false, precision = 22,
+	 * scale = 0)
+	 */
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
-	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", unique = true, nullable = false)
 	public long getId() {
 		return id;
 	}
@@ -203,14 +220,14 @@ public class TUser implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "T_ROLE_ID", nullable = false)
-	public TRole getTRole() {
-		return tRole;
+	public TRole getUserRole() {
+		return userRole;
 	}
 
-	public void setTRole(TRole tRole) {
-		this.tRole = tRole;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ROLE_ID", nullable = false)
+	public void setUserRole(TRole userRole) {
+		this.userRole = userRole;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
@@ -268,11 +285,11 @@ public class TUser implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
-	public Set<TAgency> getТAgencies() {
+	public Set<TAgency> getTAgencies() {
 		return tAgencies;
 	}
 
-	public void setТAgencies(Set<TAgency> tAgencies) {
+	public void setTAgencies(Set<TAgency> tAgencies) {
 		this.tAgencies = tAgencies;
 	}
 

@@ -183,20 +183,20 @@ public class TRequest implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TAgencyRequest> get“AgencyRequests() {
+	public Set<TAgencyRequest> getTAgencyRequests() {
 		return tAgencyRequests;
 	}
 
-	public void set“AgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
+	public void setTAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
 		this.tAgencyRequests = tAgencyRequests;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TRequestFilter> get“RequestFilters() {
+	public Set<TRequestFilter> getTRequestFilters() {
 		return tRequestFilters;
 	}
 
-	public void set“RequestFilters(Set<TRequestFilter> tRequestFilters) {
+	public void setTRequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
 

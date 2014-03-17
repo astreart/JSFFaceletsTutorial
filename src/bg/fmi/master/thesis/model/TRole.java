@@ -4,7 +4,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.HashSet;
 import java.util.Set;
-
+import bg.fmi.master.thesis.model.TUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,19 +35,19 @@ public class TRole implements java.io.Serializable{
 	/*
 	 * Потребители, имащи определена роля в системата
 	 */
-	private Set<TUser> tUsers = new HashSet<TUser>(0);
+	private Set<TUser> tUsersWithThisRole = new HashSet<TUser>(0);
 	
-	TRole(){
+	public TRole(){
 	}
 	
-	TRole(String roleName){
+	public TRole(String roleName){
 		this.roleName = roleName;
 	}
 
-	public TRole(String roleName, Set<TUser> tUsers) {
+	public TRole(String roleName, Set<TUser> tUsersWithThisRole) {
 		super();
 		this.roleName = roleName;
-		this.tUsers = tUsers;
+		this.tUsersWithThisRole = tUsersWithThisRole;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_ROLE", allocationSize = 1)
@@ -71,15 +71,15 @@ public class TRole implements java.io.Serializable{
 		this.roleName = roleName;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRole")
-	public Set<TUser> getТUsers() {
-		return tUsers;
-	}
-	
-    public void setТUsers(Set<TUser> tUsers) {
-		this.tUsers = tUsers;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userRole")	
+	public Set<TUser> getTUsersWithThisRole() {
+		return tUsersWithThisRole;
 	}
 
+	public void setTUsersWithThisRole(Set<TUser> tUsersWithThisRole) {
+		this.tUsersWithThisRole = tUsersWithThisRole;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

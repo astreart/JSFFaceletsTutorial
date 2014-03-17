@@ -54,19 +54,19 @@ public class TAgency implements java.io.Serializable {
 	TAgency() {
 	}
 	
-	TAgency(TUser tUser, String city, String address, String infirmation){
+	TAgency(TUser tUser, String city, String address, String information){
 		this.tUser = tUser;
 		this.city = city;
 		this.address = address;
-		this.information = infirmation;
+		this.information = information;
 	}
 	
-	TAgency(TUser tUser, String website, String city, String address, String infîrmation){
+	TAgency(TUser tUser, String website, String city, String address, String information){
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
 		this.address = address;
-		this.information = infîrmation;
+		this.information = information;
 	}
 	
 	
