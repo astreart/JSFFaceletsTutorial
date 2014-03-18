@@ -113,30 +113,30 @@ public class TMessage implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_USER_ID", nullable = false)
-	public TUser getTUser() {
+	public TUser gettUser() {
 		return tUser;
 	}
 
-	public void setTUser(TUser tUser) {
+	public void settUser(TUser tUser) {
 		this.tUser = tUser;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
-	public Set<TMessageUser> getTMessageUsers() {
+	public Set<TMessageUser> gettMessageUsers() {
 		return tMessageUsers;
 	}
 
-	public void setTMessageUsers(Set<TMessageUser> tMessageUsers) {
+	public void settMessageUsers(Set<TMessageUser> tMessageUsers) {
 		this.tMessageUsers = tMessageUsers;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_REQUEST_ID", nullable = false)
-	public TRequest getTRequest() {
+	public TRequest gettRequest() {
 		return tRequest;
 	}
 
-	public void setTRequest(TRequest tRequest) {
+	public void settRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
 	}
 
@@ -180,11 +180,11 @@ public class TMessage implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARENT_ID")
-	public TMessage getTMessage() {
+	public TMessage gettMessage() {
 		return tMessage;
 	}
 
-	public void setTMessage(TMessage tMessage) {
+	public void settMessage(TMessage tMessage) {
 		this.tMessage = tMessage;
 	}
 

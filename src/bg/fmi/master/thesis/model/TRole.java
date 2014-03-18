@@ -72,11 +72,11 @@ public class TRole implements java.io.Serializable{
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userRole")	
-	public Set<TUser> getTUsersWithThisRole() {
+	public Set<TUser> gettUsersWithThisRole() {
 		return tUsersWithThisRole;
 	}
 
-	public void setTUsersWithThisRole(Set<TUser> tUsersWithThisRole) {
+	public void settUsersWithThisRole(Set<TUser> tUsersWithThisRole) {
 		this.tUsersWithThisRole = tUsersWithThisRole;
 	}
 	
@@ -103,5 +103,5 @@ public class TRole implements java.io.Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
 }

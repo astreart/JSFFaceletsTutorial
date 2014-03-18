@@ -69,14 +69,14 @@ public class TAgencyEventType implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_EVENT_TYPE_ID")
-	public TEventType getTEventType() {
+	public TEventType gettEventType() {
 		return tEventType;
 	}
 
-	public void setTEventType(TEventType tEventType) {
+	public void settEventType(TEventType tEventType) {
 		this.tEventType = tEventType;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

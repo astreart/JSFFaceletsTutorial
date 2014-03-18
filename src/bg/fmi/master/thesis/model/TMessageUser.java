@@ -57,21 +57,21 @@ public class TMessageUser implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_MESSAGE_ID", nullable = false)
-	public TMessage getTMessage() {
+	public TMessage gettMessage() {
 		return tMessage;
 	}
 
-	public void setTMessage(TMessage tMessage) {
+	public void settMessage(TMessage tMessage) {
 		this.tMessage = tMessage;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_USER_ID", nullable = false)
-	public TUser getTUser() {
+	public TUser gettUser() {
 		return tUser;
 	}
 
-	public void setTUser(TUser tUser) {
+	public void settUser(TUser tUser) {
 		this.tUser = tUser;
 	}
 
@@ -98,5 +98,5 @@ public class TMessageUser implements java.io.Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
+	}	
 }

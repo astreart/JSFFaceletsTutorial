@@ -75,12 +75,12 @@ public class TRequestFilter implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_FILTER_TYPE_ID", nullable = false)
-	public TFilterType getTFilterType() {
-		return this.tFilterType;
+	public TRequest gettRequest() {
+		return tRequest;
 	}
 
-	public void setTFilterType(TFilterType tFilterType) {
-		this.tFilterType = tFilterType;
+	public void settRequest(TRequest tRequest) {
+		this.tRequest = tRequest;
 	}
 
 	@Column(name = "FILTER_VALUE", length = 4000, nullable = false)
@@ -115,5 +115,5 @@ public class TRequestFilter implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
 }

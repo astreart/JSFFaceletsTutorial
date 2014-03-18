@@ -85,13 +85,16 @@ public class TAgency implements java.io.Serializable {
 
 	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_USER_ID", unique = true, nullable = false, insertable = false, updatable = false)
-	*/public TUser getTUser() {
+	*/
+	public TUser gettUser() {
 		return tUser;
 	}
 
-	public void setTUser(TUser tUser) {
+	public void settUser(TUser tUser) {
 		this.tUser = tUser;
 	}
+
+	
 
 	@Column(name = "WEBSITE", length = 150)
 	public String getWebsite() {
@@ -159,5 +162,4 @@ public class TAgency implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
 }

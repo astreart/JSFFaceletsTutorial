@@ -84,11 +84,11 @@ public class TFilterType implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tFilterType")
-	public Set<TRequestFilter> getReqFilters() {
-		return this.tRequestFilters;
+	public Set<TRequestFilter> gettRequestFilters() {
+		return tRequestFilters;
 	}
 
-	public void setReqFilters(Set<TRequestFilter> tRequestFilters) {
+	public void settRequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
 
@@ -116,5 +116,4 @@ public class TFilterType implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
 }

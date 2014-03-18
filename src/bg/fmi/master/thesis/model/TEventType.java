@@ -86,11 +86,11 @@ public class TEventType implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tEventType")
-	public Set<TAgencyEventType> getTAgencyEventTypes() {
+	public Set<TAgencyEventType> gettAgencyEventTypes() {
 		return tAgencyEventTypes;
 	}
 
-	public void setTAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
+	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
 

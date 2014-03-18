@@ -183,20 +183,20 @@ public class TRequest implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TAgencyRequest> getTAgencyRequests() {
+	public Set<TAgencyRequest> gettAgencyRequests() {
 		return tAgencyRequests;
 	}
 
-	public void setTAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
+	public void settAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
 		this.tAgencyRequests = tAgencyRequests;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
-	public Set<TRequestFilter> getTRequestFilters() {
+	public Set<TRequestFilter> gettRequestFilters() {
 		return tRequestFilters;
 	}
 
-	public void setTRequestFilters(Set<TRequestFilter> tRequestFilters) {
+	public void settRequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
 
@@ -223,5 +223,5 @@ public class TRequest implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
+	}	
 }

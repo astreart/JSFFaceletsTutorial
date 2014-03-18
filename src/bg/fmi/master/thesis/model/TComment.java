@@ -76,11 +76,11 @@ public class TComment implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_REQUEST_ID", nullable = false)
-	public TRequest getTRequest() {
+	public TRequest gettRequest() {
 		return tRequest;
 	}
 
-	public void setTRequest(TRequest tRequest) {
+	public void settRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
 	}
 
