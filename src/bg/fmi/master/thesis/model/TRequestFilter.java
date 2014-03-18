@@ -65,22 +65,22 @@ public class TRequestFilter implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_REQUEST_ID", nullable = false)
-	public TRequest getTRequest() {
-		return this.tRequest;
-	}
-
-	public void setTRequest(TRequest tRequest) {
-		this.tRequest = tRequest;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "T_FILTER_TYPE_ID", nullable = false)
 	public TRequest gettRequest() {
 		return tRequest;
 	}
 
 	public void settRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "T_FILTER_TYPE_ID", nullable = false)
+	public TFilterType gettFilterType() {
+		return tFilterType;
+	}
+
+	public void settFilterType(TFilterType tFilterType) {
+		this.tFilterType = tFilterType;
 	}
 
 	@Column(name = "FILTER_VALUE", length = 4000, nullable = false)

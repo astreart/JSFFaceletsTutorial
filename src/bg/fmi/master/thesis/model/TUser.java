@@ -100,8 +100,8 @@ public class TUser implements java.io.Serializable {
 	/*
 	 * Агенции за организиране на събития
 	 */
-	private TAgency tAgency; 
-	
+	private TAgency tAgency;
+
 	public TUser() {
 	}
 
@@ -221,12 +221,12 @@ public class TUser implements java.io.Serializable {
 		this.email = email;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ROLE_ID", nullable = false)
 	public TRole getUserRole() {
 		return userRole;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ROLE_ID", nullable = false)
 	public void setUserRole(TRole userRole) {
 		this.userRole = userRole;
 	}
@@ -250,21 +250,12 @@ public class TUser implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
-	public Set<TAgencyEventType> getTAgencyEventTypes() {
+	public Set<TAgencyEventType> gettAgencyEventTypes() {
 		return tAgencyEventTypes;
 	}
 
-	public void setTAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
+	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tAgencyEventTypes = tAgencyEventTypes;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
-	public Set<TAgencyRequest> getTAgencyRequests() {
-		return tAgencyRequests;
-	}
-
-	public void setTAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
-		this.tAgencyRequests = tAgencyRequests;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
@@ -285,11 +276,21 @@ public class TUser implements java.io.Serializable {
 		this.receivedMessages = receivedMessages;
 	}
 
-	public TAgency getTAgency() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
+	public Set<TAgencyRequest> gettAgencyRequests() {
+		return tAgencyRequests;
+	}
+
+	public void settAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
+		this.tAgencyRequests = tAgencyRequests;
+	}
+
+	
+	public TAgency gettAgency() {
 		return tAgency;
 	}
 
-	public void setTAgencies(TAgency tAgency) {
+	public void settAgency(TAgency tAgency) {
 		this.tAgency = tAgency;
 	}
 
