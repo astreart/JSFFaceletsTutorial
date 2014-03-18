@@ -1,5 +1,6 @@
 package bg.fmi.master.thesis.model;
 
+import bg.fmi.master.thesis.model.TUser;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 import javax.persistence.Column;
@@ -82,9 +83,9 @@ public class TAgency implements java.io.Serializable {
 		TUserId = tUserId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_USER_ID", unique = true, nullable = false, insertable = false, updatable = false)
-	public TUser getTUser() {
+	*/public TUser getTUser() {
 		return tUser;
 	}
 

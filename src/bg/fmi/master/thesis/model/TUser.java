@@ -1,5 +1,6 @@
 package bg.fmi.master.thesis.model;
 
+import bg.fmi.master.thesis.model.TAgency;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.HashSet;
@@ -64,7 +65,7 @@ public class TUser implements java.io.Serializable {
 	 * Роля на потребителя в системата
 	 */
 	private TRole userRole;
-	
+
 	/**
 	 * Заявки, направени от даден потребител
 	 */
@@ -99,8 +100,8 @@ public class TUser implements java.io.Serializable {
 	/*
 	 * Агенции за организиране на събития
 	 */
-	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
-
+	private TAgency tAgency; 
+	
 	public TUser() {
 	}
 
@@ -120,7 +121,7 @@ public class TUser implements java.io.Serializable {
 			Set<TRequest> userRequests, Set<TRequest> executedRequests,
 			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
-			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies) {
+			Set<TMessageUser> receivedMessages, TAgency tAgency) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -135,7 +136,7 @@ public class TUser implements java.io.Serializable {
 		this.tAgencyRequests = tAgencyRequests;
 		this.sentMessages = sentMessages;
 		this.receivedMessages = receivedMessages;
-		this.tAgencies = tAgencies;
+		this.tAgency = tAgency;
 	}
 
 	public TUser(TUser tUser) {
@@ -284,13 +285,12 @@ public class TUser implements java.io.Serializable {
 		this.receivedMessages = receivedMessages;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
-	public Set<TAgency> getTAgencies() {
-		return tAgencies;
+	public TAgency getTAgency() {
+		return tAgency;
 	}
 
-	public void setTAgencies(Set<TAgency> tAgencies) {
-		this.tAgencies = tAgencies;
+	public void setTAgencies(TAgency tAgency) {
+		this.tAgency = tAgency;
 	}
 
 	@Override

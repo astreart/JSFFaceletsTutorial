@@ -23,7 +23,7 @@ public class App {
 
 		System.out.println("begin");
 		
-		TRole tRole = new TRole("Agency");
+		/*TRole tRole = new TRole("Agency");
 		
 		TUser newUser = new TUser("ivan123", "1234", "Ivan", "Ivanov", "91933", "2341", tRole);
 		
@@ -39,7 +39,7 @@ public class App {
 
 		em.merge(newUser);
 
-		em.getTransaction().commit();
+		em.getTransaction().commit();*/
 		System.out.println("Done");
 		em.close();
 	}
