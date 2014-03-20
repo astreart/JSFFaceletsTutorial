@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml">
+		<h:head>
+		</h:head>
+		<h:body>
+			<h:form>
+
+				<h:outputLabel for="eventType" value="EventType Name:" />
+				<p:inputText id="eventType"
+					value="#{eventTypeBean.tEventType.eventTypeName}" />
+
+				<br />
+
+				<h:outputLabel for="eventTypeDesc" value="EventType Desc: " />
+				<p:inputText id="eventTypeDesc"
+					value="#{eventTypeBean.tEventType.eventTypeDesc}" />
+					
+					<br />
+
+				<p:commandButton value="Add Event " id="Submit"
+					actionListener="#{eventTypeBean.addEventType}"></p:commandButton>
+
+				<p:commandButton value="List Event" id="listBtn"
+					actionListener="#{eventTypeBean.listEventType}" />
+
+			</h:form>
+		</h:body>
+	</ui:composition>
+</f:view>
+</html>

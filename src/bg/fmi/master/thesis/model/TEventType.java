@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -47,6 +48,11 @@ public class TEventType implements java.io.Serializable {
 
 	public TEventType(String name, String description) {
 		this.eventTypeName = name;
+	}
+
+	public TEventType(TEventType eventType) {
+		this.eventTypeName = eventType.eventTypeName;
+		this.eventTypeDesc = eventType.eventTypeDesc;
 	}
 
 	public TEventType(String name, String description,
@@ -117,5 +123,11 @@ public class TEventType implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TEventType [id=" + id + ", eventTypeName=" + eventTypeName
+				+ ", eventTypeDesc=" + eventTypeDesc + "]";
 	}
 }
