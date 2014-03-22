@@ -1,5 +1,6 @@
 package bg.fmi.master.thesis.beans;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.hibernate.Session;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -25,6 +27,7 @@ public class EditEventTypeBean {
 	private EventTypeDataModel eventTypeModel;
 	private static final String PERSISTENCE_UNIT_NAME = "myapp";
 	private static EntityManagerFactory factory;
+	private List<TEventType> eventTypes;
 
 	public EditEventTypeBean() {
 		eventTypeModel = new EventTypeDataModel(listEventTypes());
@@ -45,6 +48,8 @@ public class EditEventTypeBean {
 	public List<TEventType> listEventTypes() {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
+		//ако се нуждаем от нещо специфично за сесията
+		Session session = em.unwrap(Session.class);
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TEventType u");
 		List<TEventType> eventTypeLists = q.getResultList();
@@ -54,10 +59,11 @@ public class EditEventTypeBean {
 		System.out.println("Size: " + eventTypeLists.size());
 		em.close();
 
+		eventTypes = eventTypeLists;
 		return eventTypeLists;
 	}
 
-	public void saveChanges() {
+	public void saveChanges() throws IOException {
 
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
@@ -65,9 +71,7 @@ public class EditEventTypeBean {
 
 		em.merge(selectedEventType);
 		em.getTransaction().commit();
-
 		em.close();
-
 	}
 
 	public void onRowSelect(SelectEvent event) {
@@ -83,5 +87,32 @@ public class EditEventTypeBean {
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
+	
+	
+	public void deleteEventType() {
+	    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	    EntityManager em = factory.createEntityManager();
+	    em.getTransaction().begin();
+	     System.out.println("EventType for deleting: " + selectedEventType);
+	     
+	    //You need to check if the entity is managed by EntityManager#contains()
+	     //and if not, then make it managed it EntityManager#merge().
+	     em.remove(em.contains(selectedEventType) ? selectedEventType : em.merge(selectedEventType));
+	   
+	    Query q = em.createQuery("select u from TEventType u");
+		List<TEventType> newEventTypeLists = q.getResultList();
+		for (TEventType eventType : newEventTypeLists) {
+			System.out.println(eventType);
+		}
+		System.out.println("Size: " + newEventTypeLists.size());
+
+		//listEventTypes();
+		
+		eventTypeModel.removeEventType(eventTypes, selectedEventType);
+	    em.getTransaction().commit();
+	    em.close();
+	    
+	  
+	  }
 
 }
