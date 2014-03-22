@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml">
+		<h:head>
+		</h:head>
+		<h:body>
+			<h:form id="form">
+
+
+				<p:growl id="growl" showDetail="true" />
+
+				<p:dataTable id="eventTypes" var="eventType"
+					value="#{editEventTypeBean.eventTypeModel}" paginator="true"
+					rows="10" selection="#{editEventTypeBean.selectedEventType}"
+					selectionMode="single">
+
+					<p:ajax event="rowSelect"
+						listener="#{editEventTypeBean.onRowSelect}"
+						update=":form:display :form:growl"
+						oncomplete="PF('eventTypeDialog').show()" />
+					<p:ajax event="rowUnselect"
+						listener="#{editEventTypeBean.onRowUnselect}" update=":form:growl" />
+
+					<f:facet name="header">  
+            Select a row  
+        </f:facet>
+
+					<p:column headerText="ID">  
+            #{eventType.id}  
+        </p:column>
+
+					<p:column headerText="EventType Name">  
+            #{eventType.eventTypeName}  
+        </p:column>
+
+					<p:column headerText="EventType Description">  
+            #{eventType.eventTypeDesc}  
+        </p:column>
+
+
+				</p:dataTable>
+
+				<p:dialog id="dialog" header="EventType Details"
+					widgetVar="eventTypeDialog" resizable="false" showEffect="fade"
+					hideEffect="explode">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">
+
+						<h:outputText value="ID:" />
+						<p:inputText value="#{editEventTypeBean.selectedEventType.id}" />
+
+						<h:outputText value="EventType Name:" />
+						<p:inputText
+							value="#{editEventTypeBean.selectedEventType.eventTypeName}" />
+
+						<h:outputText value="EventType Descr:" />
+						<p:inputText
+							value="#{editEventTypeBean.selectedEventType.eventTypeDesc}" />
+
+						<p:commandButton value="Save Changes" id="listBtn"
+							actionListener="#{editEventTypeBean.saveChanges}"
+							oncomplete="PF('eventTypeDialog').hide()" update="eventTypes"
+							styleClass="ui-priority-primary" />
+
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</h:body>
+	</ui:composition>
+</f:view>
+</html>
