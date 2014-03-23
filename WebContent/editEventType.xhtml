@@ -32,6 +32,12 @@
 					<f:facet name="header">  
             Select a row  
         </f:facet>
+					<!-- <p:column headerText="Action">
+						<p:commandButton value="Delete" action="#{editEventTypeBean.deleteEventType}">
+							<f:setPropertyActionListener value="#{eventType}"
+								target="#{editEventTypeBean.selectedEventType}" />
+								</p:commandButton>
+					</p:column> -->
 
 					<p:column headerText="ID">  
             #{eventType.id}  

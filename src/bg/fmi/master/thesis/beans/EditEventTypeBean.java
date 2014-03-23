@@ -24,6 +24,7 @@ public class EditEventTypeBean {
 	private TEventType selectedEventType;
 	private EventTypeDataModel eventTypeModel;
 	private List<TEventType> eventTypes;
+	private List<TEventType> eventTypeLists;
 
 	
 	public EditEventTypeBean() {
@@ -50,13 +51,33 @@ public class EditEventTypeBean {
 		
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TEventType u");
-		List<TEventType> eventTypeLists = q.getResultList();
+		eventTypeLists = q.getResultList();
+		
+		if(eventTypeLists.isEmpty()){
+			prepareSampleData();
+		}
 		for (TEventType eventType : eventTypeLists) {
 			System.out.println(eventType);
 		}
 		System.out.println("Size: " + eventTypeLists.size());
 		eventTypes = eventTypeLists;
 		return eventTypeLists;
+	}
+
+	private void prepareSampleData() {
+		TEventType tEventType = new TEventType();
+		tEventType.setId(Long.valueOf(1));
+		tEventType.setEventTypeName("Сватби");
+		tEventType.setEventTypeDesc("Годежи, Сватбени тържества");
+		
+		TEventType tEventType1 = new TEventType();
+		tEventType1.setId(Long.valueOf(2));
+		tEventType1.setEventTypeName("Рожденни дни");
+		tEventType1.setEventTypeDesc("Рожденни, именни дни");
+		
+		eventTypeLists.add(tEventType);
+		eventTypeLists.add(tEventType1);
+		
 	}
 
 	public void saveChanges() throws IOException {
