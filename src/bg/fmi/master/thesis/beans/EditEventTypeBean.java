@@ -8,8 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
@@ -17,7 +15,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 import bg.fmi.master.thesis.model.TEventType;
-import bg.fmi.master.thesis.model.TUser;
+import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "editEventTypeBean")
 @ViewScoped
@@ -25,10 +23,9 @@ public class EditEventTypeBean {
 
 	private TEventType selectedEventType;
 	private EventTypeDataModel eventTypeModel;
-	private static final String PERSISTENCE_UNIT_NAME = "myapp";
-	private static EntityManagerFactory factory;
 	private List<TEventType> eventTypes;
 
+	
 	public EditEventTypeBean() {
 		eventTypeModel = new EventTypeDataModel(listEventTypes());
 	}
@@ -46,10 +43,11 @@ public class EditEventTypeBean {
 	}
 
 	public List<TEventType> listEventTypes() {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();
+
 		//ако се нуждаем от нещо специфично за сесията
-		Session session = em.unwrap(Session.class);
+		//Session session = em.unwrap(Session.class);
+		
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TEventType u");
 		List<TEventType> eventTypeLists = q.getResultList();
@@ -57,21 +55,16 @@ public class EditEventTypeBean {
 			System.out.println(eventType);
 		}
 		System.out.println("Size: " + eventTypeLists.size());
-		em.close();
-
 		eventTypes = eventTypeLists;
 		return eventTypeLists;
 	}
 
 	public void saveChanges() throws IOException {
-
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();
+		
 		em.getTransaction().begin();
-
 		em.merge(selectedEventType);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void onRowSelect(SelectEvent event) {
@@ -90,9 +83,10 @@ public class EditEventTypeBean {
 	
 	
 	public void deleteEventType() {
-	    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-	    EntityManager em = factory.createEntityManager();
-	    em.getTransaction().begin();
+		EntityManager em = HibernateUtil.getEntityManager();
+
+		em.getTransaction().begin();
+
 	     System.out.println("EventType for deleting: " + selectedEventType);
 	     
 	    //You need to check if the entity is managed by EntityManager#contains()
@@ -105,14 +99,9 @@ public class EditEventTypeBean {
 			System.out.println(eventType);
 		}
 		System.out.println("Size: " + newEventTypeLists.size());
-
-		//listEventTypes();
 		
 		eventTypeModel.removeEventType(eventTypes, selectedEventType);
 	    em.getTransaction().commit();
-	    em.close();
-	    
-	  
 	  }
 
 }
