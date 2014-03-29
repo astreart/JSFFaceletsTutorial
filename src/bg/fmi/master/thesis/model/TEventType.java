@@ -63,10 +63,8 @@ public class TEventType implements java.io.Serializable {
 	}
 
 	@Id
-	/*@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_EVENT_TYPE", allocationSize = 1)
-	@GeneratedValue(strategy = SEQUENCE, generator = "generator")*/
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false, unique = true)
+	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_EVENT_TYPE", allocationSize = 1)
+	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
 	public Long getId() {
 		return id;
 	}
