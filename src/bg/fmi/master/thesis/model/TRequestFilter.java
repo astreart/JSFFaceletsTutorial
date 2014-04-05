@@ -83,7 +83,7 @@ public class TRequestFilter implements java.io.Serializable {
 		this.tFilterType = tFilterType;
 	}
 
-	@Column(name = "FILTER_VALUE", length = 4000, nullable = false)
+	@Column(name = "FILTER_VALUE", length = 4000)
 	public String getFilterValue() {
 		return this.filterValue;
 	}

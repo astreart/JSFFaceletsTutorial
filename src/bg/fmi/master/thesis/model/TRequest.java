@@ -36,7 +36,12 @@ public class TRequest implements java.io.Serializable {
 	 * Автор на запитването
 	 */
 	private TUser author;
-
+	
+    /**
+     * Заглавие на запитването
+     */
+	private String title;
+	
 	/**
 	 * Описание
 	 */
@@ -86,12 +91,13 @@ public class TRequest implements java.io.Serializable {
 		this.requestDate = requestDate;
 	}	
 
-	public TRequest(TUser author, String description, Date requestDate,
+	public TRequest(TUser author, String title, String description, Date requestDate,
 			TUser hiredAgency, int assessment, Boolean isActive,
 			Boolean isCancelled, Set<TRequestFilter> tRequestFilters,
 			Set<TAgencyRequest> tAgencyRequests) {
 		super();
 		this.author = author;
+		this.title = title;
 		this.description = description;
 		this.requestDate = requestDate;
 		this.hiredAgency = hiredAgency;
@@ -123,6 +129,15 @@ public class TRequest implements java.io.Serializable {
 	public void setAuthor(TUser author) {
 		this.author = author;
 	}
+	
+	@Column(name = "TITLE", nullable = false, length = 128)
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}	
 
 	@Column(name = "DESCRIPTION", nullable = false, length = 4000)
 	public String getDescription() {
@@ -223,5 +238,5 @@ public class TRequest implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
 }

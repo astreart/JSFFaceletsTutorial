@@ -6,6 +6,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import java.util.HashSet;
 import java.util.Set;
 import bg.fmi.master.thesis.model.TRole;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -42,14 +45,9 @@ public class TUser implements java.io.Serializable {
 	private String password;
 
 	/*
-	 * Собствено име
+	 * Име
 	 */
-	private String firstName;
-
-	/*
-	 * Фамилно име
-	 */
-	private String lastName;
+	private String name;
 
 	/*
 	 * Телефон
@@ -100,33 +98,31 @@ public class TUser implements java.io.Serializable {
 	/*
 	 * Агенции за организиране на събития
 	 */
-	private TAgency tAgency;
+	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
 
 	public TUser() {
 	}
 
-	public TUser(String username, String password, String firstName,
-			String lastName, String phone, String email, TRole userRole) {
+	public TUser(String username, String password, String name, String phone,
+			String email, TRole userRole) {
 		this.username = username;
 		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.phone = phone;
 		this.email = email;
 		this.userRole = userRole;
 	}
 
-	public TUser(String username, String password, String firstName,
-			String lastName, String phone, String email, TRole userRole,
-			Set<TRequest> userRequests, Set<TRequest> executedRequests,
+	public TUser(String username, String password, String name, String phone,
+			String email, TRole userRole, Set<TRequest> userRequests,
+			Set<TRequest> executedRequests,
 			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
-			Set<TMessageUser> receivedMessages, TAgency tAgency) {
+			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.phone = phone;
 		this.email = email;
 		this.userRole = userRole;
@@ -136,7 +132,7 @@ public class TUser implements java.io.Serializable {
 		this.tAgencyRequests = tAgencyRequests;
 		this.sentMessages = sentMessages;
 		this.receivedMessages = receivedMessages;
-		this.tAgency = tAgency;
+		this.tAgencies = tAgencies;
 	}
 
 	public TUser(TUser tUser) {
@@ -185,25 +181,16 @@ public class TUser implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "FIRSTNAME", nullable = false, length = 15)
-	public String getFirstName() {
-		return firstName;
+	@Column(name = "NAME", nullable = false, length = 60)
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	@Column(name = "LASTNAME", nullable = false, length = 15)
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	@Column(name = "phone", nullable = false, length = 15)
+	@Column(name = "PHONE", nullable = false, length = 15)
 	public String getPhone() {
 		return phone;
 	}
@@ -285,20 +272,19 @@ public class TUser implements java.io.Serializable {
 		this.tAgencyRequests = tAgencyRequests;
 	}
 
-	
-	public TAgency gettAgency() {
-		return tAgency;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
+	public Set<TAgency> gettAgency() {
+		return tAgencies;
 	}
 
-	public void settAgency(TAgency tAgency) {
-		this.tAgency = tAgency;
+	public void settAgency(Set<TAgency> tAgencies) {
+		this.tAgencies = tAgencies;
 	}
 
 	@Override
 	public String toString() {
-		return "TUser [id=" + id + ", username=" + username + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phone=" + phone
-				+ ", email=" + email;
+		return "TUser [id=" + id + ", username=" + username + ", name=" + name
+				+ ", phone=" + phone + ", email=" + email;
 	}
 
 	@Override
@@ -322,4 +308,16 @@ public class TUser implements java.io.Serializable {
 			return false;
 		return true;
 	}
+	/*
+	 * @OneToOne(fetch = FetchType.LAZY, mappedBy = "test", cascade =
+	 * CascadeType.ALL)
+	 * 
+	 * @Column(name = "TEST") public TAgency getTestAgency() { return
+	 * testAgency; }
+	 * 
+	 * public void setTestAgency(TAgency testAgency) { this.testAgency =
+	 * testAgency; }
+	 * 
+	 * private TAgency testAgency;
+	 */
 }

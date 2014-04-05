@@ -52,7 +52,7 @@ public class CopyOfTUser implements java.io.Serializable {
 	private Boolean isAgency;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "agency_event_type", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
+	@JoinTable(name = "T_AGENCY_EVENT_TYPE", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "event_type_id", nullable = false, updatable = false) })
 	private Set<TEventType> tEventTypes; // = new HashSet<TEventType>(0);
 
 	public CopyOfTUser() {

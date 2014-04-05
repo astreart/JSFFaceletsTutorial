@@ -63,6 +63,7 @@ public class TEventType implements java.io.Serializable {
 	}
 
 	@Id
+	@Column(name = "ID", unique = true, nullable = false)
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_EVENT_TYPE", allocationSize = 1)
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
 	public Long getId() {
@@ -73,7 +74,7 @@ public class TEventType implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "EVENT_TYPE_NAME", nullable = false, unique=true, length = 50)
+	@Column(name = "EVENT_TYPE_NAME", nullable = false, unique=true, length = 64)
 	public String getEventTypeName() {
 		return eventTypeName;
 	}
@@ -82,7 +83,7 @@ public class TEventType implements java.io.Serializable {
 		this.eventTypeName = eventTypeName;
 	}
 
-	@Column(name = "EVENT_TYPE_DESCRIPTION", length = 500)
+	@Column(name = "EVENT_TYPE_DESC", length = 512)
 	public String getEventTypeDesc() {
 		return eventTypeDesc;
 	}

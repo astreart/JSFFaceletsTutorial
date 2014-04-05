@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
@@ -83,9 +85,8 @@ public class TAgency implements java.io.Serializable {
 		TUserId = tUserId;
 	}
 
-	/*@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "T_USER_ID", unique = true, nullable = false, insertable = false, updatable = false)
-	*/
 	public TUser gettUser() {
 		return tUser;
 	}
@@ -114,7 +115,7 @@ public class TAgency implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "ADDRESS", length = 150, nullable = false)
+	@Column(name = "ADDRESS", length = 150)
 	public String getAddress() {
 		return address;
 	}

@@ -74,7 +74,7 @@ public class TFilterType implements java.io.Serializable {
 		this.filterTypeName = filterTypeName;
 	}
 
-	@Column(name = "FILTER_TYPE_DESC", nullable = false, length = 200)
+	@Column(name = "FILTER_TYPE_DESC", length = 200)
 	public String getFilterTypeDesc() {
 		return this.filterTypeDesc;
 	}
