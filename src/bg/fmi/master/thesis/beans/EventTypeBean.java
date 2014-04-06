@@ -19,8 +19,6 @@ import bg.fmi.master.thesis.util.HibernateUtil;
 @SessionScoped
 public class EventTypeBean {
 
-	private static final String PERSISTENCE_UNIT_NAME = "myapp";
-	private static EntityManagerFactory factory;
 	private TEventType tEventType = new TEventType();
 
 	public void addEventType() {
