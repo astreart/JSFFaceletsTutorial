@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -59,6 +60,7 @@ public class TImage implements java.io.Serializable {
 		this.imageName = imageName;
 	}
 
+	@Lob
 	@Column(name = "DATA", unique = false, nullable = false, length = 100000)
 	public byte[] getData() {
 		return data;
