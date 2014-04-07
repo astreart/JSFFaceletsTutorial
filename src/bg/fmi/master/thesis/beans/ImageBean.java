@@ -1,16 +1,21 @@
 package bg.fmi.master.thesis.beans;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import bg.fmi.master.thesis.model.TEventType;
@@ -65,12 +70,24 @@ public class ImageBean {
 		HibernateUtil.shutdown();
 	}
 
-	public void showImage() {
-		EntityManager em = HibernateUtil.getEntityManager();
-		// read the existing entries and write to console
-		Query q = em.createQuery("select u from TImage u where u.id=5");
-		TImage image = (TImage) q.getSingleResult();
-		System.out.println(image);
-		tImage = image;
+	public StreamedContent getStreamedImageById() {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+			return new DefaultStreamedContent();
+			// So, we're rendering the view. Return a stub StreamedContent so
+			// that it will generate rig
+		} else {
+			EntityManager em = HibernateUtil.getEntityManager();
+			// read the existing entries and write to console
+			Query q = em.createQuery("select u from TImage u where u.id=5");
+			TImage image = (TImage) q.getSingleResult();
+			if (image.getData() == null) {
+				return new DefaultStreamedContent();
+			} else {
+				return new DefaultStreamedContent(new ByteArrayInputStream(
+						image.getData()));
+			}
+		}
 	}
 }
