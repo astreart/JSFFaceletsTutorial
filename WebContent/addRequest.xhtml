@@ -11,14 +11,12 @@
 </h:head>
 <h:form>
 
-<style type="text/css">
-                .ui-accordion-content.ui-helper-reset.ui-widget-content{
-                    border:1px solid !important;
-                }
-            </style>
+
+
+	<h:outputStylesheet library="css" name="accordion.css" />
 
 	<h:panelGrid id="panel" columns="2" cellpadding="5" border="1"
-		cellspacing="1" bgcolor="#3bbab5" width="100%">
+		cellspacing="1" bgcolor="#3bbab5" >
 		<f:facet name="header">
 			<h:outputText value="Запитване за организиране на събитие" />
 		</f:facet>
@@ -29,25 +27,28 @@
 
 		<h:outputLabel for="description" value="Описание"
 			style="font-weight:bold" />
-		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000"
+		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000" style="width: 97%"
 			autoResize="false" />
 
 		<b>Тип на събитието</b>
 		<h:selectOneMenu value="#{editEventTypeBean.selectedEventType}"
 			required="true" panelStyle="width:150px" effect="fade" var="t"
-			style="width:160px" filter="true" filterMatchMode="startsWith">
+			style="width:97%" filter="true" filterMatchMode="startsWith">
 			<f:selectItem itemLabel="Избери тип" itemValue="" />
 			<f:selectItems value="#{editEventTypeBean.eventTypeModel}"
 				var="eventType" itemLabel="#{eventType.eventTypeName}"
-				itemValue="#{eventType}" />
+				itemValue="#{eventType}"/>
 		</h:selectOneMenu>
 
-		<p:accordionPanel style="border:1px solid; width:100%">
+		<b>Филтри</b>
+		<p:accordionPanel style="border:1px solid; width:300px">
 			<p:tab title="Допълнителна информация">
 				<h:outputText
 					value="Тук ще се въвежда допълнителна информация, относно организирането на събитието!" />
+
+
 			</p:tab>
-			
+
 		</p:accordionPanel>
 
 
@@ -59,7 +60,7 @@
 
 	</h:panelGrid>
 
-	
+
 </h:form>
 
 </html>
