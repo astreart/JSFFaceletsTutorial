@@ -6,11 +6,19 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
 <h:form>
 
+<style type="text/css">
+                .ui-accordion-content.ui-helper-reset.ui-widget-content{
+                    border:1px solid !important;
+                }
+            </style>
+
 	<h:panelGrid id="panel" columns="2" cellpadding="5" border="1"
-		cellspacing="1" bgcolor="#3bbab5">
+		cellspacing="1" bgcolor="#3bbab5" width="100%">
 		<f:facet name="header">
 			<h:outputText value="Запитване за организиране на събитие" />
 		</f:facet>
@@ -34,6 +42,13 @@
 				itemValue="#{eventType}" />
 		</h:selectOneMenu>
 
+		<p:accordionPanel style="border:1px solid; width:100%">
+			<p:tab title="Допълнителна информация">
+				<h:outputText
+					value="Тук ще се въвежда допълнителна информация, относно организирането на събитието!" />
+			</p:tab>
+			
+		</p:accordionPanel>
 
 
 		<f:facet name="footer">
@@ -44,7 +59,7 @@
 
 	</h:panelGrid>
 
-
+	
 </h:form>
 
 </html>
