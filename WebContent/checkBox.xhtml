@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
+<f:view>
+	<h:form>
+		<div>
+			Using value="#\{var\}"
+			<ui:repeat var="checkbox" value="#{checkboxTestBean.list}"
+				varStatus="status">
+				<h:selectBooleanCheckbox value="#{checkbox}" />
+			</ui:repeat>
+		</div>
+
+		<div>
+			Using value="#\{varStatus.index\}"
+			<ui:repeat var="checkbox" value="#{checkboxTestBean.list}"
+				varStatus="status">
+				<h:selectBooleanCheckbox
+					value="#{checkboxTestBean.list[status.index]}" />
+			</ui:repeat>
+		</div>
+		<h:commandLink actionListener="#{checkboxTestBean.actionListener}">
+		PROCESS FORM
+    <f:ajax execute="@form" render="@form" />
+		</h:commandLink>
+	</h:form>
+</f:view>
+</html>

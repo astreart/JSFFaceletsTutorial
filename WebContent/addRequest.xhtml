@@ -7,7 +7,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<script name="jquery/jquery.js" library="primefaces"></script>
+	<script name="jquery/jquery.js" library="primefaces">
+		
+	</script>
 </h:head>
 <h:form>
 
@@ -16,7 +18,7 @@
 	<h:outputStylesheet library="css" name="accordion.css" />
 
 	<h:panelGrid id="panel" columns="2" cellpadding="5" border="1"
-		cellspacing="1" bgcolor="#3bbab5" >
+		cellspacing="1" bgcolor="#3bbab5">
 		<f:facet name="header">
 			<h:outputText value="Запитване за организиране на събитие" />
 		</f:facet>
@@ -27,8 +29,8 @@
 
 		<h:outputLabel for="description" value="Описание"
 			style="font-weight:bold" />
-		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000" style="width: 97%"
-			autoResize="false" />
+		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000"
+			style="width: 97%" autoResize="false" />
 
 		<b>Тип на събитието</b>
 		<h:selectOneMenu value="#{editEventTypeBean.selectedEventType}"
@@ -37,7 +39,7 @@
 			<f:selectItem itemLabel="Избери тип" itemValue="" />
 			<f:selectItems value="#{editEventTypeBean.eventTypeModel}"
 				var="eventType" itemLabel="#{eventType.eventTypeName}"
-				itemValue="#{eventType}"/>
+				itemValue="#{eventType}" />
 		</h:selectOneMenu>
 
 		<b>Филтри</b>
@@ -48,8 +50,14 @@
 
 
 			</p:tab>
-
 		</p:accordionPanel>
+
+		<!-- <h:outputLabel name="#{filterTypeBean.listFilterTypes()}" /> -->
+		<!-- <ui:repeat var="checkbox" value="#{filterTypeBean.listFilterTypes()}"
+			varStatus="status">
+			<h:selectCheckbox value="#{checkbox}" />
+		</ui:repeat>
+ -->
 
 
 		<f:facet name="footer">
@@ -58,9 +66,25 @@
 			</h:panelGroup>
 		</f:facet>
 
+
+
 	</h:panelGrid>
 
+</h:form>
+
+<h:form>
+	<h:outputText value="Изберете " />
+	<p:selectManyCheckbox value="#{filterTypeBean.selectedFilterTypes}">
+		<ui:repeat var="checkbox" value="#{filterTypeBean.listFilterTypes()}"
+			varStatus="status">
+			<!-- <h:outputText value="#{checkbox.filterTypeName}" /> -->
+			<f:selectItem itemLabel="#{checkbox.filterTypeName}"
+				itemValue="#{checkbox}" />
+		</ui:repeat>
+	</p:selectManyCheckbox>
 
 </h:form>
+
+
 
 </html>

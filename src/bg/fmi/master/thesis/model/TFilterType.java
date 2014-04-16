@@ -52,6 +52,11 @@ public class TFilterType implements java.io.Serializable {
 		this.filterTypeDesc = filterTypeDesc;
 		this.tRequestFilters = tRequestFilters;
 	}
+	
+	public TFilterType(TFilterType filterType) {
+		this.filterTypeName = filterType.filterTypeName;
+		this.filterTypeDesc = filterType.filterTypeDesc;
+	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_FILTER_TYPE", allocationSize = 1)
 	@Id

@@ -27,5 +27,7 @@ public class RequestBean implements Serializable {
 	public void settRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
 	}
+	
+	
 
 }
