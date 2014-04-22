@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 /**
  * Тип филтър (възможни стойности: цена, брой гости и други)
  */
@@ -36,23 +38,31 @@ public class TFilterType implements java.io.Serializable {
 	 */
 	private String filterTypeDesc;
 
+	/**
+	 * Показва дали филтърът е Boolean
+	 */
+	private Boolean isBooleanType;
+
 	private Set<TRequestFilter> tRequestFilters = new HashSet<TRequestFilter>(0);
 
 	public TFilterType() {
 	}
 
-	public TFilterType(String filterTypeName, String filterTypeDesc) {
+	public TFilterType(String filterTypeName, String filterTypeDesc,
+			Boolean isBooleanType) {
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
+		this.isBooleanType = isBooleanType;
 	}
 
 	public TFilterType(String filterTypeName, String filterTypeDesc,
-			Set<TRequestFilter> tRequestFilters) {
+			Set<TRequestFilter> tRequestFilters, Boolean isBooleanType) {
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
 		this.tRequestFilters = tRequestFilters;
+		this.isBooleanType = isBooleanType;
 	}
-	
+
 	public TFilterType(TFilterType filterType) {
 		this.filterTypeName = filterType.filterTypeName;
 		this.filterTypeDesc = filterType.filterTypeDesc;
@@ -120,5 +130,15 @@ public class TFilterType implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Column(name = "IS_BOOLEAN_TYPE", length = 1)
+	@Type(type = "yes_no")
+	public Boolean getIsBooleanType() {
+		return isBooleanType;
+	}
+
+	public void setIsBooleanType(Boolean isBooleanType) {
+		this.isBooleanType = isBooleanType;
 	}
 }

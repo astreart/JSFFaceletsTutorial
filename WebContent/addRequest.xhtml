@@ -76,15 +76,23 @@
 	<p:selectManyCheckbox id="chkbox1"
 		value="#{filterTypeBean.selectedFilterTypes}" layout="pageDirection">
 		<f:selectItems var="checkbox"
-			value="#{filterTypeBean.listFilterTypes()}"
-			itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
-			required="true" requiredMessage="check at least one checkbox" />
+			value="#{filterTypeBean.listBooleanFilterTypes()}"
+			itemLabel="#{checkbox.filterTypeName}"
+			itemValue="#{checkbox.filterTypeName}" required="true"
+			requiredMessage="check at least one checkbox" />
 	</p:selectManyCheckbox>
 	<h:message for="chkbox1" style="color:red" />
 
 	<p:commandButton value="Submit" update="display" />
-	<h:outputText id="display"
-		value="Избрани филтри (ид-та): #{filterTypeBean.selectedFilterTypes}" />
+
+	<ui:repeat id="display" var="inputBoxes"
+		value="#{filterTypeBean.selectedFilterTypes}">
+		<h:outputText value="&lt;br/&gt;" escape="false" />
+		<div style="width: 100px; white-space: normal">
+		<h:outputText value="#{inputBoxes}" /> 
+			<h:inputText />
+		</div>
+	</ui:repeat>
 
 </h:form>
 
