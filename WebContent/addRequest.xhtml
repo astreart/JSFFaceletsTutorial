@@ -42,22 +42,23 @@
 				itemValue="#{eventType}" />
 		</h:selectOneMenu>
 
-		<b>Филтри</b>
+		<b>Детайли</b>
 		<p:accordionPanel style="border:1px solid; width:300px">
-			<p:tab title="Допълнителна информация">
-				<h:outputText
-					value="Тук ще се въвежда допълнителна информация, относно организирането на събитието!" />
+			<p:tab title="Добави филтри">
 
+				<p:selectManyCheckbox value="#{filterTypeBean.selectedFilterTypes}"
+					layout="pageDirection">
+					<f:selectItems var="checkbox"
+						value="#{filterTypeBean.listFilterTypes()}"
+						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
+				</p:selectManyCheckbox>
 
 			</p:tab>
+
+			<h:outputText value="TEST"></h:outputText>
+
 		</p:accordionPanel>
 
-		<!-- <h:outputLabel name="#{filterTypeBean.listFilterTypes()}" /> -->
-		<!-- <ui:repeat var="checkbox" value="#{filterTypeBean.listFilterTypes()}"
-			varStatus="status">
-			<h:selectCheckbox value="#{checkbox}" />
-		</ui:repeat>
- -->
 
 
 		<f:facet name="footer">
@@ -69,19 +70,6 @@
 
 
 	</h:panelGrid>
-
-</h:form>
-
-<h:form>
-	<h:outputText value="Изберете " />
-	<p:selectManyCheckbox value="#{filterTypeBean.selectedFilterTypes}">
-		<ui:repeat var="checkbox" value="#{filterTypeBean.listFilterTypes()}"
-			varStatus="status">
-			<!-- <h:outputText value="#{checkbox.filterTypeName}" /> -->
-			<f:selectItem itemLabel="#{checkbox.filterTypeName}"
-				itemValue="#{checkbox}" />
-		</ui:repeat>
-	</p:selectManyCheckbox>
 
 </h:form>
 
