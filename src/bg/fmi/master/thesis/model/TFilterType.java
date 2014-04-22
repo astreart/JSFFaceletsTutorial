@@ -106,6 +106,15 @@ public class TFilterType implements java.io.Serializable {
 	public void settRequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "TFilterType [filterTypeName=" + filterTypeName
+				+ ", filterTypeDesc=" + filterTypeDesc + ", isBooleanType="
+				+ isBooleanType + ", tRequestFilters=" + tRequestFilters + "]";
+	}
 
 	@Override
 	public int hashCode() {

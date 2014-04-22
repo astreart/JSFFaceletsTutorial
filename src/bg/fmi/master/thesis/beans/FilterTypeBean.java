@@ -55,10 +55,31 @@ public class FilterTypeBean implements Serializable{
 
 	public List<TFilterType> listBooleanFilterTypes() {
 		EntityManager em = HibernateUtil.getEntityManager();
-		Query q = em.createQuery("select u from TFilterType u where u.id between 3 and 6");
+		Query q = em.createQuery("select u from TFilterType u where u.isBooleanType ='Y'");
 		List<TFilterType> resultList = q.getResultList();
 		return resultList;
 	}
+	
+	public List<TFilterType> listTextFilterTypes() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query q = em.createQuery("select u from TFilterType u where u.isBooleanType ='N'");
+		List<TFilterType> resultList = q.getResultList();
+		return resultList;
+	}
+	
+	public TFilterType listDateFilterType() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query q = em.createQuery("select u from TFilterType u where u.isBooleanType is null");
+		TFilterType resultList = (TFilterType) q.getSingleResult();
+		return resultList;
+	}
+	
+	/*public List<TFilterType> listBooleanFilterTypes() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query q = em.createQuery("select u from TFilterType u where u.id between 3 and 6");
+		List<TFilterType> resultList = q.getResultList();
+		return resultList;
+	}*/
 
 	public TFilterType gettFilterType() {
 		return tFilterType;

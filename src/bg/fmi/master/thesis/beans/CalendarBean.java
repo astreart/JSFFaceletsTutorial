@@ -9,13 +9,13 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class CalendarBean {  
   
-    private Date date1=null;  
+    private Date date=null;  
       
-    public Date getDate1() {  
-        return date1;  
+    public Date getDate() {  
+        return date;  
     }  
   
-    public void setDate1(Date date1) {  
-        this.date1 = date1;  
+    public void setDate(Date date) {  
+        this.date = date;  
     }  
 }  

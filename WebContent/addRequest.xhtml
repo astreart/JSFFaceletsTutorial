@@ -1,19 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
 <h:head>
 	<script name="jquery/jquery.js" library="primefaces">
-		
-	</script>
+	 PrimeFaces.locales['bg'] = {
+		    closeText: '-',
+		    prevText: 'Предишен',
+		    nextText: 'Следващ',
+		    monthNames: ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'],
+		    monthNamesShort: ['Яну', 'Фев', 'Мар', 'Апр', 'Май', 'Юни', 'Юли', 'Явг', 'Сеп', 'Окт', 'Ное', 'Дек'],
+		    dayNames: ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'],
+		    dayNamesShort: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+		    dayNamesMin: ['Н', 'П', 'В', 'С ', 'Ч', 'П ', 'С'],
+		    weekHeader: 'Седмица',
+		    firstDay: 1,
+		    isRTL: false,
+		    showMonthAfterYear: false,
+		    yearSuffix: '',
+		    timeOnlyTitle: 'Само време',
+		    timeText: 'Време',
+		    hourText: 'Час',
+		    minuteText: 'Минути',
+		    secondText: 'Секунди',
+		    currentText: 'Текуща дата',
+		    ampm: false,
+		    month: 'Месец',
+		    week: 'Седмица',
+		    day: 'Ден',
+		    allDayText: 'Всеки ден'
+		};  
+	</script> 
 </h:head>
 <h:form>
 
-
+<!-- <h:outputScript library="js" name="calendar.js" /> -->
 
 	<h:outputStylesheet library="css" name="accordion.css" />
 
@@ -42,16 +68,36 @@
 				itemValue="#{eventType}" />
 		</h:selectOneMenu>
 
-		<b>Детайли</b>
-		<p:accordionPanel style="border:1px solid; width:300px">
+		<h:outputText style="vertical-align: top; font-weight:bold;"
+			value="Детайли" />
+		<p:accordionPanel style="border:1px solid; width:500px">
 			<p:tab title="Добави филтри">
 
-				<p:selectManyCheckbox value="#{filterTypeBean.selectedFilterTypes}"
+				<p:selectManyCheckbox id="chkbox1"
+					value="#{filterTypeBean.selectedFilterTypes}"
 					layout="pageDirection">
 					<f:selectItems var="checkbox"
-						value="#{filterTypeBean.listFilterTypes()}"
-						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
+						value="#{filterTypeBean.listBooleanFilterTypes()}"
+						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
+						required="true" requiredMessage="check at least one checkbox" />
 				</p:selectManyCheckbox>
+				<h:message for="chkbox1" style="color:red" />
+
+
+				<h:panelGrid id="panel2" columns="2" cellpadding="5">
+					<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
+						var="inputBoxes">
+						<h:outputText value="${inputBoxes.filterTypeName}"
+							style="width: 100px; white-space: normal; border: 3px" />
+						<h:inputText />
+					</c:forEach>
+
+					<h:outputText
+						value="${filterTypeBean.listDateFilterType().getFilterTypeName()}"
+						style="width: 100px; white-space: normal; border: 3px" />
+					<p:calendar id="cal" value="#{calendarBean.date}" mode="popup"
+						showOn="button" locale="bg" />
+				</h:panelGrid>
 
 			</p:tab>
 
@@ -73,26 +119,34 @@
 </h:form>
 <h:form>
 
-	<p:selectManyCheckbox id="chkbox1"
+	<!-- <p:selectManyCheckbox id="chkbox1"
 		value="#{filterTypeBean.selectedFilterTypes}" layout="pageDirection">
 		<f:selectItems var="checkbox"
 			value="#{filterTypeBean.listBooleanFilterTypes()}"
-			itemLabel="#{checkbox.filterTypeName}"
-			itemValue="#{checkbox.filterTypeName}" required="true"
-			requiredMessage="check at least one checkbox" />
+			itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
+			required="true" requiredMessage="check at least one checkbox" />
 	</p:selectManyCheckbox>
 	<h:message for="chkbox1" style="color:red" />
 
 	<p:commandButton value="Submit" update="display" />
 
-	<ui:repeat id="display" var="inputBoxes"
-		value="#{filterTypeBean.selectedFilterTypes}">
+		<ui:repeat var="inputBoxes"
+		value="#{filterTypeBean.listFilterTypes()}">
 		<h:outputText value="&lt;br/&gt;" escape="false" />
-		<div style="width: 100px; white-space: normal">
-		<h:outputText value="#{inputBoxes}" /> 
+		<div style="width: 100px; white-space: normal; border: 3px">
+		<h:outputText value="#{inputBoxes.filterTypeName}" /> 
 			<h:inputText />
 		</div>
 	</ui:repeat>
+
+	<h:panelGrid id="panel2" columns="2" cellpadding="5">
+		<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
+			var="inputBoxes">
+			<h:outputText value="${inputBoxes.filterTypeName}"
+				style="width: 100px; white-space: normal; border: 3px" />
+			<h:inputText />
+		</c:forEach>
+	</h:panelGrid> -->
 
 </h:form>
 
