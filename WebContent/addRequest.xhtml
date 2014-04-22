@@ -68,11 +68,25 @@
 		</f:facet>
 
 
-
 	</h:panelGrid>
 
 </h:form>
+<h:form>
 
+	<p:selectManyCheckbox id="chkbox1"
+		value="#{filterTypeBean.selectedFilterTypes}" layout="pageDirection">
+		<f:selectItems var="checkbox"
+			value="#{filterTypeBean.listFilterTypes()}"
+			itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
+			required="true" requiredMessage="check at least one checkbox" />
+	</p:selectManyCheckbox>
+	<h:message for="chkbox1" style="color:red" />
+
+	<p:commandButton value="Submit" update="display" />
+	<h:outputText id="display"
+		value="Избрани филтри (ид-та): #{filterTypeBean.selectedFilterTypes}" />
+
+</h:form>
 
 
 </html>
