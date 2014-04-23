@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /*
- * Таблица с видовете роли, които 1 потребител може да има в системата
+ * РўР°Р±Р»РёС†Р° СЃ РІРёРґРѕРІРµС‚Рµ СЂРѕР»Рё, РєРѕРёС‚Рѕ 1 РїРѕС‚СЂРµР±РёС‚РµР» РјРѕР¶Рµ РґР° РёРјР° РІ СЃРёСЃС‚РµРјР°С‚Р°
  */
 
 @Entity
@@ -23,17 +23,17 @@ import javax.persistence.Table;
 public class TRole implements java.io.Serializable{
 
 	/*
-	 * ИД на ролята
+	 * РР” РЅР° СЂРѕР»СЏС‚Р°
 	 */
 	private Long id;
 	
 	/*
-	 * Наименование на ролята
+	 * РќР°РёРјРµРЅРѕРІР°РЅРёРµ РЅР° СЂРѕР»СЏС‚Р°
 	 */
 	private String roleName;
 	
 	/*
-	 * Потребители, имащи определена роля в системата
+	 * РџРѕС‚СЂРµР±РёС‚РµР»Рё, РёРјР°С‰Рё РѕРїСЂРµРґРµР»РµРЅР° СЂРѕР»СЏ РІ СЃРёСЃС‚РµРјР°С‚Р°
 	 */
 	private Set<TUser> tUsersWithThisRole = new HashSet<TUser>(0);
 	

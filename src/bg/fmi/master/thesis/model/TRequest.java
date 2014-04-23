@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -22,63 +22,63 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 
 /**
- * Заявка за организиране на събитиe
+ * Р—Р°СЏРІРєР° Р·Р° РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚Рёe
  */
 @Entity
 @Table(name = "T_REQUEST")
 public class TRequest implements java.io.Serializable {
 	/**
-	 * Първичен ключ на таблицата
+	 * РџСЉСЂРІРёС‡РµРЅ РєР»СЋС‡ РЅР° С‚Р°Р±Р»РёС†Р°С‚Р°
 	 */
 	private Long id;
 
 	/**
-	 * Автор на запитването
+	 * РђРІС‚РѕСЂ РЅР° Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 	 */
 	private TUser author;
 	
     /**
-     * Заглавие на запитването
+     * Р—Р°РіР»Р°РІРёРµ РЅР° Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
      */
 	private String title;
 	
 	/**
-	 * Описание
+	 * РћРїРёСЃР°РЅРёРµ
 	 */
 	private String description;
 
 	/**
-	 * Дата на запитването
+	 * Р”Р°С‚Р° РЅР° Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 	 */
 	private Date requestDate;
 
 	/**
-	 * Наета агенция
+	 * РќР°РµС‚Р° Р°РіРµРЅС†РёСЏ
 	 */
 	private TUser hiredAgency;
 
 	/**
-	 * Оценка за това как е било организирано събитието от наетата агенция
+	 * РћС†РµРЅРєР° Р·Р° С‚РѕРІР° РєР°Рє Рµ Р±РёР»Рѕ РѕСЂРіР°РЅРёР·РёСЂР°РЅРѕ СЃСЉР±РёС‚РёРµС‚Рѕ РѕС‚ РЅР°РµС‚Р°С‚Р° Р°РіРµРЅС†РёСЏ
 	 */
 	private int assessment;
 
 	/**
-	 * Флаг, показващ дали запитването е активно
+	 * Р¤Р»Р°Рі, РїРѕРєР°Р·РІР°С‰ РґР°Р»Рё Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ Рµ Р°РєС‚РёРІРЅРѕ
 	 */
 	private Boolean isActive;
 
 	/**
-	 * Флаг, показващ дали запитването е отменено
+	 * Р¤Р»Р°Рі, РїРѕРєР°Р·РІР°С‰ РґР°Р»Рё Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ Рµ РѕС‚РјРµРЅРµРЅРѕ
 	 */
 	private Boolean isCancelled;
 
 	/**
-	 * Избрани филтри
+	 * РР·Р±СЂР°РЅРё С„РёР»С‚СЂРё
 	 */
 	private Set<TRequestFilter> tRequestFilters = new HashSet<TRequestFilter>(0);
 
 	/**
-	 * Агенции, до които е направено запитването
+	 * РђРіРµРЅС†РёРё, РґРѕ РєРѕРёС‚Рѕ Рµ РЅР°РїСЂР°РІРµРЅРѕ Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
 

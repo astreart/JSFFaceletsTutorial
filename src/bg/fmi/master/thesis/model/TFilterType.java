@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -17,31 +17,31 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 /**
- * Тип филтър (възможни стойности: цена, брой гости и други)
+ * РўРёРї С„РёР»С‚СЉСЂ (РІСЉР·РјРѕР¶РЅРё СЃС‚РѕР№РЅРѕСЃС‚Рё: С†РµРЅР°, Р±СЂРѕР№ РіРѕСЃС‚Рё Рё РґСЂСѓРіРё)
  */
 @Entity
 @Table(name = "T_FILTER_TYPE")
 public class TFilterType implements java.io.Serializable {
 
 	/**
-	 * ИД на филтър
+	 * РР” РЅР° С„РёР»С‚СЉСЂ
 	 */
 	private Long id;
 
 	/**
-	 * Наименование на вида филтър
+	 * РќР°РёРјРµРЅРѕРІР°РЅРёРµ РЅР° РІРёРґР° С„РёР»С‚СЉСЂ
 	 */
 	private String filterTypeName;
 
 	/**
-	 * Описание на вида филтър
+	 * РћРїРёСЃР°РЅРёРµ РЅР° РІРёРґР° С„РёР»С‚СЉСЂ
 	 */
 	private String filterTypeDesc;
 
 	/**
-	 * Показва дали филтърът е Boolean
+	 * РџРѕРєР°Р·РІР° С‚РёРїР° РЅР° С„РёР»С‚СЉСЂР°
 	 */
-	private Boolean isBooleanType;
+	private String filterType;
 
 	private Set<TRequestFilter> tRequestFilters = new HashSet<TRequestFilter>(0);
 
@@ -49,18 +49,18 @@ public class TFilterType implements java.io.Serializable {
 	}
 
 	public TFilterType(String filterTypeName, String filterTypeDesc,
-			Boolean isBooleanType) {
+			String filterType) {
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
-		this.isBooleanType = isBooleanType;
+		this.filterType = filterType;
 	}
 
 	public TFilterType(String filterTypeName, String filterTypeDesc,
-			Set<TRequestFilter> tRequestFilters, Boolean isBooleanType) {
+			Set<TRequestFilter> tRequestFilters, String filterType) {
 		this.filterTypeName = filterTypeName;
 		this.filterTypeDesc = filterTypeDesc;
 		this.tRequestFilters = tRequestFilters;
-		this.isBooleanType = isBooleanType;
+		this.filterType = filterType;
 	}
 
 	public TFilterType(TFilterType filterType) {
@@ -113,7 +113,7 @@ public class TFilterType implements java.io.Serializable {
 	public String toString() {
 		return "TFilterType [filterTypeName=" + filterTypeName
 				+ ", filterTypeDesc=" + filterTypeDesc + ", isBooleanType="
-				+ isBooleanType + ", tRequestFilters=" + tRequestFilters + "]";
+				+ filterType + ", tRequestFilters=" + tRequestFilters + "]";
 	}
 
 	@Override
@@ -141,13 +141,12 @@ public class TFilterType implements java.io.Serializable {
 		return true;
 	}
 
-	@Column(name = "IS_BOOLEAN_TYPE", length = 1)
-	@Type(type = "yes_no")
-	public Boolean getIsBooleanType() {
-		return isBooleanType;
+	@Column(name = "FILTER_TYPE", length = 1)
+	public String getFilterType() {
+		return filterType;
 	}
 
-	public void setIsBooleanType(Boolean isBooleanType) {
-		this.isBooleanType = isBooleanType;
+	public void setFilterType(String filterType) {
+		this.filterType = filterType;
 	}
 }

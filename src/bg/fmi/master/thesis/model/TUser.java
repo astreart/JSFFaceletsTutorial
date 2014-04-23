@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import bg.fmi.master.thesis.model.TAgency;
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -30,73 +30,73 @@ import javax.persistence.JoinColumn;
 public class TUser implements java.io.Serializable {
 
 	/*
-	 * ИД на потребителя
+	 * РР” РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ
 	 */
 	private long id;
 
 	/*
-	 * Потребителско име
+	 * РџРѕС‚СЂРµР±РёС‚РµР»СЃРєРѕ РёРјРµ
 	 */
 	private String username;
 
 	/*
-	 * Парола
+	 * РџР°СЂРѕР»Р°
 	 */
 	private String password;
 
 	/*
-	 * Име
+	 * РРјРµ
 	 */
 	private String name;
 
 	/*
-	 * Телефон
+	 * РўРµР»РµС„РѕРЅ
 	 */
 	private String phone;
 
 	/*
-	 * Имейл
+	 * РРјРµР№Р»
 	 */
 	private String email;
 
 	/*
-	 * Роля на потребителя в системата
+	 * Р РѕР»СЏ РЅР° РїРѕС‚СЂРµР±РёС‚РµР»СЏ РІ СЃРёСЃС‚РµРјР°С‚Р°
 	 */
 	private TRole userRole;
 
 	/**
-	 * Заявки, направени от даден потребител
+	 * Р—Р°СЏРІРєРё, РЅР°РїСЂР°РІРµРЅРё РѕС‚ РґР°РґРµРЅ РїРѕС‚СЂРµР±РёС‚РµР»
 	 */
 	private Set<TRequest> userRequests = new HashSet<TRequest>(0);
 
 	/**
-	 * Заявки, взети от дадена агенция
+	 * Р—Р°СЏРІРєРё, РІР·РµС‚Рё РѕС‚ РґР°РґРµРЅР° Р°РіРµРЅС†РёСЏ
 	 */
 	private Set<TRequest> executedRequests = new HashSet<TRequest>(0);
 
 	/**
-	 * Типове събития, които огранизира дадена агенция
+	 * РўРёРїРѕРІРµ СЃСЉР±РёС‚РёСЏ, РєРѕРёС‚Рѕ РѕРіСЂР°РЅРёР·РёСЂР° РґР°РґРµРЅР° Р°РіРµРЅС†РёСЏ
 	 */
 	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
 			0);
 
 	/**
-	 * Агенции, до които е направено запитването
+	 * РђРіРµРЅС†РёРё, РґРѕ РєРѕРёС‚Рѕ Рµ РЅР°РїСЂР°РІРµРЅРѕ Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
 
 	/*
-	 * Изпратени съобщения
+	 * РР·РїСЂР°С‚РµРЅРё СЃСЉРѕР±С‰РµРЅРёСЏ
 	 */
 	private Set<TMessage> sentMessages = new HashSet<TMessage>(0);
 
 	/*
-	 * Получени съобщения
+	 * РџРѕР»СѓС‡РµРЅРё СЃСЉРѕР±С‰РµРЅРёСЏ
 	 */
 	private Set<TMessageUser> receivedMessages = new HashSet<TMessageUser>(0);
 
 	/*
-	 * Агенции за организиране на събития
+	 * РђРіРµРЅС†РёРё Р·Р° РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚РёСЏ
 	 */
 	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
 

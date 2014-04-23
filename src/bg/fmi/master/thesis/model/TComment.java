@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -19,34 +19,34 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 
 /**
- * Положителни и отрицателни коментари, свързани с изпълнението на дадена заявка
+ * РџРѕР»РѕР¶РёС‚РµР»РЅРё Рё РѕС‚СЂРёС†Р°С‚РµР»РЅРё РєРѕРјРµРЅС‚Р°СЂРё, СЃРІСЉСЂР·Р°РЅРё СЃ РёР·РїСЉР»РЅРµРЅРёРµС‚Рѕ РЅР° РґР°РґРµРЅР° Р·Р°СЏРІРєР°
  */
 @Entity
 @Table(name = "T_COMMENT")
 public class TComment implements java.io.Serializable{
 
 	/**
-	 * ИД на коментар
+	 * РР” РЅР° РєРѕРјРµРЅС‚Р°СЂ
 	 */
 	private Long id;
 
 	/**
-	 * Заявка за организиране на събитие
+	 * Р—Р°СЏРІРєР° Р·Р° РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚РёРµ
 	 */
 	private TRequest tRequest;
 
 	/*
-	 * Коментар
+	 * РљРѕРјРµРЅС‚Р°СЂ
 	 */
 	private String commentBody;
 
 	/*
-	 * Дата на коментара
+	 * Р”Р°С‚Р° РЅР° РєРѕРјРµРЅС‚Р°СЂР°
 	 */
 	private Date commentDate;
 
 	/*
-	 * Флаг, показващ дали коментара е положителен или отрицателен
+	 * Р¤Р»Р°Рі, РїРѕРєР°Р·РІР°С‰ РґР°Р»Рё РєРѕРјРµРЅС‚Р°СЂР° Рµ РїРѕР»РѕР¶РёС‚РµР»РµРЅ РёР»Рё РѕС‚СЂРёС†Р°С‚РµР»РµРЅ
 	 */
 	private Boolean isNegative;
 

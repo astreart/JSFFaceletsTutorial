@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -9,37 +9,11 @@
 
 <h:head>
 	<script name="jquery/jquery.js" library="primefaces">
-	 PrimeFaces.locales['bg'] = {
-		    closeText: '-',
-		    prevText: 'Предишен',
-		    nextText: 'Следващ',
-		    monthNames: ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'],
-		    monthNamesShort: ['Яну', 'Фев', 'Мар', 'Апр', 'Май', 'Юни', 'Юли', 'Явг', 'Сеп', 'Окт', 'Ное', 'Дек'],
-		    dayNames: ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'],
-		    dayNamesShort: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
-		    dayNamesMin: ['Н', 'П', 'В', 'С ', 'Ч', 'П ', 'С'],
-		    weekHeader: 'Седмица',
-		    firstDay: 1,
-		    isRTL: false,
-		    showMonthAfterYear: false,
-		    yearSuffix: '',
-		    timeOnlyTitle: 'Само време',
-		    timeText: 'Време',
-		    hourText: 'Час',
-		    minuteText: 'Минути',
-		    secondText: 'Секунди',
-		    currentText: 'Текуща дата',
-		    ampm: false,
-		    month: 'Месец',
-		    week: 'Седмица',
-		    day: 'Ден',
-		    allDayText: 'Всеки ден'
-		};  
-	</script> 
+	</script>
 </h:head>
 <h:form>
 
-<!-- <h:outputScript library="js" name="calendar.js" /> -->
+	<h:outputScript library="js" name="calendar.js" />
 
 	<h:outputStylesheet library="css" name="accordion.css" />
 
@@ -96,7 +70,8 @@
 						value="${filterTypeBean.listDateFilterType().getFilterTypeName()}"
 						style="width: 100px; white-space: normal; border: 3px" />
 					<p:calendar id="cal" value="#{calendarBean.date}" mode="popup"
-						showOn="button" locale="bg" />
+						showOn="button" locale="bg" navigator="true" pattern="dd.mm.yyyy"
+						style="width: 1px" />
 				</h:panelGrid>
 
 			</p:tab>

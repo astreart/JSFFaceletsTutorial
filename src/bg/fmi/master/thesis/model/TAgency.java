@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import bg.fmi.master.thesis.model.TUser;
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -17,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.UniqueConstraint;
 
 /*
- * Таблица, пазеща специфична информация за агенция за организиране на събития
+ * РўР°Р±Р»РёС†Р°, РїР°Р·РµС‰Р° СЃРїРµС†РёС„РёС‡РЅР° РёРЅС„РѕСЂРјР°С†РёСЏ Р·Р° Р°РіРµРЅС†РёСЏ Р·Р° РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚РёСЏ
  */
 @Entity
 @Table(name = "T_AGENCY", uniqueConstraints = {
@@ -25,32 +25,32 @@ import javax.persistence.UniqueConstraint;
 public class TAgency implements java.io.Serializable {
 
 	/**
-	 * Първичен ключ
+	 * РџСЉСЂРІРёС‡РµРЅ РєР»СЋС‡
 	 */
 	private Long TUserId;
 
 	/**
-	 * Първичен ключ (връзка с TUser)
+	 * РџСЉСЂРІРёС‡РµРЅ РєР»СЋС‡ (РІСЂСЉР·РєР° СЃ TUser)
 	 */
 	private TUser tUser;
 
 	/*
-	 * Уеб сайт на агенцията
+	 * РЈРµР± СЃР°Р№С‚ РЅР° Р°РіРµРЅС†РёСЏС‚Р°
 	 */
 	private String website;
 
 	/*
-	 * Град
+	 * Р“СЂР°Рґ
 	 */
 	private String city;
 
 	/*
-	 * Адрес
+	 * РђРґСЂРµСЃ
 	 */
 	private String address;
 
 	/*
-	 * Информация
+	 * РРЅС„РѕСЂРјР°С†РёСЏ
 	 */
 	private String information;
 

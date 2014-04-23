@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -13,24 +13,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Таблица за връзка много-много м/у T_REQUEST и T_USER
+ * РўР°Р±Р»РёС†Р° Р·Р° РІСЂСЉР·РєР° РјРЅРѕРіРѕ-РјРЅРѕРіРѕ Рј/Сѓ T_REQUEST Рё T_USER
  */
 @Entity
 @Table(name = "T_AGENCY_REQUEST")
 public class TAgencyRequest implements java.io.Serializable{
 
 	/**
-	 * ИД на филтър
+	 * РР” РЅР° С„РёР»С‚СЉСЂ
 	 */
 	private Long id;
 	
 	/**
-	 * Запитване, което е изпратено
+	 * Р—Р°РїРёС‚РІР°РЅРµ, РєРѕРµС‚Рѕ Рµ РёР·РїСЂР°С‚РµРЅРѕ
 	 */
 	private TRequest tRequest;
 
 	/**
-	 * Aгенция, на която е изпратено запитването
+	 * AРіРµРЅС†РёСЏ, РЅР° РєРѕСЏС‚Рѕ Рµ РёР·РїСЂР°С‚РµРЅРѕ Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 	 */
 	private TUser tUser;
 	

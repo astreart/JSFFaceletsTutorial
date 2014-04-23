@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /*
- * Таблица, пазеща информация за типовете събития, които организира дадена агенция
+ * РўР°Р±Р»РёС†Р°, РїР°Р·РµС‰Р° РёРЅС„РѕСЂРјР°С†РёСЏ Р·Р° С‚РёРїРѕРІРµС‚Рµ СЃСЉР±РёС‚РёСЏ, РєРѕРёС‚Рѕ РѕСЂРіР°РЅРёР·РёСЂР° РґР°РґРµРЅР° Р°РіРµРЅС†РёСЏ
  */
 
 @Entity
@@ -21,17 +21,17 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class TAgencyEventType implements java.io.Serializable{
 	
 	/**
-	 * ИД на записа
+	 * РР” РЅР° Р·Р°РїРёСЃР°
 	 */
 	private Long id;
 	
 	/*
-	 * Агенция
+	 * РђРіРµРЅС†РёСЏ
 	 */
 	private TUser agency;
 	
 	/*
-	 * Тип събитие
+	 * РўРёРї СЃСЉР±РёС‚РёРµ
 	 */
 	private TEventType tEventType;
 	

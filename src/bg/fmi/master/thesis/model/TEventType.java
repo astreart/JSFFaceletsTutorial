@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -15,30 +15,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 /*
- * Таблица, пазеща информация за типовете събития
+ * РўР°Р±Р»РёС†Р°, РїР°Р·РµС‰Р° РёРЅС„РѕСЂРјР°С†РёСЏ Р·Р° С‚РёРїРѕРІРµС‚Рµ СЃСЉР±РёС‚РёСЏ
  */
 @Entity
 @Table(name = "T_EVENT_TYPE")
 public class TEventType implements java.io.Serializable {
 
 	/*
-	 * ИД на тип събитие
+	 * РР” РЅР° С‚РёРї СЃСЉР±РёС‚РёРµ
 	 */
 	private Long id;
 
 	/*
-	 * Тип събитие
+	 * РўРёРї СЃСЉР±РёС‚РёРµ
 	 */
 	private String eventTypeName;
 
 	/*
-	 * Описание
+	 * РћРїРёСЃР°РЅРёРµ
 	 */
 	private String eventTypeDesc;
 
 	/*
-	 * Връзка към мапинг таблицата, пазеща информация какви типове събития
-	 * организира дадена агенция
+	 * Р’СЂСЉР·РєР° РєСЉРј РјР°РїРёРЅРі С‚Р°Р±Р»РёС†Р°С‚Р°, РїР°Р·РµС‰Р° РёРЅС„РѕСЂРјР°С†РёСЏ РєР°РєРІРё С‚РёРїРѕРІРµ СЃСЉР±РёС‚РёСЏ
+	 * РѕСЂРіР°РЅРёР·РёСЂР° РґР°РґРµРЅР° Р°РіРµРЅС†РёСЏ
 	 */
 	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
 			0);

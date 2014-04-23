@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+﻿package bg.fmi.master.thesis.model;
 
 import java.util.HashSet;
 import java.util.Set;

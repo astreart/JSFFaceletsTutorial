@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+﻿package bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 

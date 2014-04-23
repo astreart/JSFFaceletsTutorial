@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
- * Таблица, пазеща информация до кого са изпратени съобщения
+ * РўР°Р±Р»РёС†Р°, РїР°Р·РµС‰Р° РёРЅС„РѕСЂРјР°С†РёСЏ РґРѕ РєРѕРіРѕ СЃР° РёР·РїСЂР°С‚РµРЅРё СЃСЉРѕР±С‰РµРЅРёСЏ
  */
 
 @Entity
@@ -21,17 +21,17 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class TMessageUser implements java.io.Serializable{
 	
 	/**
-	 * ИД на записа
+	 * РР” РЅР° Р·Р°РїРёСЃР°
 	 */
 	private Long id;
 
 	/**
-	 * Потребител, до когото е изпратено съобщението
+	 * РџРѕС‚СЂРµР±РёС‚РµР», РґРѕ РєРѕРіРѕС‚Рѕ Рµ РёР·РїСЂР°С‚РµРЅРѕ СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 	 */
 	private TUser tUser;
 
 	/**
-	 * Съобщението, което е изпратено
+	 * РЎСЉРѕР±С‰РµРЅРёРµС‚Рѕ, РєРѕРµС‚Рѕ Рµ РёР·РїСЂР°С‚РµРЅРѕ
 	 */
 	private TMessage tMessage;
 	

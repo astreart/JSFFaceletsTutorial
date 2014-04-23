@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
- * Таблица, пазеща информация за типовете филтри, свързани с дадена заявка за
- * организиране на събитие
+ * РўР°Р±Р»РёС†Р°, РїР°Р·РµС‰Р° РёРЅС„РѕСЂРјР°С†РёСЏ Р·Р° С‚РёРїРѕРІРµС‚Рµ С„РёР»С‚СЂРё, СЃРІСЉСЂР·Р°РЅРё СЃ РґР°РґРµРЅР° Р·Р°СЏРІРєР° Р·Р°
+ * РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚РёРµ
  */
 
 @Entity
@@ -22,22 +22,22 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class TRequestFilter implements java.io.Serializable {
 
 	/**
-	 * ИД на записа
+	 * РР” РЅР° Р·Р°РїРёСЃР°
 	 */
 	private Long id;
 
 	/**
-	 * Филтър
+	 * Р¤РёР»С‚СЉСЂ
 	 */
 	private TFilterType tFilterType;
 
 	/**
-	 * Заявка за организиране на събитие
+	 * Р—Р°СЏРІРєР° Р·Р° РѕСЂРіР°РЅРёР·РёСЂР°РЅРµ РЅР° СЃСЉР±РёС‚РёРµ
 	 */
 	private TRequest tRequest;
 
 	/**
-	 * Стойност на избраният филтър
+	 * РЎС‚РѕР№РЅРѕСЃС‚ РЅР° РёР·Р±СЂР°РЅРёСЏС‚ С„РёР»С‚СЉСЂ
 	 */
 	private String filterValue;
 
