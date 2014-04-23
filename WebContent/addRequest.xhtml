@@ -9,6 +9,7 @@
 
 <h:head>
 	<script name="jquery/jquery.js" library="primefaces">
+		
 	</script>
 </h:head>
 <h:form>
@@ -30,7 +31,7 @@
 		<h:outputLabel for="description" value="Описание"
 			style="font-weight:bold" />
 		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000"
-			style="width: 97%" autoResize="false" />
+			style="width: 97%" autoResize="false" value="#{requestBean.tRequest.description}"/>
 
 		<b>Тип на събитието</b>
 		<h:selectOneMenu value="#{editEventTypeBean.selectedEventType}"
@@ -76,15 +77,14 @@
 
 			</p:tab>
 
-			<h:outputText value="TEST"></h:outputText>
-
 		</p:accordionPanel>
 
 
 
 		<f:facet name="footer">
 			<h:panelGroup style="display:block; text-align:center">
-				<h:commandButton value="Запази" />
+				<h:commandButton value="Запази" id="saveBtn"
+					actionListener="#{requestBean.addRequest()}"/>
 			</h:panelGroup>
 		</f:facet>
 
@@ -92,38 +92,5 @@
 	</h:panelGrid>
 
 </h:form>
-<h:form>
-
-	<!-- <p:selectManyCheckbox id="chkbox1"
-		value="#{filterTypeBean.selectedFilterTypes}" layout="pageDirection">
-		<f:selectItems var="checkbox"
-			value="#{filterTypeBean.listBooleanFilterTypes()}"
-			itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
-			required="true" requiredMessage="check at least one checkbox" />
-	</p:selectManyCheckbox>
-	<h:message for="chkbox1" style="color:red" />
-
-	<p:commandButton value="Submit" update="display" />
-
-		<ui:repeat var="inputBoxes"
-		value="#{filterTypeBean.listFilterTypes()}">
-		<h:outputText value="&lt;br/&gt;" escape="false" />
-		<div style="width: 100px; white-space: normal; border: 3px">
-		<h:outputText value="#{inputBoxes.filterTypeName}" /> 
-			<h:inputText />
-		</div>
-	</ui:repeat>
-
-	<h:panelGrid id="panel2" columns="2" cellpadding="5">
-		<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
-			var="inputBoxes">
-			<h:outputText value="${inputBoxes.filterTypeName}"
-				style="width: 100px; white-space: normal; border: 3px" />
-			<h:inputText />
-		</c:forEach>
-	</h:panelGrid> -->
-
-</h:form>
-
 
 </html>

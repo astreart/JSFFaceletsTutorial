@@ -82,10 +82,10 @@ public class TRequest implements java.io.Serializable {
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
 
-	TRequest() {
-	}
+	public TRequest() {	
+		}
 
-	TRequest(TUser author, String description, Date requestDate) {
+	public TRequest(TUser author, String description, Date requestDate) {
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;
@@ -106,6 +106,18 @@ public class TRequest implements java.io.Serializable {
 		this.isCancelled = isCancelled;
 		this.tRequestFilters = tRequestFilters;
 		this.tAgencyRequests = tAgencyRequests;
+	}
+
+	public TRequest(TRequest tRequest) {
+		this.author = tRequest.author;
+		this.title = tRequest.title;
+		this.description = tRequest.description;
+		this.requestDate = tRequest.requestDate;
+		this.hiredAgency = tRequest.hiredAgency;
+		this.assessment = tRequest.assessment;
+		this.isActive = tRequest.isActive;
+		this.isCancelled = tRequest.isCancelled;
+		this.tRequestFilters = tRequest.tRequestFilters;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_REQUEST", allocationSize = 1)

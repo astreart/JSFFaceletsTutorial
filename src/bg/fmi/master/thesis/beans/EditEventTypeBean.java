@@ -26,7 +26,6 @@ public class EditEventTypeBean implements Serializable {
 	
 	private TEventType selectedEventType;
 	private EventTypeDataModel eventTypeModel;
-	private List<TEventType> eventTypes;
 	private List<TEventType> eventTypeLists;
 
 	
@@ -63,7 +62,6 @@ public class EditEventTypeBean implements Serializable {
 			System.out.println(eventType);
 		}
 		System.out.println("Size: " + eventTypeLists.size());
-		eventTypes = eventTypeLists;
 		return eventTypeLists;
 	}
 
@@ -92,14 +90,14 @@ public class EditEventTypeBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("EventType Selected",
+		FacesMessage msg = new FacesMessage("Избран тип събитие",
 				((TEventType) event.getObject()).getEventTypeName());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void onRowUnselect(UnselectEvent event) {
-		FacesMessage msg = new FacesMessage("EventType Unselected",
+		FacesMessage msg = new FacesMessage("Отменя на избрания тип събитие",
 				((TEventType) event.getObject()).getEventTypeName());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -117,14 +115,7 @@ public class EditEventTypeBean implements Serializable {
 	     //and if not, then make it managed it EntityManager#merge().
 	     em.remove(em.contains(selectedEventType) ? selectedEventType : em.merge(selectedEventType));
 	   
-	    Query q = em.createQuery("select u from TEventType u");
-		List<TEventType> newEventTypeLists = q.getResultList();
-		for (TEventType eventType : newEventTypeLists) {
-			System.out.println(eventType);
-		}
-		System.out.println("Size: " + newEventTypeLists.size());
-		
-		eventTypeModel.removeEventType(eventTypes, selectedEventType);
+	    eventTypeModel.removeEventType(eventTypeLists, selectedEventType);
 	    em.getTransaction().commit();
 	  }
 

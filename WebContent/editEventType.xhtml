@@ -27,10 +27,11 @@
 						update=":form:display :form:growl"
 						oncomplete="PF('eventTypeDialog').show()" />
 					<p:ajax event="rowUnselect"
-						listener="#{editEventTypeBean.onRowUnselect}" update=":form:growl" />
+						listener="#{editEventTypeBean.onRowUnselect}"
+						update=" :form:growl" />
 
 					<f:facet name="header">  
-            Select a row  
+            Избери запис  
         </f:facet>
 					<!-- <p:column headerText="Action">
 						<p:commandButton value="Delete" action="#{editEventTypeBean.deleteEventType}">
@@ -39,39 +40,39 @@
 								</p:commandButton>
 					</p:column> -->
 
-					<p:column headerText="ID">  
+					<p:column headerText="Номер">  
             #{eventType.id}  
         </p:column>
 
-					<p:column headerText="EventType Name">  
+					<p:column headerText="Тип на събитието">  
             #{eventType.eventTypeName}  
         </p:column>
 
-					<p:column headerText="EventType Description">  
+					<p:column headerText="Описание">  
             #{eventType.eventTypeDesc}  
         </p:column>
 
 
 				</p:dataTable>
 
-				<p:dialog id="dialog" header="EventType Details"
+				<p:dialog id="dialog" header="Детайли"
 					widgetVar="eventTypeDialog" resizable="false" showEffect="fade"
 					hideEffect="explode">
 
 					<h:panelGrid id="display" columns="2" cellpadding="4">
 
-						<h:outputText value="ID:" />
+						<h:outputText value="Номер:" />
 						<p:inputText value="#{editEventTypeBean.selectedEventType.id}" />
 
-						<h:outputText value="EventType Name:" />
+						<h:outputText value="Тип на събитието:" />
 						<p:inputText
 							value="#{editEventTypeBean.selectedEventType.eventTypeName}" />
 
-						<h:outputText value="EventType Descr:" />
+						<h:outputText value="Описание:" />
 						<p:inputText
 							value="#{editEventTypeBean.selectedEventType.eventTypeDesc}" />
 
-						<p:commandButton value="Save Changes" id="listBtn"
+						<p:commandButton value="Запази" id="listBtn"
 							actionListener="#{editEventTypeBean.saveChanges}"
 							oncomplete="PF('eventTypeDialog').hide()" update="eventTypes"
 							styleClass="ui-priority-primary" />

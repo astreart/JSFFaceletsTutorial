@@ -30,18 +30,18 @@
 						listener="#{editEventTypeBean.onRowUnselect}" update=":form:growl" />
 
 					<f:facet name="header">  
-            Select a row  
+           Избери запис   
         </f:facet>
 
-					<p:column headerText="ID">  
+					<p:column headerText="Номер">  
             #{eventType.id}  
         </p:column>
 
-					<p:column headerText="EventType Name">  
+					<p:column headerText="Тип на събитиетоe">  
             #{eventType.eventTypeName}  
         </p:column>
 
-					<p:column headerText="EventType Description">  
+					<p:column headerText="Описание">  
             #{eventType.eventTypeDesc}  
         </p:column>
 
@@ -54,18 +54,18 @@
 
 					<h:panelGrid id="display" columns="2" cellpadding="4">
 
-						<h:outputText value="ID:" />
+						<h:outputText value="Номер:" />
 						<p:inputText value="#{editEventTypeBean.selectedEventType.id}" />
 
-						<h:outputText value="EventType Name:" />
+						<h:outputText value="Тип на събитието:" />
 						<p:inputText
 							value="#{editEventTypeBean.selectedEventType.eventTypeName}" />
 
-						<h:outputText value="EventType Descr:" />
+						<h:outputText value="Описание:" />
 						<p:inputText
 							value="#{editEventTypeBean.selectedEventType.eventTypeDesc}" />
 
-						<p:commandButton value="Delete" id="listBtn1"
+						<p:commandButton value="Изтрий" id="listBtn1"
 							actionListener="#{editEventTypeBean.deleteEventType}"
 							oncomplete="PF('eventTypeDialog').hide()" update="eventTypes"
 							styleClass="ui-priority-primary"/>
