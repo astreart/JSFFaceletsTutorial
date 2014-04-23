@@ -1,6 +1,7 @@
 package bg.fmi.master.thesis.beans;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -19,8 +20,10 @@ import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "editEventTypeBean")
 @ViewScoped
-public class EditEventTypeBean {
+public class EditEventTypeBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private TEventType selectedEventType;
 	private EventTypeDataModel eventTypeModel;
 	private List<TEventType> eventTypes;

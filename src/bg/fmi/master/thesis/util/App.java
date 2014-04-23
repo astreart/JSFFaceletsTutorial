@@ -3,6 +3,7 @@ package bg.fmi.master.thesis.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.hibernate.Session;
@@ -40,6 +41,9 @@ public class App {
 		em.merge(newUser);
 
 		em.getTransaction().commit();*/
+		
+		String version = FacesContext.class.getPackage().getImplementationVersion();
+		System.out.println("JSF version : " + version);
 		System.out.println("Done");
 		em.close();
 	}

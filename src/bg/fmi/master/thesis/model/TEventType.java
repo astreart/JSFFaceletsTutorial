@@ -46,7 +46,7 @@ public class TEventType implements java.io.Serializable {
 	public TEventType() {
 	}
 
-	public TEventType(String name, String description) {
+	public TEventType(String name) {
 		this.eventTypeName = name;
 	}
 

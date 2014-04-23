@@ -24,7 +24,6 @@ public class EventTypeBean {
 	public void addEventType() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		System.out.println("tEventType: " + tEventType);
 		TEventType newEventType = new TEventType(tEventType);
 		System.out.println("newEventType: " + newEventType);
 		try {

@@ -1,5 +1,6 @@
 package bg.fmi.master.thesis.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.model.ListDataModel;
@@ -10,7 +11,9 @@ import bg.fmi.master.thesis.model.TEventType;
 import bg.fmi.master.thesis.model.TUser;
 
 public class EventTypeDataModel extends ListDataModel<TEventType> implements
-		SelectableDataModel<TEventType> {
+		SelectableDataModel<TEventType>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public EventTypeDataModel() {
 	}

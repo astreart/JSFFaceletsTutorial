@@ -13,23 +13,22 @@
 		</h:head>
 		<h:body>
 			<h:form>
-
-				<h:outputLabel for="eventType" value="EventType Name:" />
-				<p:inputText id="eventType"
-					value="#{eventTypeBean.tEventType.eventTypeName}" />
-
-				<br />
-
-				<h:outputLabel for="eventTypeDesc" value="EventType Desc: " />
-				<p:inputText id="eventTypeDesc"
-					value="#{eventTypeBean.tEventType.eventTypeDesc}" />
+				<h:panelGrid id="panel2" columns="2" cellpadding="5" border="1"
+					style=" background-color: #3bbab5;font-weight: bold; ">
 					
-					<br />
+					<h:outputLabel for="eventType" value="Тип събитие:" />
+					<p:inputText id="eventType"
+						value="#{eventTypeBean.tEventType.eventTypeName}" />
 
-				<p:commandButton value="Add Event " id="Submit"
+					<h:outputLabel for="eventTypeDesc" value="Описание: " />
+					<p:inputText id="eventTypeDesc"
+						value="#{eventTypeBean.tEventType.eventTypeDesc}" />
+				</h:panelGrid>
+
+				<p:commandButton value="Запази " id="Submit"
 					actionListener="#{eventTypeBean.addEventType}"></p:commandButton>
 
-				<p:commandButton value="List Event" id="listBtn"
+				<p:commandButton value="Покажи" id="listBtn"
 					actionListener="#{eventTypeBean.listEventType}" />
 
 			</h:form>
