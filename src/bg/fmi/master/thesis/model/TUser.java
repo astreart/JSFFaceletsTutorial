@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -99,6 +100,11 @@ public class TUser implements java.io.Serializable {
 	 * Агенции за организиране на събития
 	 */
 	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
+	
+	/**
+	 * Снимка
+	 */
+	private byte[] photo;
 
 	public TUser() {
 	}
@@ -118,7 +124,7 @@ public class TUser implements java.io.Serializable {
 			Set<TRequest> executedRequests,
 			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
-			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies) {
+			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies, byte[] photo) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -133,6 +139,7 @@ public class TUser implements java.io.Serializable {
 		this.sentMessages = sentMessages;
 		this.receivedMessages = receivedMessages;
 		this.tAgencies = tAgencies;
+		this.photo = photo;
 	}
 
 	public TUser(TUser tUser) {
@@ -320,4 +327,14 @@ public class TUser implements java.io.Serializable {
 	 * 
 	 * private TAgency testAgency;
 	 */
+
+	@Lob
+	@Column(name = "PHOTO", length = 100000)
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
 }

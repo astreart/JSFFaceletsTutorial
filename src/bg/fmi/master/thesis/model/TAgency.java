@@ -54,17 +54,17 @@ public class TAgency implements java.io.Serializable {
 	 */
 	private String information;
 
-	TAgency() {
+	public TAgency() {
 	}
 	
-	TAgency(TUser tUser, String city, String address, String information){
+	public TAgency(TUser tUser, String city, String address, String information){
 		this.tUser = tUser;
 		this.city = city;
 		this.address = address;
 		this.information = information;
 	}
 	
-	TAgency(TUser tUser, String website, String city, String address, String information){
+	public TAgency(TUser tUser, String website, String city, String address, String information){
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
@@ -124,7 +124,7 @@ public class TAgency implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "INFORMATION", length = 150, nullable = false)
+	@Column(name = "INFORMATION", length = 512, nullable = false)
 	public String getInformation() {
 		return information;
 	}
