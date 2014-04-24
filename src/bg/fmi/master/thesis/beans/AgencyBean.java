@@ -22,7 +22,7 @@ public class AgencyBean {
 
 	private TAgency tEventType = new TAgency();
 
-	public void listAgencies() {
+	public List<TAgency> listAgencies() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TAgency u");
@@ -31,6 +31,7 @@ public class AgencyBean {
 			System.out.println("NAme: " + agency.gettUser().getName());
 
 		}
+		return agencyList;
 	}
 
 	public TAgency gettEventType() {
@@ -40,7 +41,4 @@ public class AgencyBean {
 	public void settEventType(TAgency tEventType) {
 		this.tEventType = tEventType;
 	}
-
-
-
 }
