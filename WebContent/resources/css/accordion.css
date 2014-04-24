@@ -1,11 +1,12 @@
 .ui-accordion .ui-accordion-header a {
-                background-color: #3bbab5;
+                background-color: #fddb67;
                 font-style: inherit;
       color: black;
             }
             
             
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
-    color: black;
+ /*    color: black; */
     text-decoration: none;
+    background-color: white;
 }

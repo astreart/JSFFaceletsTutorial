@@ -42,6 +42,11 @@ public class TEventType implements java.io.Serializable {
 	 */
 	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
 			0);
+	
+	/**
+	 * Запитвания за организиране на събитие от избрания тип на събитие
+	 */
+	private Set<TRequest> eventTypeRequests = new HashSet<TRequest>(0);
 
 	public TEventType() {
 	}
@@ -56,10 +61,11 @@ public class TEventType implements java.io.Serializable {
 	}
 
 	public TEventType(String name, String description,
-			Set<TAgencyEventType> tAgencyEventTypes) {
+			Set<TAgencyEventType> tAgencyEventTypes,  Set<TRequest>  eventTypeRequests) {
 		this.eventTypeName = name;
 		this.eventTypeDesc = description;
 		this.tAgencyEventTypes = tAgencyEventTypes;
+		this.eventTypeRequests = eventTypeRequests;
 	}
 
 	@Id
@@ -130,5 +136,14 @@ public class TEventType implements java.io.Serializable {
 	public String toString() {
 		return "TEventType [id=" + id + ", eventTypeName=" + eventTypeName
 				+ ", eventTypeDesc=" + eventTypeDesc + "]";
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tEventType")
+	public Set<TRequest> getEventTypeRequests() {
+		return eventTypeRequests;
+	}
+
+	public void setEventTypeRequests(Set<TRequest> eventTypeRequests) {
+		this.eventTypeRequests = eventTypeRequests;
 	}
 }

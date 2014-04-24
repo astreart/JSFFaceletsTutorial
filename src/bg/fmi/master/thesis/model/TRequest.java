@@ -71,6 +71,12 @@ public class TRequest implements java.io.Serializable {
 	 * Флаг, показващ дали запитването е отменено
 	 */
 	private Boolean isCancelled;
+	
+
+	/**
+	 * Тип на събитието, за което е пуснато запитване
+	 */
+	private TEventType tEventType;
 
 	/**
 	 * Избрани филтри
@@ -94,7 +100,7 @@ public class TRequest implements java.io.Serializable {
 	public TRequest(TUser author, String title, String description, Date requestDate,
 			TUser hiredAgency, int assessment, Boolean isActive,
 			Boolean isCancelled, Set<TRequestFilter> tRequestFilters,
-			Set<TAgencyRequest> tAgencyRequests) {
+			Set<TAgencyRequest> tAgencyRequests, TEventType tEventType) {
 		super();
 		this.author = author;
 		this.title = title;
@@ -106,6 +112,7 @@ public class TRequest implements java.io.Serializable {
 		this.isCancelled = isCancelled;
 		this.tRequestFilters = tRequestFilters;
 		this.tAgencyRequests = tAgencyRequests;
+		this.tEventType = tEventType;
 	}
 
 	public TRequest(TRequest tRequest) {
@@ -118,6 +125,7 @@ public class TRequest implements java.io.Serializable {
 		this.isActive = tRequest.isActive;
 		this.isCancelled = tRequest.isCancelled;
 		this.tRequestFilters = tRequest.tRequestFilters;
+		this.tEventType = tRequest.tEventType;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_REQUEST", allocationSize = 1)
@@ -250,5 +258,15 @@ public class TRequest implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EVENT_TYPE_ID")
+	public TEventType gettEventType() {
+		return tEventType;
+	}
+
+	public void settEventType(TEventType tEventType) {
+		this.tEventType = tEventType;
 	}
 }
