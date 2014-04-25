@@ -115,6 +115,8 @@ public class TEventType implements java.io.Serializable {
 		return result;
 	}
 
+	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
