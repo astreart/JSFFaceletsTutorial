@@ -11,15 +11,16 @@
 		<center>
 			<h2>Агенции за организиране на събития</h2>
 		</center>
-
-			<c:forEach items="${agencyBean.listAgencies()}"
+		
+			<p:growl id="growl" showDetail="true" />
+	
+			<c:forEach items="#{agencyBean.listAgencies}"
 			var="inputBoxes">
 							
-			<p:growl id="growl" showDetail="true" />
-			<p:fieldset legend="${inputBoxes.tUser.name}" toggleable="true"
+		<p:fieldset legend="${inputBoxes.tUser.name}" toggleable="true"
 				toggleSpeed="500">
-				<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
-					update="growl" />
+				<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl"/>
+					 
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:graphicImage
 						value="http://www.primefaces.org/showcase/images/godfather/godfather2.jpg" />
