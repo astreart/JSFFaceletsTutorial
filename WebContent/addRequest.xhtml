@@ -17,7 +17,7 @@
 	<h:outputScript library="js" name="calendar.js" />
 
 	<h:outputStylesheet library="css" name="accordion.css" />
-	
+
 	<h:panelGrid id="panel" columns="2" cellpadding="5" border="1"
 		cellspacing="1" bgcolor="#fddb67">
 		<f:facet name="header">
@@ -31,16 +31,19 @@
 		<h:outputLabel for="description" value="Описание"
 			style="font-weight:bold" />
 		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000"
-			style="width: 97%" autoResize="false" value="#{requestBean.tRequest.description}"/>
+			style="width: 97%" autoResize="false"
+			value="#{requestBean.tRequest.description}" />
 
 		<b>Тип на събитието</b>
-		<h:selectOneMenu value="#{editEventTypeBean.selectedEventType}"
-			required="true" panelStyle="width:150px" effect="fade" var="t"
-			style="width:97%" filter="true" filterMatchMode="startsWith">
-			<f:selectItem itemLabel="Избери тип" itemValue="" />
-			<f:selectItems value="#{editEventTypeBean.eventTypeModel}"
-				var="eventType" itemLabel="#{eventType.eventTypeName}"
-				itemValue="#{eventType}" />
+		<h:selectOneMenu value="#{requestBean.selectedEventType}" required="true"
+			panelStyle="width:150px" effect="fade" var="t" style="width:97%"
+			filter="true" filterMatchMode="startsWith">
+			<f:selectItem itemLabel="Избери тип" itemValue="#{null}" />
+			<f:selectItems value="#{eventTypeBean.selectItems}" var="eventType"
+				itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType}" />
+
+			<f:converter converterId="tEventTypeConverter" />
+
 		</h:selectOneMenu>
 
 		<h:outputText style="vertical-align: top; font-weight:bold;"
@@ -49,15 +52,18 @@
 			<p:tab title="Добави филтри">
 
 				<p:selectManyCheckbox id="chkbox1"
-					value="#{filterTypeBean.selectedFilterTypes}"
-					layout="pageDirection">
+					value="#{requestBean.selectedBooleanFilterTypes}"
+					layout="pageDirection"
+					converter="filterTypeConverter">
 					<f:selectItems var="checkbox"
 						value="#{filterTypeBean.listBooleanFilterTypes()}"
-						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox.id}"
-						required="true" requiredMessage="check at least one checkbox" />
-				</p:selectManyCheckbox>
-				<h:message for="chkbox1" style="color:red" />
+						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
+					<!-- required="true"
+						 requiredMessage="check at least one checkbox"  -->
 
+				</p:selectManyCheckbox>
+				<!-- <h:message for="chkbox1" style="color:red" />
+ -->
 
 				<h:panelGrid id="panel2" columns="2" cellpadding="5">
 					<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
@@ -84,12 +90,14 @@
 		<f:facet name="footer">
 			<h:panelGroup style="display:block; text-align:center">
 				<h:commandButton value="Запази" id="saveBtn"
-					actionListener="#{requestBean.addRequest()}"/>
+					actionListener="#{requestBean.addRequest()}" />
 			</h:panelGroup>
 		</f:facet>
 
 
 	</h:panelGrid>
+
+	<h:messages style="color:red;margin:8px;" />
 
 </h:form>
 

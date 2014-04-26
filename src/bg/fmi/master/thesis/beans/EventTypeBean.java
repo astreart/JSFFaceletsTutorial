@@ -86,14 +86,7 @@ public class EventTypeBean {
 	private static Map<Long, TEventType> tEventTypeMap;
 
 	public TEventType find(String key) {
-		// print it
 		Long keyToLong = Long.valueOf(key);
-		System.out.println("It fails here: " + keyToLong);
-		System.out.println("It fails here key: " + tEventTypeMap.containsKey(keyToLong));
-		System.out.println("It fails here value: " + tEventTypeMap.containsValue(keyToLong));
-		System.out.println("It fails here size: " + tEventTypeMap.size());
-		System.out.println("It fails here values: " + tEventTypeMap.values());
-		System.out.println("It fails here keySet: " + tEventTypeMap.keySet());
 		return tEventTypeMap.get(keyToLong);
 	}
 

@@ -41,14 +41,20 @@ public class TRequestFilter implements java.io.Serializable {
 	 */
 	private String filterValue;
 
-	TRequestFilter() {
+	public TRequestFilter() {
 	}
 
-	TRequestFilter(TFilterType tFilterType, TRequest tRequest,
+	public TRequestFilter(TFilterType tFilterType, TRequest tRequest,
 			String filterValue) {
 		this.tFilterType = tFilterType;
 		this.tRequest = tRequest;
 		this.filterValue = filterValue;
+	}
+	
+	public TRequestFilter(TRequestFilter other) {
+		this.tFilterType = other.tFilterType;
+		this.tRequest = other.tRequest;
+		this.filterValue = other.filterValue;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_REQUEST_FILTER", allocationSize = 1)
