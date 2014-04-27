@@ -27,14 +27,14 @@ import bg.fmi.master.thesis.util.HibernateUtil;
 public class RequestBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private TRequest tRequest = new TRequest();
 
 	private TEventType selectedEventType;
 	private List<TFilterType> selectedBooleanFilterTypes;
-	
+
 	private TRequestFilter requestFilter = new TRequestFilter();
-	
+
 	public TRequest gettRequest() {
 		return tRequest;
 	}
@@ -42,63 +42,61 @@ public class RequestBean implements Serializable {
 	public void settRequest(TRequest tRequest) {
 		this.tRequest = tRequest;
 	}
-	
+
 	public void addRequest() {
-		System.out.println("RequestBean " );
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		
-		System.out.println("request: " + tRequest.getTitle());
 		TRequest newRequest = new TRequest(tRequest);
-		
-		System.out.println("newRequest: " + newRequest);
-		
+
 		newRequest.setRequestDate(new Date());
-		
+
 		Query q = em.createQuery("select u from TUser u");
 		List<TUser> usersList = q.getResultList();
 		for (TUser user : usersList) {
 			System.out.println("User: " + user);
 		}
-		
+
 		TUser author1 = new TUser();
 		for (TUser tUser : usersList) {
 			if (tUser.getId() == (Long.valueOf(2)))
 				author1 = tUser;
 		}
 
-		System.out.println("Author: " + author1.getName()); 
-		
+		System.out.println("Author: " + author1.getName());
+
 		newRequest.setAuthor(author1);
-		newRequest.settEventType(selectedEventType);
+		if (selectedEventType != null) {
+			newRequest.settEventType(selectedEventType);
+		}
+		
 		try {
 			em.persist(newRequest);
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		}
 		em.getTransaction().commit();
-		
-		for (TFilterType type : selectedBooleanFilterTypes) {
-	        TRequestFilter reqFilter = new TRequestFilter(requestFilter);
-	        reqFilter.settRequest(newRequest);
-			System.out.println("SelectedFilterTypes: "
-					+ type.getFilterTypeName());
-			reqFilter.settFilterType(type);
-			reqFilter.setFilterValue("true");
-			//new transaction
-			em.getTransaction().begin();
-			try {
-				em.persist(reqFilter);
-			} catch (Exception e) {
-				System.out.println("Exception: " + e);
-			}	
-			em.getTransaction().commit();
-		}
-		
-	
+
+		if (selectedBooleanFilterTypes != null) {
+			for (TFilterType type : selectedBooleanFilterTypes) {
+				TRequestFilter reqFilter = new TRequestFilter(requestFilter);
+				reqFilter.settRequest(newRequest);
+				System.out.println("SelectedFilterTypes: "
+						+ type.getFilterTypeName());
+				reqFilter.settFilterType(type);
+				reqFilter.setFilterValue("true");
+				// new transaction
+				em.getTransaction().begin();
+				try {
+					em.persist(reqFilter);
+				} catch (Exception e) {
+					System.out.println("Exception: " + e);
+				}
+				em.getTransaction().commit();
+			}
 		}
 
-	
+	}
+
 	public TEventType getSelectedEventType() {
 		return selectedEventType;
 	}
@@ -115,6 +113,4 @@ public class RequestBean implements Serializable {
 			List<TFilterType> selectedBooleanFilterTypes) {
 		this.selectedBooleanFilterTypes = selectedBooleanFilterTypes;
 	}
-	
-
 }

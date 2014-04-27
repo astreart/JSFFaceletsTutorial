@@ -35,15 +35,16 @@
 			value="#{requestBean.tRequest.description}" />
 
 		<b>Тип на събитието</b>
-		<h:selectOneMenu value="#{requestBean.selectedEventType}" required="true"
-			panelStyle="width:150px" effect="fade" var="t" style="width:97%"
-			filter="true" filterMatchMode="startsWith">
-			<f:selectItem itemLabel="Избери тип" itemValue="#{null}" />
+		<h:selectOneMenu value="#{requestBean.selectedEventType}"
+			converter="tEventTypeConverter" panelStyle="width:150px"
+			effect="fade" var="t" style="width:97%" required="true"
+			requiredMessage="Моля, изберете тип на събитието, за което искате да направите запитване!!!">
+			<f:selectItem itemLabel="Избери тип" noSeletionOption="true" />
 			<f:selectItems value="#{eventTypeBean.selectItems}" var="eventType"
 				itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType}" />
 
-			<f:converter converterId="tEventTypeConverter" />
-
+			<!-- 	<f:converter converterId="tEventTypeConverter" />
+ -->
 		</h:selectOneMenu>
 
 		<h:outputText style="vertical-align: top; font-weight:bold;"
@@ -53,8 +54,7 @@
 
 				<p:selectManyCheckbox id="chkbox1"
 					value="#{requestBean.selectedBooleanFilterTypes}"
-					layout="pageDirection"
-					converter="filterTypeConverter">
+					layout="pageDirection" converter="filterTypeConverter">
 					<f:selectItems var="checkbox"
 						value="#{filterTypeBean.listBooleanFilterTypes()}"
 						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
@@ -70,7 +70,7 @@
 						var="inputBoxes">
 						<h:outputText value="${inputBoxes.filterTypeName}"
 							style="width: 100px; white-space: normal; border: 3px" />
-						<h:inputText />
+						<h:inputText value="${requestBean.filterTypeValue}" />
 					</c:forEach>
 
 					<h:outputText

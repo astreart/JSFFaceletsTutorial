@@ -12,7 +12,9 @@ public class TFilterTypeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
+    	// It will create bean when not done yet.
         FilterTypeBean filterTypeBean = context.getApplication().evaluateExpressionGet(context, "#{filterTypeBean}", FilterTypeBean.class);
+       
         for (TFilterType type : filterTypeBean.listBooleanFilterTypes()) {
             if (type.getFilterTypeName().equals(value)) {
                 return type;

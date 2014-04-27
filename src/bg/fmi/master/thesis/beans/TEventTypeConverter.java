@@ -17,11 +17,10 @@ public class TEventTypeConverter implements Converter {
 	// Actions
 	// ------------------------------------------------------------------------------------
 
-
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
 		if (value == null || value.isEmpty()) {
-			return null;
+			return "";
 		}
 
 		if (!value.matches("\\d+")) {
@@ -29,21 +28,19 @@ public class TEventTypeConverter implements Converter {
 					+ value);
 		}
 
-		System.out.println ("Value id: " + value);
 		return eventType.find(value);
 
 	}
 
-
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
 		if (value == null) {
-			return null; // Or an empty string, can also.
+			return ""; // Or an empty string, can also.
 		}
 
 		if (!(value instanceof TEventType)) {
-			throw new ConverterException("The value is not a valid TEventType: "
-					+ value);
+			throw new ConverterException(
+					"The value is not a valid TEventType: " + value);
 		}
 
 		Long id = ((TEventType) value).getId();
