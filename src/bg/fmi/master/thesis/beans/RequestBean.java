@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -44,6 +47,15 @@ public class RequestBean implements Serializable {
 	}
 
 	public void addRequest() {
+		
+		Iterator it = values.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+	        
+	        
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		TRequest newRequest = new TRequest(tRequest);
@@ -52,10 +64,7 @@ public class RequestBean implements Serializable {
 
 		Query q = em.createQuery("select u from TUser u");
 		List<TUser> usersList = q.getResultList();
-		for (TUser user : usersList) {
-			System.out.println("User: " + user);
-		}
-
+		
 		TUser author1 = new TUser();
 		for (TUser tUser : usersList) {
 			if (tUser.getId() == (Long.valueOf(2)))
@@ -68,7 +77,7 @@ public class RequestBean implements Serializable {
 		if (selectedEventType != null) {
 			newRequest.settEventType(selectedEventType);
 		}
-		
+
 		try {
 			em.persist(newRequest);
 		} catch (Exception e) {
@@ -113,4 +122,30 @@ public class RequestBean implements Serializable {
 			List<TFilterType> selectedBooleanFilterTypes) {
 		this.selectedBooleanFilterTypes = selectedBooleanFilterTypes;
 	}
+
+	///test
+	private List<TFilterType> filterTypesList;
+
+	public List<TFilterType> listTextFilterTypes() {
+
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query q = em
+				.createQuery("select u from TFilterType u where u.filterType like 'T'");
+		filterTypesList = q.getResultList();
+		return filterTypesList;
+	}
+	
+	public List<TFilterType> getFilterTypesList(){
+		return filterTypesList;
+	}
+	
+	public Map<String, Object> getValues() {
+		return values;
+	}
+
+	public void setValues(Map<String, Object> values) {
+		this.values = values;
+	}
+
+	private Map<String, Object> values = new HashMap<String, Object>();
 }

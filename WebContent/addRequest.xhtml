@@ -66,11 +66,11 @@
  -->
 
 				<h:panelGrid id="panel2" columns="2" cellpadding="5">
-					<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
-						var="inputBoxes">
-						<h:outputText value="${inputBoxes.filterTypeName}"
+					<c:forEach items="${requestBean.listTextFilterTypes()}"
+						var="inputBox">
+						<h:outputText value="${inputBox.filterTypeName}"
 							style="width: 100px; white-space: normal; border: 3px" />
-						<h:inputText value="${requestBean.filterTypeValue}" />
+						<h:inputText value="#{requestBean.values[inputBox.filterTypeName]}" />
 					</c:forEach>
 
 					<h:outputText
