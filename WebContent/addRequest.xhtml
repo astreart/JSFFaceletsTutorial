@@ -70,15 +70,18 @@
 						var="inputBox">
 						<h:outputText value="${inputBox.filterTypeName}"
 							style="width: 100px; white-space: normal; border: 3px" />
-						<h:inputText value="#{requestBean.values[inputBox.filterTypeName]}" />
+						<h:inputText value="#{requestBean.values[inputBox]}" />
 					</c:forEach>
 
-					<h:outputText
-						value="${filterTypeBean.listDateFilterType().getFilterTypeName()}"
-						style="width: 100px; white-space: normal; border: 3px" />
-					<p:calendar id="cal" value="#{calendarBean.date}" mode="popup"
-						showOn="button" locale="bg" navigator="true" pattern="dd.mm.yyyy"
-						style="width: 1px" />
+					<c:forEach items="${requestBean.listDateFilterType()}"
+						var="dateBox">
+						<h:outputText value="${dateBox.getFilterTypeName()}"
+							style="width: 100px; white-space: normal; border: 3px" />
+						<p:calendar id="cal"
+							value="#{requestBean.eventDateValue[dateBox]}" mode="popup"
+							showOn="button" locale="bg" navigator="true" pattern="yyyy-mm-dd"
+							style="width: 1px" />
+					</c:forEach>
 				</h:panelGrid>
 
 			</p:tab>
@@ -90,7 +93,7 @@
 		<f:facet name="footer">
 			<h:panelGroup style="display:block; text-align:center">
 				<h:commandButton value="Запази" id="saveBtn"
-					actionListener="#{requestBean.addRequest()}" />
+					actionListener="#{requestBean.addRequest()}"/>
 			</h:panelGroup>
 		</f:facet>
 
