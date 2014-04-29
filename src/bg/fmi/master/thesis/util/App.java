@@ -45,6 +45,8 @@ public class App {
 		String version = FacesContext.class.getPackage().getImplementationVersion();
 		System.out.println("JSF version : " + version);
 		System.out.println("Done");
+		
+		System.out.println(System.getProperty("file.encoding"));
 		em.close();
 	}
 }

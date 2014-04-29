@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import bg.fmi.master.thesis.model.TEventType;
 import bg.fmi.master.thesis.model.TUser;
 
 
@@ -44,12 +45,9 @@ public class EditUsersBean {
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TUser u");
 		List<TUser> usersList = q.getResultList();
-		for (TUser todo : usersList) {
-			System.out.println(todo);
+		for (TUser user : usersList) {
+			System.out.println("User: " + user);
 		}
-		System.out.println("Size: " + usersList.size());
-
-		// create new todo
 
 		em.close();
 		return usersList;
@@ -94,5 +92,17 @@ public class EditUsersBean {
 				((TUser) event.getObject()).getUsername());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	
+	//FIX IT
+	public TUser getTUserObject(String rowKey) {
+		List<TUser> tUserList = listUsers();
+
+		for (TUser tUser : tUserList) {
+			if (tUser.getId() == (Long.valueOf(rowKey)))
+				return tUser;
+		}
+		return null;
 	}
 }

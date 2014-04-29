@@ -12,7 +12,7 @@
 		
 	</script>
 </h:head>
-<h:form>
+<!-- <h:form>
 
 <h:selectOneMenu value="#{eventTypeBean.selectedItem}" required="true"
 			panelStyle="width:150px" effect="fade" var="t" style="width:97%"
@@ -28,6 +28,27 @@
 		 <h:commandButton value="submit" action="${eventTypeBean.action()}" />
     <h:messages />
 
-</h:form>
+</h:form> -->
 
+<h:form>
+
+
+<h:panelGrid id="panel2" columns="2" cellpadding="5">
+					<c:forEach items="${filterTypeBean.listTextFilterTypes()}"
+						var="inputBoxes">
+						<h:outputText value="${inputBoxes.filterTypeName}"
+							style="width: 100px; white-space: normal; border: 3px" />
+						<h:inputText value="${inputBoxes.filterTypeValue}" />
+					</c:forEach>
+				</h:panelGrid>
+
+	<h:message for="chkbox1" style="color:red" />
+
+ 
+
+	<p:commandButton value="Submit" update="display" />
+
+	<!-- <h:outputText id="display" value="филтри (ид-та): #{requestBean.selectedBooleanFilterTypes}" />
+ -->
+</h:form>
 </html>

@@ -2,6 +2,7 @@ package bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +32,8 @@ public class RequestBean implements Serializable {
 	private TRequest tRequest = new TRequest();
 
 	private TEventType selectedEventType;
-	private List<TFilterType> selectedBooleanFilterTypes;
+	private TRequest newRequest;
+	private List<TFilterType> selectedBooleanFilterTypes = new ArrayList<TFilterType>();
 
 	private TRequestFilter requestFilter = new TRequestFilter();
 
@@ -47,7 +49,7 @@ public class RequestBean implements Serializable {
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		TRequest newRequest = new TRequest(tRequest);
+		newRequest = new TRequest(tRequest);
 
 		newRequest.setRequestDate(new Date());
 
@@ -82,6 +84,7 @@ public class RequestBean implements Serializable {
 				reqFilter.setFilterValue("true");
 				// new transaction
 				em.getTransaction().begin();
+
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
@@ -133,11 +136,6 @@ public class RequestBean implements Serializable {
 		}
 	}
 
-	public void clear(TRequest request){
-		request.setTitle(null);
-		request.setDescription(null);
-		
-	}
 	public TEventType getSelectedEventType() {
 		return selectedEventType;
 	}
@@ -201,4 +199,5 @@ public class RequestBean implements Serializable {
 		filterDateElement = q.getResultList();
 		return filterDateElement;
 	}
+	
 }
