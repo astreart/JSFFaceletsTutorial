@@ -18,16 +18,16 @@
 				<p:growl id="growl" showDetail="true" />
 
 				<p:dataTable id="eventTypes" var="eventType"
-					value="#{editEventTypeBean.eventTypeModel}" paginator="true"
-					rows="10" selection="#{editEventTypeBean.selectedEventType}"
+					value="#{eventTypeBean.eventTypeModel}" paginator="true"
+					rows="10" selection="#{eventTypeBean.selectedEventType}"
 					selectionMode="single">
 
 					<p:ajax event="rowSelect"
-						listener="#{editEventTypeBean.onRowSelect}"
+						listener="#{eventTypeBean.onRowSelect}"
 						update=":form:display :form:growl"
 						oncomplete="PF('eventTypeDialog').show()" />
 					<p:ajax event="rowUnselect"
-						listener="#{editEventTypeBean.onRowUnselect}"
+						listener="#{eventTypeBean.onRowUnselect}"
 						update=" :form:growl" />
 
 					<f:facet name="header">  
@@ -62,18 +62,18 @@
 					<h:panelGrid id="display" columns="2" cellpadding="4">
 
 						<h:outputText value="Номер:" />
-						<p:inputText value="#{editEventTypeBean.selectedEventType.id}" />
+						<p:inputText value="#{eventTypeBean.selectedEventType.id}" />
 
 						<h:outputText value="Тип на събитието:" />
 						<p:inputText
-							value="#{editEventTypeBean.selectedEventType.eventTypeName}" />
+							value="#{eventTypeBean.selectedEventType.eventTypeName}" />
 
 						<h:outputText value="Описание:" />
 						<p:inputText
-							value="#{editEventTypeBean.selectedEventType.eventTypeDesc}" />
+							value="#{eventTypeBean.selectedEventType.eventTypeDesc}" />
 
 						<p:commandButton value="Запази" id="listBtn"
-							actionListener="#{editEventTypeBean.saveChanges}"
+							actionListener="#{eventTypeBean.saveChanges}"
 							oncomplete="PF('eventTypeDialog').hide()" update="eventTypes"
 							styleClass="ui-priority-primary" />
 

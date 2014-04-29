@@ -2,11 +2,11 @@
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -106,6 +106,15 @@ public class TEventType implements java.io.Serializable {
 	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tEventType")
+	public Set<TRequest> getEventTypeRequests() {
+		return eventTypeRequests;
+	}
+
+	public void setEventTypeRequests(Set<TRequest> eventTypeRequests) {
+		this.eventTypeRequests = eventTypeRequests;
+	}
 
 	@Override
 	public int hashCode() {
@@ -140,12 +149,4 @@ public class TEventType implements java.io.Serializable {
 				+ ", eventTypeDesc=" + eventTypeDesc + "]";
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tEventType")
-	public Set<TRequest> getEventTypeRequests() {
-		return eventTypeRequests;
-	}
-
-	public void setEventTypeRequests(Set<TRequest> eventTypeRequests) {
-		this.eventTypeRequests = eventTypeRequests;
-	}
 }

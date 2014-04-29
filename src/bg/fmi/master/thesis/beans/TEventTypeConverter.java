@@ -9,13 +9,7 @@ import bg.fmi.master.thesis.model.TEventType;
 
 public class TEventTypeConverter implements Converter {
 
-	// Init
-	// ---------------------------------------------------------------------------------------
-
 	private static EventTypeBean eventType = new EventTypeBean();
-
-	// Actions
-	// ------------------------------------------------------------------------------------
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {

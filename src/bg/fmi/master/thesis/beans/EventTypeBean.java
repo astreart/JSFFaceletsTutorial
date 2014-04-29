@@ -1,77 +1,45 @@
-package bg.fmi.master.thesis.beans;
+﻿package bg.fmi.master.thesis.beans;
 
 import java.io.IOException;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
 import bg.fmi.master.thesis.model.TEventType;
-import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "eventTypeBean")
-@RequestScoped
-public class EventTypeBean {
+@ViewScoped
+public class EventTypeBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private TEventType tEventType = new TEventType();
-
-	public void addEventType() {
-		EntityManager em = HibernateUtil.getEntityManager();
-		em.getTransaction().begin();
-		TEventType newEventType = new TEventType(tEventType);
-		System.out.println("newEventType: " + newEventType);
-		try {
-			em.persist(newEventType);
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-		}
-		em.getTransaction().commit();
-	}
-
-	public void listEventType() {
-		EntityManager em = HibernateUtil.getEntityManager();
-		// read the existing entries and write to console
-		Query q = em.createQuery("select u from TEventType u");
-		List<TEventType> eventTypeList = q.getResultList();
-		for (TEventType eventType : eventTypeList) {
-			System.out.println(eventType);
-		}
-		System.out.println("Size: " + eventTypeList.size());
-	}
-
-	public TEventType gettEventType() {
-		return tEventType;
-	}
-
-	public void settEventType(TEventType tEventType) {
-		this.tEventType = tEventType;
-	}
-
+	private static Map<Long, TEventType> tEventTypeMap;
 	private List<SelectItem> selectItems;
-	private TEventType selectedItem;
-	private List<TEventType> listTEventTypes;
 
-	@PostConstruct
-	public void init() {
-		System.out.println("PostConstructor!!!");
-		EntityManager em = HibernateUtil.getEntityManager();
-		Query q = em.createQuery("select u from TEventType u");
-		listTEventTypes = q.getResultList();
+	private TEventType selectedEventType;
+	private EventTypeDataModel eventTypeModel;
+	private List<TEventType> eventTypesList;
+
+	public EventTypeBean() {
+		eventTypeModel = new EventTypeDataModel(getEventTypesList());
 
 		tEventTypeMap = new LinkedHashMap<Long, TEventType>();
-		for (TEventType eventType : listTEventTypes) {
+		for (TEventType eventType : eventTypeModel) {
 			tEventTypeMap.put(eventType.getId(), eventType);
 		}
 
@@ -82,8 +50,13 @@ public class EventTypeBean {
 		}
 	}
 
-	// DAO (includes postconstructor too)
-	private static Map<Long, TEventType> tEventTypeMap;
+	public TEventType gettEventType() {
+		return tEventType;
+	}
+
+	public void settEventType(TEventType tEventType) {
+		this.tEventType = tEventType;
+	}
 
 	public TEventType find(String key) {
 		Long keyToLong = Long.valueOf(key);
@@ -98,23 +71,82 @@ public class EventTypeBean {
 		return tEventTypeMap;
 	}
 
-	public TEventType getSelectedItem() {
-		return selectedItem;
-	}
-
-	public void setSelectedItem(TEventType selectedItem) {
-		this.selectedItem = selectedItem;
-	}
-
 	public List<SelectItem> getSelectItems() {
 		return selectItems;
 	}
 
-	// Actions
-	// ------------------------------------------------------------------------------------
-
-	public void action() {
-		System.out.println("Selected TEventType item: " + selectedItem);
+	public TEventType getSelectedEventType() {
+		return selectedEventType;
 	}
 
+	public void setSelectedEventType(TEventType selectedEventType) {
+		this.selectedEventType = selectedEventType;
+	}
+
+	public EventTypeDataModel getEventTypeModel() {
+		return eventTypeModel;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Избран тип събитие",
+				((TEventType) event.getObject()).getEventTypeName());
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Отменя на избрания тип събитие",
+				((TEventType) event.getObject()).getEventTypeName());
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public List<TEventType> getEventTypesList() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query q = em.createQuery("select u from TEventType u");
+		eventTypesList = q.getResultList();
+		return eventTypesList;
+	}
+
+	// Add EventType
+	public void addEventType() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		TEventType newEventType = new TEventType(tEventType);
+		try {
+			em.persist(newEventType);
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		}
+		em.getTransaction().commit();
+	}
+
+	// Update EventType
+	public void saveChanges() throws IOException {
+		EntityManager em = HibernateUtil.getEntityManager();
+
+		em.getTransaction().begin();
+		em.merge(selectedEventType);
+		em.getTransaction().commit();
+	}
+
+	// Delete EventType
+	public void deleteEventType() {
+		EntityManager em = HibernateUtil.getEntityManager();
+
+		em.getTransaction().begin();
+
+		// You need to check if the entity is managed by
+		// EntityManager#contains()
+		// and if not, then make it managed it EntityManager#merge().
+		try {
+			em.remove(em.contains(selectedEventType) ? selectedEventType : em
+					.merge(selectedEventType));
+			eventTypeModel.removeEventType(eventTypesList, selectedEventType);
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		}
+
+		em.getTransaction().commit();
+	}
 }
