@@ -35,16 +35,14 @@
 			value="#{requestBean.tRequest.description}" />
 
 		<b>Тип на събитието</b>
-		<h:selectOneMenu value="#{requestBean.selectedEventType}"
+		<h:selectOneMenu value="#{requestBean.eventTypeBean.selectedEventType}"
 			converter="tEventTypeConverter" panelStyle="width:150px"
 			effect="fade" var="t" style="width:97%" required="true"
 			requiredMessage="Моля, изберете тип на събитието, за което искате да направите запитване!!!">
 			<f:selectItem itemLabel="Избери тип" noSeletionOption="true" />
-			<f:selectItems value="#{eventTypeBean.selectItems}" var="eventType"
+			<f:selectItems value="#{requestBean.eventTypeBean.selectItems}" var="eventType"
 				itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType}" />
 
-			<!-- 	<f:converter converterId="tEventTypeConverter" />
- -->
 		</h:selectOneMenu>
 
 		<h:outputText style="vertical-align: top; font-weight:bold;"
@@ -54,36 +52,32 @@
 
 			<p:tab title="Добави филтри">
 
-				<p:selectManyCheckbox id="chkbox1"
-					value="#{requestBean.selectedBooleanFilterTypes}"
+				<!-- <p:selectManyCheckbox id="chkbox1"
+					value="#{requestBean.filterTypeBean.selectedBooleanFilterTypes}"
 					layout="pageDirection" converter="filterTypeConverter">
 					<f:selectItems var="checkbox"
-						value="#{filterTypeBean.listBooleanFilterTypes()}"
+						value="#{requestBean.filterTypeBean.listBooleanFilterTypes()}"
 						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
-					<!-- required="true"
-						 requiredMessage="check at least one checkbox"  -->
-
-				</p:selectManyCheckbox>
-				<!-- <h:message for="chkbox1" style="color:red" />
- -->
-
+				</p:selectManyCheckbox> -->
+				
 				<h:panelGrid id="panel2" columns="2" cellpadding="5">
-					<c:forEach items="${requestBean.listTextFilterTypes()}"
+					<c:forEach items="${requestBean.filterTypeBean.listTextFilterTypes()}"
 						var="inputBox">
 						<h:outputText value="${inputBox.filterTypeName}"
 							style="width: 100px; white-space: normal; border: 3px" />
-						<h:inputText value="#{requestBean.values[inputBox]}" />
+						<h:inputText value="#{requestBean.textFilterTypeValues[inputBox]}" />
 					</c:forEach>
 
-					<c:forEach items="${requestBean.listDateFilterType()}"
+					<!-- <c:forEach
+						items="${requestBean.getFilterTypeBean().listDateFilterType()}"
 						var="dateBox">
 						<h:outputText value="${dateBox.getFilterTypeName()}"
 							style="width: 100px; white-space: normal; border: 3px" />
 						<p:calendar id="cal"
-							value="#{requestBean.eventDateValue[dateBox]}" mode="popup"
+							value="#{requestBean.eventDateValues[dateBox]}" mode="popup"
 							showOn="button" locale="bg" navigator="true" pattern="yyyy-mm-dd"
 							style="width: 1px" />
-					</c:forEach>
+					</c:forEach> -->
 				</h:panelGrid>
 
 			</p:tab>
@@ -91,12 +85,11 @@
 		</p:accordionPanel>
 
 
-
 		<f:facet name="footer">
 			<h:panelGroup style="display:block; text-align:center">
 				<h:commandButton value="Запази" id="saveBtn"
-					actionListener="#{requestBean.addRequest()}" 
-					 update="@form" action = "addedRequest" />
+					actionListener="#{requestBean.addRequest()}" update="@form"
+					action="addedRequest" />
 			</h:panelGroup>
 		</f:facet>
 

@@ -113,7 +113,7 @@ public class TFilterType implements java.io.Serializable {
 	public String toString() {
 		return "TFilterType [filterTypeName=" + filterTypeName
 				+ ", filterTypeDesc=" + filterTypeDesc + ", isBooleanType="
-				+ filterType + ", tRequestFilters=" + tRequestFilters + "]";
+				+ filterType + "]";
 	}
 
 	@Override
