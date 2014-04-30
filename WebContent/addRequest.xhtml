@@ -47,18 +47,17 @@
 
 		<h:outputText style="vertical-align: top; font-weight:bold;"
 			value="Детайли" />
-		<p:accordionPanel style="border:1px solid; width:500px" dynamic="true"
-			activeIndex="-1">
+		<p:accordionPanel style="border:1px solid; width:500px" activeIndex="-1">
 
 			<p:tab title="Добави филтри">
 
-				<!-- <p:selectManyCheckbox id="chkbox1"
+				<p:selectManyCheckbox id="chkbox1"
 					value="#{requestBean.filterTypeBean.selectedBooleanFilterTypes}"
 					layout="pageDirection" converter="filterTypeConverter">
 					<f:selectItems var="checkbox"
 						value="#{requestBean.filterTypeBean.listBooleanFilterTypes()}"
 						itemLabel="#{checkbox.filterTypeName}" itemValue="#{checkbox}" />
-				</p:selectManyCheckbox> -->
+				</p:selectManyCheckbox>
 				
 				<h:panelGrid id="panel2" columns="2" cellpadding="5">
 					<c:forEach items="${requestBean.filterTypeBean.listTextFilterTypes()}"
@@ -68,7 +67,7 @@
 						<h:inputText value="#{requestBean.textFilterTypeValues[inputBox]}" />
 					</c:forEach>
 
-					<!-- <c:forEach
+					<c:forEach
 						items="${requestBean.getFilterTypeBean().listDateFilterType()}"
 						var="dateBox">
 						<h:outputText value="${dateBox.getFilterTypeName()}"
@@ -77,7 +76,7 @@
 							value="#{requestBean.eventDateValues[dateBox]}" mode="popup"
 							showOn="button" locale="bg" navigator="true" pattern="yyyy-mm-dd"
 							style="width: 1px" />
-					</c:forEach> -->
+					</c:forEach>
 				</h:panelGrid>
 
 			</p:tab>

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "requestBean")
-@SessionScoped
+@RequestScoped
 public class RequestBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -90,6 +91,7 @@ public class RequestBean implements Serializable {
 		EntityManager em = HibernateUtil.getEntityManager();
 		
 		em.getTransaction().begin();
+		
 		TRequest newRequest = new TRequest(tRequest);
 		
 		newRequest.setRequestDate(new Date());
@@ -107,7 +109,6 @@ public class RequestBean implements Serializable {
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		}
-		em.getTransaction().commit();
 		
 		//Save BooleanFilterTypes
 		List<TFilterType> selectedBooleanFilterTypes = filterTypeBean
@@ -119,14 +120,11 @@ public class RequestBean implements Serializable {
 				reqFilter.settFilterType(type);
 				reqFilter.setFilterValue("TRUE");
 				
-				// new transaction
-				em.getTransaction().begin();
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
 					System.out.println("Exception: " + e);
 				}
-				em.getTransaction().commit();
 			}
 		}
 
@@ -139,16 +137,16 @@ public class RequestBean implements Serializable {
 				reqFilter.settFilterType((TFilterType) pairs.getKey());
 				reqFilter.settRequest(newRequest);
 				reqFilter.setFilterValue((String) pairs.getValue());
-				em.getTransaction().begin();
+			
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
 					System.out.println("Exception: " + e);
 				}
-				em.getTransaction().commit();
 			}
 			textFilterTypeIterator.remove(); // avoids a ConcurrentModificationException
 		}
+		
 
 		// set Date
 		Iterator dateIterator = eventDateValues.entrySet().iterator();
@@ -161,15 +159,14 @@ public class RequestBean implements Serializable {
 				String convertedDate = new SimpleDateFormat("yyyy-mm-dd")
 						.format(eventDatePairs.getValue());
 				reqFilter.setFilterValue(convertedDate);
-				em.getTransaction().begin();
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
 					System.out.println("Exception: " + e);
 				}
-				em.getTransaction().commit();
 			}
 			dateIterator.remove();
 		}
+		em.getTransaction().commit();
 	}
 }
