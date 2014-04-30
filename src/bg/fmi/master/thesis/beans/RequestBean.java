@@ -15,7 +15,6 @@ import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-
 import bg.fmi.master.thesis.model.TEventType;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TRequest;
@@ -32,8 +31,8 @@ public class RequestBean implements Serializable {
 	private TRequest tRequest = new TRequest();
 
 	private TEventType selectedEventType;
-	private TRequest newRequest;
-	private List<TFilterType> selectedBooleanFilterTypes = new ArrayList<TFilterType>();
+
+	private List<TFilterType> selectedBooleanFilterTypes;
 
 	private TRequestFilter requestFilter = new TRequestFilter();
 
@@ -49,7 +48,7 @@ public class RequestBean implements Serializable {
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		newRequest = new TRequest(tRequest);
+		TRequest newRequest = new TRequest(tRequest);
 
 		newRequest.setRequestDate(new Date());
 
@@ -122,7 +121,8 @@ public class RequestBean implements Serializable {
 				TRequestFilter reqFilter = new TRequestFilter(requestFilter);
 				reqFilter.settRequest(newRequest);
 				reqFilter.settFilterType((TFilterType) eventDatePairs.getKey());
-				String convertedDate = new SimpleDateFormat("yyyy-mm-dd").format(eventDatePairs.getValue());
+				String convertedDate = new SimpleDateFormat("yyyy-mm-dd")
+						.format(eventDatePairs.getValue());
 				reqFilter.setFilterValue(convertedDate);
 				em.getTransaction().begin();
 				try {
@@ -150,6 +150,10 @@ public class RequestBean implements Serializable {
 
 	public void setSelectedBooleanFilterTypes(
 			List<TFilterType> selectedBooleanFilterTypes) {
+		for (TFilterType f : selectedBooleanFilterTypes) {
+			System.out.println("Set selectedBooleanFilterTypes: "
+					+ f.getFilterTypeName());
+		}
 		this.selectedBooleanFilterTypes = selectedBooleanFilterTypes;
 	}
 
@@ -199,5 +203,5 @@ public class RequestBean implements Serializable {
 		filterDateElement = q.getResultList();
 		return filterDateElement;
 	}
-	
+
 }

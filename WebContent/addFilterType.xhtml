@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml">
+		<h:head>
+		</h:head>
+		<h:body>
+			<h:form>
+				<h:panelGrid id="panel2" columns="2" cellpadding="5" border="1"
+					style=" background-color: #fddb67;font-weight: bold; ">
+					
+					<h:outputLabel for="filterName" value="Фълтър на събитие:" />
+					<p:inputText id="filterName"
+						value="#{filterTypeBean.tFilterType.filterTypeName}" />
+
+					<h:outputLabel for="filterDesc" value="Описание: " />
+					<p:inputText id="filterDesc"
+						value="#{filterTypeBean.tFilterType.filterTypeDesc}" />
+				</h:panelGrid>
+
+				<p:commandButton value="Запази " id="Submit"
+					actionListener="#{filterTypeBean.addFilterType}"></p:commandButton>
+
+			</h:form>
+		</h:body>
+	</ui:composition>
+</f:view>
+</html>
