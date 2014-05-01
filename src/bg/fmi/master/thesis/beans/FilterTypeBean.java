@@ -1,10 +1,13 @@
 package bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -31,7 +34,6 @@ public class FilterTypeBean implements Serializable {
 	}
 
 	public List<TFilterType> getSelectedFilterTypes() {
-		System.out.println("FIlterTypeBean getSelectedFilterTypes()");
 		return selectedFilterTypes;
 	}
 
@@ -45,7 +47,6 @@ public class FilterTypeBean implements Serializable {
 	}
 
 	public List<String> getSelectedFilterTypesNames() {
-		System.out.println("Radi: " + selectedFilterTypesNames);
 		return selectedFilterTypesNames;
 	}
 
@@ -53,19 +54,15 @@ public class FilterTypeBean implements Serializable {
 			List<TFilterType> selectedFilterTypes) {
 		for (TFilterType filterType : selectedFilterTypes) {
 			selectedFilterTypesNames.add(filterType.getFilterTypeName());
-			System.out.println("Radi set: " + selectedFilterTypesNames);
 		}
 	}
 
 	public List<TFilterType> getSelectedBooleanFilterTypes() {
-		System.out.println("Get selectedBooleanFilterTypes: ");
-
 		return selectedBooleanFilterTypes;
 	}
 
 	public void setSelectedBooleanFilterTypes(
 			List<TFilterType> selectedBooleanFilterTypes) {
-			System.out.println("Set selectedBooleanFilterTypes: ");
 		this.selectedBooleanFilterTypes = selectedBooleanFilterTypes;
 	}
 
@@ -86,9 +83,6 @@ public class FilterTypeBean implements Serializable {
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TFilterType u");
 		List<TFilterType> eventFilterList = q.getResultList();
-		for (TFilterType filterType : eventFilterList) {
-			// System.out.println(filterType.getFilterTypeName());
-		}
 		return eventFilterList;
 	}
 
@@ -115,4 +109,5 @@ public class FilterTypeBean implements Serializable {
 		List<TFilterType> filterDateElements = q.getResultList();
 		return filterDateElements;
 	}
+
 }

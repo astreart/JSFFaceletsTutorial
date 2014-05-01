@@ -26,5 +26,11 @@
 		<managed-bean-class>bg.fmi.master.thesis.beans.EventTypeBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.SelectManyCheckboxRenderer</renderer-type>
+			<renderer-class>bg.fmi.master.thesis.util.MySelectManyCheckBoxRenderer</renderer-class>
+		</renderer>
+	</render-kit>
 </faces-config>

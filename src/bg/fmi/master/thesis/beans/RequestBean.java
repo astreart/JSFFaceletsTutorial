@@ -63,7 +63,6 @@ public class RequestBean implements Serializable {
 	}
 
 	public void setEventDateValues(Map<TFilterType, Object> eventDateValues) {
-		System.out.println("setEventDateValues");
 		this.eventDateValues = eventDateValues;
 	}
 
@@ -76,13 +75,11 @@ public class RequestBean implements Serializable {
 	}
 
 	public Map<TFilterType, Object> getTextFilterTypeValues() {
-		System.out.println("getTextFilterTypeValues");
 		return textFilterTypeValues;
 	}
 
 	public void setTextFilterTypeValues(
 			Map<TFilterType, Object> textFilterTypeValues) {
-		System.out.println("setTextFilterTypeValues");
 		this.textFilterTypeValues = textFilterTypeValues;
 	}
 
