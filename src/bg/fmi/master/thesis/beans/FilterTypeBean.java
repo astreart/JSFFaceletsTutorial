@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -15,7 +13,7 @@ import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "filterTypeBean")
-@SessionScoped
+@RequestScoped
 public class FilterTypeBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +21,7 @@ public class FilterTypeBean implements Serializable {
 	private TFilterType tFilterType = new TFilterType();
 	private List<TFilterType> selectedFilterTypes;
 	private List<String> selectedFilterTypesNames;
-	private List<TFilterType> selectedBooleanFilterTypes;
+	private List<TFilterType> selectedBooleanFilterTypes = new ArrayList<TFilterType>();
 
 	public TFilterType gettFilterType() {
 		return tFilterType;
@@ -109,5 +107,4 @@ public class FilterTypeBean implements Serializable {
 		List<TFilterType> filterDateElements = q.getResultList();
 		return filterDateElements;
 	}
-
 }
