@@ -26,7 +26,7 @@ import bg.fmi.master.thesis.model.TImage;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "agencyBean")
-@SessionScoped
+@RequestScoped
 public class AgencyBean implements Serializable {
 
 	private TAgency tAgency = new TAgency();
@@ -75,7 +75,6 @@ public class AgencyBean implements Serializable {
 					currentAgency = currAgency;
 
 			}
-			System.out.println("Agency Name photo: " + currentAgency.gettUser().getId());
 			byte[] image = (byte[]) currentAgency.gettUser().getPhoto();
 			if (image == null) {
 				return new DefaultStreamedContent();
@@ -85,5 +84,4 @@ public class AgencyBean implements Serializable {
 			}
 		}
 	}
-
 }

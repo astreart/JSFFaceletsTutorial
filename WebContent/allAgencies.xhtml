@@ -11,7 +11,8 @@
 		<center>
 			<h2>Агенции за организиране на събития</h2>
 		</center>
-		
+
+
 		<p:growl id="growl" showDetail="true" />
 
 		<c:forEach items="#{agencyBean.agencyList}" var="agency">
@@ -21,25 +22,27 @@
 				<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
 					update="growl" />
 
-				<h:panelGrid columns="2" cellpadding="10">
-	
-					<p:graphicImage value="#{agencyBean.image}">
-						<f:param name="agencyId" value="#{agency.tUser.id}" />
-					</p:graphicImage> 
+				<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
 
-     				    ID: <h:outputText value="#{agency.tUser.id}" />
-     				    
-						Име на агенция: <h:outputText value="${agency.tUser.name}" />
-						Телефон за контакт:<h:outputText value="${agency.tUser.phone}" />
-						Град: <h:outputText value="${agency.city}" />
+
+					<p:graphicImage value="#{agencyBean.image}"
+						alt="${agency.tUser.name}" width="200px" height="125px">
+						<f:param name="agencyId" value="#{agency.tUser.id}" />
+					</p:graphicImage>
+					<h:panelGrid columns="2" cellpadding="3" cellspacing="1" border="1">
+						Име на агенция: <h:outputText value="${agency.tUser.name}" /> 
+						Телефон за контакт:<h:outputText value="${agency.tUser.phone}" /> 
+						Град: <h:outputText value="${agency.city}" />  
 						Адрес: <h:outputText value="${agency.address}" />
 						Уеб сайт: <h:commandLink value="${agency.website}" />
+					</h:panelGrid>
+
+					<h:commandButton value="Детайли" actionLink="#{agencyBean.tAgency}"
+						action="agencyDetail"/>
 				</h:panelGrid>
+
 			</p:fieldset>
-
 		</c:forEach>
-
-
 
 
 
