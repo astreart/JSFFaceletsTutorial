@@ -22,11 +22,15 @@ public class AgencyDetailBean implements Serializable {
 
 	private TAgency agency;
 	
-	 public TAgency getAgency() {
+	 public void setAgency(TAgency agency) {
+		this.agency = agency;
+	}
+
+	public TAgency getAgency() {
 	      if(agencyBean != null){
 	         agency = agencyBean.gettAgency();
 	      }  
-	      System.out.println("Agency: " + agency);
+	      System.out.println("Agency: " + agency.gettUser().getName());
 	      return agency;
 	   }
 }
