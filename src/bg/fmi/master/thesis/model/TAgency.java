@@ -27,7 +27,7 @@ public class TAgency implements java.io.Serializable {
 	/**
 	 * Първичен ключ
 	 */
-	private Long TUserId;
+	private Long tUserId;
 
 	/**
 	 * Първичен ключ (връзка с TUser)
@@ -77,12 +77,12 @@ public class TAgency implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
 	@Column(name = "T_USER_ID", unique = true, nullable = false, precision = 22, scale = 0)
-	public Long getTUserId() {
-		return TUserId;
+	public Long gettUserId() {
+		return tUserId;
 	}
 
-	public void setTUserId(Long tUserId) {
-		TUserId = tUserId;
+	public void settUserId(Long tUserId) {
+		this.tUserId = tUserId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -137,7 +137,7 @@ public class TAgency implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((TUserId == null) ? 0 : TUserId.hashCode());
+		result = prime * result + ((tUserId == null) ? 0 : tUserId.hashCode());
 		result = prime * result + ((tUser == null) ? 0 : tUser.hashCode());
 		return result;
 	}
@@ -151,10 +151,10 @@ public class TAgency implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TAgency other = (TAgency) obj;
-		if (TUserId == null) {
-			if (other.TUserId != null)
+		if (tUserId == null) {
+			if (other.tUserId != null)
 				return false;
-		} else if (!TUserId.equals(other.TUserId))
+		} else if (!tUserId.equals(other.tUserId))
 			return false;
 		if (tUser == null) {
 			if (other.tUser != null)

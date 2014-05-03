@@ -148,17 +148,6 @@ public class TUser implements java.io.Serializable {
 		this.email = tUser.email;
 	}
 
-	/*
-	 * @SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER",
-	 * allocationSize = 1)
-	 * 
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = SEQUENCE, generator = "generator")
-	 * 
-	 * @Column(name = "ID", unique = true, nullable = false, precision = 22,
-	 * scale = 0)
-	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", unique = true, nullable = false)
@@ -280,11 +269,11 @@ public class TUser implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")
-	public Set<TAgency> gettAgency() {
+	public Set<TAgency> getTAgency() {
 		return tAgencies;
 	}
 
-	public void settAgency(Set<TAgency> tAgencies) {
+	public void setTAgency(Set<TAgency> tAgencies) {
 		this.tAgencies = tAgencies;
 	}
 
@@ -315,18 +304,6 @@ public class TUser implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	/*
-	 * @OneToOne(fetch = FetchType.LAZY, mappedBy = "test", cascade =
-	 * CascadeType.ALL)
-	 * 
-	 * @Column(name = "TEST") public TAgency getTestAgency() { return
-	 * testAgency; }
-	 * 
-	 * public void setTestAgency(TAgency testAgency) { this.testAgency =
-	 * testAgency; }
-	 * 
-	 * private TAgency testAgency;
-	 */
 
 	@Lob
 	@Column(name = "PHOTO", length = 100000)

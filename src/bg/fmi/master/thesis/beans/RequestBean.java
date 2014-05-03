@@ -30,7 +30,7 @@ public class RequestBean implements Serializable {
 	private TRequest tRequest = new TRequest();
 	private EventTypeBean eventTypeBean = new EventTypeBean();
 	private TRequestFilter requestFilter = new TRequestFilter();
-	private FilterTypeBean filterTypeBean =  new FilterTypeBean();
+	private FilterTypeBean filterTypeBean = new FilterTypeBean();
 	private Map<TFilterType, Object> eventDateValues = new HashMap<TFilterType, Object>();
 	private Map<TFilterType, Object> textFilterTypeValues = new HashMap<TFilterType, Object>();
 
@@ -49,7 +49,7 @@ public class RequestBean implements Serializable {
 	public void setEventTypeBean(EventTypeBean eventTypeBean) {
 		this.eventTypeBean = eventTypeBean;
 	}
-	
+
 	public FilterTypeBean getFilterTypeBean() {
 		return filterTypeBean;
 	}
@@ -86,28 +86,28 @@ public class RequestBean implements Serializable {
 	public void addRequest() {
 
 		EntityManager em = HibernateUtil.getEntityManager();
-		
+
 		em.getTransaction().begin();
-		
+
 		TRequest newRequest = new TRequest(tRequest);
-		
+
 		newRequest.setRequestDate(new Date());
 
 		Query q = em.createQuery("select u from TUser u where u.id = 2");
 		TUser author1 = (TUser) q.getSingleResult();
 		newRequest.setAuthor(author1);
-		
+
 		if (eventTypeBean.getSelectedEventType() != null) {
 			newRequest.settEventType(eventTypeBean.getSelectedEventType());
 		}
-		
+
 		try {
 			em.persist(newRequest);
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		}
-		
-		//Save BooleanFilterTypes
+
+		// Save BooleanFilterTypes
 		List<TFilterType> selectedBooleanFilterTypes = filterTypeBean
 				.getSelectedBooleanFilterTypes();
 		if (selectedBooleanFilterTypes != null) {
@@ -116,7 +116,7 @@ public class RequestBean implements Serializable {
 				reqFilter.settRequest(newRequest);
 				reqFilter.settFilterType(type);
 				reqFilter.setFilterValue("TRUE");
-				
+
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
@@ -125,7 +125,8 @@ public class RequestBean implements Serializable {
 			}
 		}
 
-		Iterator textFilterTypeIterator = textFilterTypeValues.entrySet().iterator();
+		Iterator textFilterTypeIterator = textFilterTypeValues.entrySet()
+				.iterator();
 		while (textFilterTypeIterator.hasNext()) {
 			Map.Entry pairs = (Map.Entry) textFilterTypeIterator.next();
 			if (pairs.getValue() != null
@@ -134,16 +135,16 @@ public class RequestBean implements Serializable {
 				reqFilter.settFilterType((TFilterType) pairs.getKey());
 				reqFilter.settRequest(newRequest);
 				reqFilter.setFilterValue((String) pairs.getValue());
-			
+
 				try {
 					em.persist(reqFilter);
 				} catch (Exception e) {
 					System.out.println("Exception: " + e);
 				}
 			}
-			textFilterTypeIterator.remove(); // avoids a ConcurrentModificationException
+			textFilterTypeIterator.remove(); // avoids a
+												// ConcurrentModificationException
 		}
-		
 
 		// set Date
 		Iterator dateIterator = eventDateValues.entrySet().iterator();
