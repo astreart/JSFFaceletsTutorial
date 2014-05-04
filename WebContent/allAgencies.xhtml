@@ -13,10 +13,9 @@
 			<h2>Агенции за организиране на събития</h2>
 		</center>
 
-		<p:growl id="growl" showDetail="true" />
-
-		<c:forEach items="#{agencyBean.agencyList}" var="agency">
-
+		<p:dataGrid var="agency" value="#{agencyBean.agencyList}" columns="1"
+			rows="5" paginator="true" paginatorPosition="bottom" lazy="false">
+			<p:growl id="growl" showDetail="true" />
 			<p:fieldset legend="${agency.tUser.name}" toggleable="true"
 				toggleSpeed="500" style="width:600px">
 				<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
@@ -52,7 +51,7 @@
 				</h:panelGrid>
 
 			</p:fieldset>
-		</c:forEach>
+		</p:dataGrid>
 
 
 
