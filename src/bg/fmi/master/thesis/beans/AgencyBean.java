@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.beans;
+﻿package bg.fmi.master.thesis.beans;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -34,13 +34,27 @@ public class AgencyBean implements Serializable {
 
 	private TAgency tAgency = new TAgency();
 	private List<TAgency> agencyList;
+	private Map<TAgency, String> rating = new HashMap<TAgency, String>();
+	
+	public AgencyBean(){
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query query = em
+				.createQuery("select hiredAgency, sum(r.assessment)/(count(r.assessment)), "
+						+ "count(r.assessment) "
+						+ "from TAgency hiredAgency join hiredAgency.executedRequests r "
+						+ "group by hiredAgency.tUserId, hiredAgency.address, hiredAgency.city, hiredAgency.information,"
+						+ "hiredAgency.website");
 
-	public List<TAgency> getAgencyList() {
-		return agencyList;
-	}
-
-	public void setAgencyList(List<TAgency> agencyList) {
-		this.agencyList = agencyList;
+		List<Object[]> list = query.getResultList();
+		for (Object[] element : list) {
+			TAgency ratingForAgency = (TAgency) element[0];
+			String ratingText = "Оценка " + element[1] + "/10, гласували: " + element[2];
+			
+			System.out.println("Агенция:" + ratingForAgency.gettUser().getName());
+			System.out.println("Рейтинг:" + ratingText);
+			
+			rating.put(ratingForAgency, ratingText);
+		}
 	}
 
 	@PostConstruct
@@ -49,19 +63,23 @@ public class AgencyBean implements Serializable {
 		// read the existing entries and write to console
 		Query q = em.createQuery("select u from TAgency u");
 		agencyList = q.getResultList();
+	}
 
-		TAgency agency = agencyList.get(1);
-		
-		Query query = em
-			    .createQuery("select hiredAgency, count(r.assessment), sum(r.assessment), " +
-					    		"sum(r.assessment)/(count(r.assessment)) " +
-					    		"from TAgency hiredAgency join hiredAgency.executedRequests r " +
-					    		"group by hiredAgency.tUserId, hiredAgency.address, hiredAgency.city, hiredAgency.information," +
-					    		"hiredAgency.website");
-		
-		/*query.setParameter("agency", agency);*/
-		List<Object> list = query.getResultList();
-		System.out.println("Stop");
+	
+	public Map<TAgency, String> getRating() {
+		return rating;
+	}
+	
+	public void setRating(Map<TAgency, String> rating) {
+		this.rating = rating;
+	}
+	
+	public List<TAgency> getAgencyList() {
+		return agencyList;
+	}
+
+	public void setAgencyList(List<TAgency> agencyList) {
+		this.agencyList = agencyList;
 	}
 
 	public TAgency gettAgency() {
@@ -95,14 +113,4 @@ public class AgencyBean implements Serializable {
 			}
 		}
 	}
-
-	public Map<TFilterType, Object> getRating() {
-		return rating;
-	}
-
-	public void setRating(Map<TFilterType, Object> rating) {
-		this.rating = rating;
-	}
-
-	private Map<TFilterType, Object> rating = new HashMap<TFilterType, Object>(); 
 }
