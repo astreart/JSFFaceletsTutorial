@@ -1,5 +1,8 @@
 ﻿package bg.fmi.master.thesis.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import bg.fmi.master.thesis.model.TUser;
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -9,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
@@ -20,8 +24,7 @@ import javax.persistence.UniqueConstraint;
  * Таблица, пазеща специфична информация за агенция за организиране на събития
  */
 @Entity
-@Table(name = "T_AGENCY", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "ADDRESS") })
+@Table(name = "T_AGENCY", uniqueConstraints = { @UniqueConstraint(columnNames = "ADDRESS") })
 public class TAgency implements java.io.Serializable {
 
 	/**
@@ -54,25 +57,31 @@ public class TAgency implements java.io.Serializable {
 	 */
 	private String information;
 
+	/**
+	 * Заявки, взети от дадена агенция
+	 */
+	private Set<TRequest> executedRequests = new HashSet<TRequest>(0);
+
 	public TAgency() {
 	}
-	
-	public TAgency(TUser tUser, String city, String address, String information){
+
+	public TAgency(TUser tUser, String city, String address, String information) {
 		this.tUser = tUser;
 		this.city = city;
 		this.address = address;
 		this.information = information;
 	}
-	
-	public TAgency(TUser tUser, String website, String city, String address, String information){
+
+	public TAgency(TUser tUser, String website, String city, String address,
+			String information, Set<TRequest> executedRequests) {
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
 		this.address = address;
 		this.information = information;
+		this.executedRequests = executedRequests;
 	}
-	
-	
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
@@ -94,8 +103,6 @@ public class TAgency implements java.io.Serializable {
 	public void settUser(TUser tUser) {
 		this.tUser = tUser;
 	}
-
-	
 
 	@Column(name = "WEBSITE", length = 150)
 	public String getWebsite() {
@@ -131,6 +138,15 @@ public class TAgency implements java.io.Serializable {
 
 	public void setInformation(String information) {
 		this.information = information;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hiredAgency")
+	public Set<TRequest> getExecutedRequests() {
+		return executedRequests;
+	}
+
+	public void setExecutedRequests(Set<TRequest> executedRequests) {
+		this.executedRequests = executedRequests;
 	}
 
 	@Override

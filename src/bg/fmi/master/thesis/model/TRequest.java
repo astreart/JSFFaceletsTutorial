@@ -55,7 +55,7 @@ public class TRequest implements java.io.Serializable {
 	/**
 	 * Наета агенция
 	 */
-	private TUser hiredAgency;
+	private TAgency hiredAgency;
 
 	/**
 	 * Оценка за това как е било организирано събитието от наетата агенция
@@ -98,7 +98,7 @@ public class TRequest implements java.io.Serializable {
 	}	
 
 	public TRequest(TUser author, String title, String description, Date requestDate,
-			TUser hiredAgency, int assessment, Boolean isActive,
+			TAgency hiredAgency, int assessment, Boolean isActive,
 			Boolean isCancelled, Set<TRequestFilter> tRequestFilters,
 			Set<TAgencyRequest> tAgencyRequests, TEventType tEventType) {
 		super();
@@ -180,11 +180,11 @@ public class TRequest implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HIRED_AGENCY_ID")
-	public TUser getHiredAgency() {
+	public TAgency getHiredAgency() {
 		return this.hiredAgency;
 	}
 
-	public void setHiredAgency(TUser hiredAgency) {
+	public void setHiredAgency(TAgency hiredAgency) {
 		this.hiredAgency = hiredAgency;
 	}
 
