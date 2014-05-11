@@ -24,7 +24,7 @@
 				<br />
 				<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
 					<p:commandLink action="agencyDetail.jsf?faces-redirect=true">
-						<f:setPropertyActionListener target="#{agencyDetailBean.agency}"
+						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
 							value="${agency}" />
 						<p:graphicImage value="#{agencyBean.image}"
 							alt="${agency.tUser.name}" width="200px" height="125px">
@@ -32,8 +32,10 @@
 						</p:graphicImage>
 					</p:commandLink>
 					<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
-						<b>Име на агенция:</b>
+						<b>Агенция:</b>
 						<h:outputText value="${agency.tUser.name}" />
+						<b>Организира:</b>
+						<h:outputText value="#{agencyBean.agencyEventTypes[agency]}" />
 						<b>Телефон за контакт:</b>
 						<h:outputText value="${agency.tUser.phone}" />
 						<b>Град: </b>
@@ -45,7 +47,7 @@
 					</h:panelGrid>
 
 					<h:commandButton value="Детайли" action="agencyDetail">
-						<f:setPropertyActionListener target="#{agencyDetailBean.agency}"
+						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
 							value="${agency}" />
 					</h:commandButton>
 				</h:panelGrid>

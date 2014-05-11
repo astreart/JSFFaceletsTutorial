@@ -10,6 +10,7 @@
 <h:head>
 </h:head>
 <h:form>Детайли за агенция за организиране на събития!</h:form>
-<h:outputText value="#{agencyDetailBean.agency.tUser.name}" /><br/>
-	<h:outputText value="#{agencyDetailBean.agency.information}" />
+<h:outputText value="#{agencyBean.tAgency.tUser.name}" /><br/>
+	<h:outputText value="#{agencyBean.tAgency.information}" />
+	<h:outputText value="#{agencyBean.rating[agencyBean.tAgency]}" />
 </html>

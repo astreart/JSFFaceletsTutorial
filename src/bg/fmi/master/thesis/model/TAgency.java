@@ -62,6 +62,13 @@ public class TAgency implements java.io.Serializable {
 	 */
 	private Set<TRequest> executedRequests = new HashSet<TRequest>(0);
 
+	/**
+	 * Типове събития, които огранизира дадена агенция
+	 */
+	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
+			0);
+
+	
 	public TAgency() {
 	}
 
@@ -73,13 +80,15 @@ public class TAgency implements java.io.Serializable {
 	}
 
 	public TAgency(TUser tUser, String website, String city, String address,
-			String information, Set<TRequest> executedRequests) {
+			String information, Set<TRequest> executedRequests,
+			Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
 		this.address = address;
 		this.information = information;
 		this.executedRequests = executedRequests;
+		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY", allocationSize = 1)
@@ -147,6 +156,15 @@ public class TAgency implements java.io.Serializable {
 
 	public void setExecutedRequests(Set<TRequest> executedRequests) {
 		this.executedRequests = executedRequests;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
+	public Set<TAgencyEventType> gettAgencyEventTypes() {
+		return tAgencyEventTypes;
+	}
+
+	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
+		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
 
 	@Override

@@ -71,12 +71,6 @@ public class TUser implements java.io.Serializable {
 	private Set<TRequest> userRequests = new HashSet<TRequest>(0);
 
 	/**
-	 * Типове събития, които огранизира дадена агенция
-	 */
-	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
-			0);
-
-	/**
 	 * Агенции, до които е направено запитването
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
@@ -116,7 +110,6 @@ public class TUser implements java.io.Serializable {
 
 	public TUser(String username, String password, String name, String phone,
 			String email, TRole userRole, Set<TRequest> userRequests,
-			Set<TAgencyEventType> tAgencyEventTypes,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
 			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies, byte[] photo) {
 		super();
@@ -127,7 +120,6 @@ public class TUser implements java.io.Serializable {
 		this.email = email;
 		this.userRole = userRole;
 		this.userRequests = userRequests;
-		this.tAgencyEventTypes = tAgencyEventTypes;
 		this.tAgencyRequests = tAgencyRequests;
 		this.sentMessages = sentMessages;
 		this.receivedMessages = receivedMessages;
@@ -214,15 +206,6 @@ public class TUser implements java.io.Serializable {
 
 	public void setUserRequests(Set<TRequest> userRequests) {
 		this.userRequests = userRequests;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
-	public Set<TAgencyEventType> gettAgencyEventTypes() {
-		return tAgencyEventTypes;
-	}
-
-	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
-		this.tAgencyEventTypes = tAgencyEventTypes;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tUser")

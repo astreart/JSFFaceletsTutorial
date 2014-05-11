@@ -28,7 +28,7 @@ public class TAgencyEventType implements java.io.Serializable{
 	/*
 	 * Агенция
 	 */
-	private TUser agency;
+	private TAgency agency;
 	
 	/*
 	 * Тип събитие
@@ -39,7 +39,7 @@ public class TAgencyEventType implements java.io.Serializable{
 	TAgencyEventType() {
 	}
 	
-	public TAgencyEventType(TUser agency, TEventType tEventType) {
+	public TAgencyEventType(TAgency agency, TEventType tEventType) {
 		super();
 		this.agency = agency;
 		this.tEventType = tEventType;
@@ -59,11 +59,11 @@ public class TAgencyEventType implements java.io.Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AGENCY_ID", nullable = false)
-	public TUser getAgency() {
+	public TAgency getAgency() {
 		return agency;
 	}
 
-	public void setAgency(TUser agency) {
+	public void setAgency(TAgency agency) {
 		this.agency = agency;
 	}
 
