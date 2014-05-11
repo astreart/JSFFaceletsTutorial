@@ -22,6 +22,7 @@
 					update="growl" />
 
 				<br />
+
 				<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
 					<p:commandLink action="agencyDetail.jsf?faces-redirect=true">
 						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
@@ -46,19 +47,16 @@
 						<h:outputLink value="#{agency.website}" target="_blank">#{agency.website}</h:outputLink>
 					</h:panelGrid>
 
-					<h:commandButton value="Детайли" action="agencyDetail">
+					<h:commandButton value="Детайли" action="agencyDetail?faces-redirect=true">
 						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
 							value="${agency}" />
 					</h:commandButton>
 				</h:panelGrid>
-				
-				<h:outputText value="#{agencyBean.rating[agency]}"/> 
-				
+
+				<h:outputText value="#{agencyBean.rating[agency]}" />
+
 			</p:fieldset>
 		</p:dataGrid>
-
-
-
 	</h:form>
 </f:view>
 </html>

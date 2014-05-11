@@ -9,8 +9,34 @@
 
 <h:head>
 </h:head>
-<h:form>Детайли за агенция за организиране на събития!</h:form>
-<h:outputText value="#{agencyBean.tAgency.tUser.name}" /><br/>
+<h:form>Детайли за агенция за организиране на събития!
+<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
+		<h:outputLink value="#{agencyBean.tAgency.website}" target="_blank">
+			<p:graphicImage value="#{agencyBean.image}"
+				alt="${tAgency.tUser.name}" width="200px" height="125px">
+				<f:param name="agencyId" value="#{agencyBean.tAgency.tUser.id}" />
+			</p:graphicImage>
+		</h:outputLink>
+		<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
+			<b>Агенция:</b>
+			<h:outputText value="#{agencyBean.tAgency.tUser.name}" />
+			<b>Организира:</b>
+			<h:outputText
+				value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />
+			<b>Телефон за контакт:</b>
+			<h:outputText value="#{agencyBean.tAgency.tUser.phone}" />
+			<b>Град: </b>
+			<h:outputText value="${agencyBean.tAgency.city}" />
+			<b>Адрес: </b>
+			<h:outputText value="${agencyBean.tAgency.address}" />
+			<b>Уеб сайт: </b>
+			<h:outputLink value="#{agencyBean.tAgency.website}" target="_blank">#{agencyBean.tAgency.website}</h:outputLink>
+		</h:panelGrid>
+	</h:panelGrid>
 	<h:outputText value="#{agencyBean.tAgency.information}" />
+	<br/>
 	<h:outputText value="#{agencyBean.rating[agencyBean.tAgency]}" />
+
+
+</h:form>
 </html>

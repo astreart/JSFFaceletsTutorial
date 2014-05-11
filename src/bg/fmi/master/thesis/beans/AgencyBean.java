@@ -34,7 +34,7 @@ import bg.fmi.master.thesis.model.TRequestFilter;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "agencyBean")
-@RequestScoped
+@SessionScoped
 public class AgencyBean implements Serializable {
 
 	private TAgency tAgency = new TAgency();
