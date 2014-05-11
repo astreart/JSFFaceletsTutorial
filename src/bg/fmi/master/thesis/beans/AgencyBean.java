@@ -1,6 +1,8 @@
 ﻿package bg.fmi.master.thesis.beans;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -41,8 +43,8 @@ public class AgencyBean implements Serializable {
 	private List<TAgency> agencyList;
 	private Map<TAgency, String> rating = new HashMap<TAgency, String>();
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
-	
-	public AgencyBean(){
+
+	public AgencyBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select hiredAgency, sum(r.assessment)/(count(r.assessment)), "
@@ -54,30 +56,31 @@ public class AgencyBean implements Serializable {
 		List<Object[]> list = query.getResultList();
 		for (Object[] element : list) {
 			TAgency ratingForAgency = (TAgency) element[0];
-			String ratingText = "Оценка " + element[1] + "/10, гласували: " + element[2];
+			String ratingText = "Оценка " + element[1] + "/10, гласували: "
+					+ element[2];
 			rating.put(ratingForAgency, ratingText);
 		}
-		
+
 		Query queryEventTypes = em
-				.createQuery("select agency, et.eventTypeName " +
-						"from TAgency agency join agency.tAgencyEventTypes eat " +
-						"join eat.tEventType et");
+				.createQuery("select agency, et.eventTypeName "
+						+ "from TAgency agency join agency.tAgencyEventTypes eat "
+						+ "join eat.tEventType et");
 		List<Object[]> list2 = queryEventTypes.getResultList();
-		
+
 		TAgency agencyObj = new TAgency();
-		String eventTypeText = ""; 
-		
+		String eventTypeText = "";
+
 		Iterator agencyIterator = list2.iterator();
 		while (agencyIterator.hasNext()) {
 			Object[] agencyEventTypePairs = (Object[]) agencyIterator.next();
-			agencyObj = (TAgency)agencyEventTypePairs[0];
-			eventTypeText= (String)agencyEventTypePairs[1];
-			if (agencyEventTypes.containsKey(agencyObj)){
+			agencyObj = (TAgency) agencyEventTypePairs[0];
+			eventTypeText = (String) agencyEventTypePairs[1];
+			if (agencyEventTypes.containsKey(agencyObj)) {
 				eventTypeText += ", " + agencyEventTypes.get(agencyObj);
 			}
-			
-		agencyEventTypes.put(agencyObj, eventTypeText);
-		agencyIterator.remove();
+
+			agencyEventTypes.put(agencyObj, eventTypeText);
+			agencyIterator.remove();
 
 		}
 	}
@@ -90,15 +93,14 @@ public class AgencyBean implements Serializable {
 		agencyList = q.getResultList();
 	}
 
-	
 	public Map<TAgency, String> getRating() {
 		return rating;
 	}
-	
+
 	public void setRating(Map<TAgency, String> rating) {
 		this.rating = rating;
 	}
-	
+
 	public List<TAgency> getAgencyList() {
 		return agencyList;
 	}
@@ -114,7 +116,7 @@ public class AgencyBean implements Serializable {
 	public void settAgency(TAgency tAgency) {
 		this.tAgency = tAgency;
 	}
-	
+
 	public Map<TAgency, String> getAgencyEventTypes() {
 		return agencyEventTypes;
 	}

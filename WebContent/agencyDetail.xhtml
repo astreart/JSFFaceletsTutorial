@@ -23,20 +23,25 @@
 			<b>Организира:</b>
 			<h:outputText
 				value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />
-			<b>Телефон за контакт:</b>
-			<h:outputText value="#{agencyBean.tAgency.tUser.phone}" />
 			<b>Град: </b>
 			<h:outputText value="${agencyBean.tAgency.city}" />
 			<b>Адрес: </b>
-			<h:outputText value="${agencyBean.tAgency.address}" />
+			<h:outputText
+				value="#{agencyBean.tAgency.address!=null ? agencyBean.tAgency.address : '-'}" />
+			<b>Телефон за контакт:</b>
+			<h:outputText value="#{agencyBean.tAgency.tUser.phone}" />
 			<b>Уеб сайт: </b>
 			<h:outputLink value="#{agencyBean.tAgency.website}" target="_blank">#{agencyBean.tAgency.website}</h:outputLink>
 		</h:panelGrid>
 	</h:panelGrid>
 	<h:outputText value="#{agencyBean.tAgency.information}" />
-	<br/>
+	<br />
+	<br />
 	<h:outputText value="#{agencyBean.rating[agencyBean.tAgency]}" />
-
+	<br />
+	<h:commandButton value="Изпрати запитване"
+		action="addRequest?faces-redirect=true">
+	</h:commandButton>
 
 </h:form>
 </html>

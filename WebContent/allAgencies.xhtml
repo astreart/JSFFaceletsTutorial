@@ -8,7 +8,7 @@
 <f:view>
 	<h:form>
 
-		<h:outputStylesheet library="css" name="toggleablePanel.css" />
+		<h:outputStylesheet library="css" name="css.css" />
 		<center>
 			<h2>Агенции за организиране на събития</h2>
 		</center>
@@ -20,7 +20,6 @@
 				toggleSpeed="500" style="width:600px">
 				<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
 					update="growl" />
-
 				<br />
 
 				<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
@@ -37,17 +36,16 @@
 						<h:outputText value="${agency.tUser.name}" />
 						<b>Организира:</b>
 						<h:outputText value="#{agencyBean.agencyEventTypes[agency]}" />
-						<b>Телефон за контакт:</b>
-						<h:outputText value="${agency.tUser.phone}" />
 						<b>Град: </b>
 						<h:outputText value="${agency.city}" />
-						<b>Адрес: </b>
-						<h:outputText value="${agency.address}" />
+						<b>Телефон за контакт:</b>
+						<h:outputText value="${agency.tUser.phone}" />
 						<b>Уеб сайт: </b>
 						<h:outputLink value="#{agency.website}" target="_blank">#{agency.website}</h:outputLink>
 					</h:panelGrid>
 
-					<h:commandButton value="Детайли" action="agencyDetail?faces-redirect=true">
+					<h:commandButton value="Детайли"
+						action="agencyDetail?faces-redirect=true">
 						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
 							value="${agency}" />
 					</h:commandButton>
