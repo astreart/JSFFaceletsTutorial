@@ -45,7 +45,7 @@ public class AgencyBean implements Serializable {
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
 
 	public AgencyBean() {
-		EntityManager em = HibernateUtil.getEntityManager();
+	    EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select hiredAgency, sum(r.assessment)/(count(r.assessment)), "
 						+ "count(r.assessment) "
@@ -141,7 +141,10 @@ public class AgencyBean implements Serializable {
 			}
 			byte[] image = (byte[]) currentAgency.gettUser().getPhoto();
 			if (image == null) {
-				return new DefaultStreamedContent();
+			    StreamedContent imageData;
+				File file = new File("F:\\MasterThesis_Radi\\workspace\\MasterThesis\\WebContent\\resources\\images\\agency.png");
+				imageData=new DefaultStreamedContent( new FileInputStream(file));
+				return imageData;
 			} else {
 				return new DefaultStreamedContent(new ByteArrayInputStream(
 						image));
