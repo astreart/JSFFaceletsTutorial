@@ -23,7 +23,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "T_COMMENT")
-public class TComment implements java.io.Serializable{
+public class TComment implements java.io.Serializable {
 
 	/**
 	 * ИД на коментар
@@ -50,18 +50,30 @@ public class TComment implements java.io.Serializable{
 	 */
 	private Boolean isNegative;
 
+	/**
+	 * Автор на коментара
+	 */
+	private TUser author;
+
+	/**
+	 * Агенция, за която се отнася коментара
+	 */
+	private TAgency commentedAgency;
+
 	TComment() {
 	}
-	
+
 	public TComment(TRequest tRequest, String commentBody, Date commentDate,
-			Boolean isNegative) {
+			Boolean isNegative, TUser author, TAgency commentedAgency) {
 		super();
 		this.tRequest = tRequest;
 		this.commentBody = commentBody;
 		this.commentDate = commentDate;
 		this.isNegative = isNegative;
+		this.author = author;
+		this.commentedAgency = commentedAgency;
 	}
-	
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_COMMENT", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
@@ -111,6 +123,26 @@ public class TComment implements java.io.Serializable{
 
 	public void setIsNegative(Boolean isNegative) {
 		this.isNegative = isNegative;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AUTHOR_ID", nullable = false)
+	public TUser getAuthor() {
+		return this.author;
+	}
+
+	public void setAuthor(TUser author) {
+		this.author = author;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AGENCY_ID", nullable = false)
+	public TAgency getCommentedAgency() {
+		return commentedAgency;
+	}
+
+	public void setCommentedAgency(TAgency commentedAgency) {
+		this.commentedAgency = commentedAgency;
 	}
 
 	@Override

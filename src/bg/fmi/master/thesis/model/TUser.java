@@ -71,6 +71,11 @@ public class TUser implements java.io.Serializable {
 	private Set<TRequest> userRequests = new HashSet<TRequest>(0);
 
 	/**
+	 * Коментари, направени от даден потребител
+	 */
+	private Set<TComment> userComments = new HashSet<TComment>(0);
+
+	/**
 	 * Агенции, до които е направено запитването
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
@@ -89,7 +94,7 @@ public class TUser implements java.io.Serializable {
 	 * Агенции за организиране на събития
 	 */
 	private Set<TAgency> tAgencies = new HashSet<TAgency>(0);
-	
+
 	/**
 	 * Снимка
 	 */
@@ -111,7 +116,8 @@ public class TUser implements java.io.Serializable {
 	public TUser(String username, String password, String name, String phone,
 			String email, TRole userRole, Set<TRequest> userRequests,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
-			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies, byte[] photo) {
+			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies,
+			byte[] photo, Set<TComment> userComments) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -125,6 +131,7 @@ public class TUser implements java.io.Serializable {
 		this.receivedMessages = receivedMessages;
 		this.tAgencies = tAgencies;
 		this.photo = photo;
+		this.userComments = userComments;
 	}
 
 	public TUser(TUser tUser) {
@@ -244,6 +251,25 @@ public class TUser implements java.io.Serializable {
 		this.tAgencies = tAgencies;
 	}
 
+	@Lob
+	@Column(name = "PHOTO", length = 100000)
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+	public Set<TComment> getUserComments() {
+		return userComments;
+	}
+
+	public void setUserComments(Set<TComment> userComments) {
+		this.userComments = userComments;
+	}
+
 	@Override
 	public String toString() {
 		return "TUser [id=" + id + ", username=" + username + ", name=" + name
@@ -270,15 +296,5 @@ public class TUser implements java.io.Serializable {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-
-	@Lob
-	@Column(name = "PHOTO", length = 100000)
-	public byte[] getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
 	}
 }
