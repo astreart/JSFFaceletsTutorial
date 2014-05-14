@@ -43,5 +43,23 @@
 		action="addRequest?faces-redirect=true">
 	</h:commandButton>
 
+
+	 <p:dataTable id="comments" var="comment"
+		value="#{agencyBean.getCommentByAgency(agencyBean.tAgency)}" paginator="true" rows="10">
+
+		<f:facet name="header">  
+            Коментари за агенция #{tAgency}
+        </f:facet>
+
+		<p:column headerText="Коментар">  
+            #{comment.commentBody}  
+        </p:column>
+
+		<p:column headerText="Дата">  
+            #{comment.commentDate}  
+        </p:column>
+
+	</p:dataTable> 
+
 </h:form>
 </html>

@@ -60,9 +60,9 @@ public class TComment implements java.io.Serializable {
 	 */
 	private TAgency commentedAgency;
 
-	TComment() {
+	public TComment() {
 	}
-
+	
 	public TComment(TRequest tRequest, String commentBody, Date commentDate,
 			Boolean isNegative, TUser author, TAgency commentedAgency) {
 		super();

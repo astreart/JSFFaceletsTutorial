@@ -29,6 +29,7 @@ import org.primefaces.model.StreamedContent;
 
 import bg.fmi.master.thesis.model.TAgency;
 import bg.fmi.master.thesis.model.TAgencyEventType;
+import bg.fmi.master.thesis.model.TComment;
 import bg.fmi.master.thesis.model.TEventType;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TImage;
@@ -43,6 +44,7 @@ public class AgencyBean implements Serializable {
 	private List<TAgency> agencyList;
 	private Map<TAgency, String> rating = new HashMap<TAgency, String>();
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
+	private List<TComment> comments;
 
 	public AgencyBean() {
 	    EntityManager em = HibernateUtil.getEntityManager();
@@ -124,6 +126,14 @@ public class AgencyBean implements Serializable {
 	public void setAgencyEventTypes(Map<TAgency, String> agencyEventTypes) {
 		this.agencyEventTypes = agencyEventTypes;
 	}
+	
+	public List<TComment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<TComment> comments) {
+		this.comments = comments;
+	}
 
 	public StreamedContent getImage() throws IOException {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -150,5 +160,15 @@ public class AgencyBean implements Serializable {
 						image));
 			}
 		}
+	}
+	
+	public List<TComment> getCommentByAgency(TAgency agency) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		
+		Query queryAgencyComments = em
+				.createQuery("select u from TComment u where u.commentedAgency = :agency");
+		queryAgencyComments.setParameter("agency", agency);
+		comments = queryAgencyComments.getResultList();
+		return comments;
 	}
 }
