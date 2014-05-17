@@ -44,22 +44,55 @@
 	</h:commandButton>
 
 
-	 <p:dataTable id="comments" var="comment"
-		value="#{agencyBean.getCommentByAgency(agencyBean.tAgency)}" paginator="true" rows="10">
+	<br />
+	<br />
+	<p:dataTable id="comments" var="comment"
+		value="#{agencyBean.getCommentByAgency(agencyBean.tAgency)}"
+		paginator="true" rows="3" paginatorPosition="bottom"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		emptyMessage="Няма коментари за тази агенция!">
 
 		<f:facet name="header">  
-            Коментари за агенция #{tAgency}
+            Коментари за агенция #{agencyBean.tAgency.tUser.name}
         </f:facet>
 
-		<p:column headerText="Коментар">  
-            #{comment.commentBody}  
-        </p:column>
+		<p:column>
+				#{comment.author.name} <br /> #{comment.commentDate}
+		</p:column>
 
-		<p:column headerText="Дата">  
-            #{comment.commentDate}  
-        </p:column>
+		<p:column>
 
-	</p:dataTable> 
+			<p:row>
+				<p:column>
+					<p:graphicImage library="images" name="positive.png" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{comment.positiveComment != null  ? comment.positiveComment : 'Няма положителен коментар към оценката'}"
+ style="#{comment.positiveComment != null ? '' : 'font-style:italic;'}"/>
+				</p:column>
+			</p:row>
+			<hr />
+			<p:row>
+				<p:column>
+					<p:graphicImage library="images" name="negative.png" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{comment.negativeComment != null  ? comment.negativeComment : 'Няма отрицателен коментар към оценката'}" 
+						style="#{comment.negativeComment != null ? '' : 'font-style:italic;'}"/>
+				</p:column>
+			</p:row>
+			<br />
+			<br />
+		</p:column>
+
+		<p:column>
+			<center>Оценка:</center>
+			<center>#{comment.tRequest.assessment}</center>
+		</p:column>
+
+	</p:dataTable>
 
 </h:form>
 </html>

@@ -36,19 +36,19 @@ public class TComment implements java.io.Serializable {
 	private TRequest tRequest;
 
 	/*
-	 * Коментар
+	 * Позитивен коментар
 	 */
-	private String commentBody;
+	private String positiveComment;
+	
+	/*
+	 * Негативен коментар
+	 */
+	private String negativeComment;
 
 	/*
 	 * Дата на коментара
 	 */
 	private Date commentDate;
-
-	/*
-	 * Флаг, показващ дали коментара е положителен или отрицателен
-	 */
-	private Boolean isNegative;
 
 	/**
 	 * Автор на коментара
@@ -63,13 +63,13 @@ public class TComment implements java.io.Serializable {
 	public TComment() {
 	}
 	
-	public TComment(TRequest tRequest, String commentBody, Date commentDate,
-			Boolean isNegative, TUser author, TAgency commentedAgency) {
+	public TComment(TRequest tRequest, String positiveComment, Date commentDate,
+			String negativeComment, TUser author, TAgency commentedAgency) {
 		super();
 		this.tRequest = tRequest;
-		this.commentBody = commentBody;
+		this.positiveComment = positiveComment;
 		this.commentDate = commentDate;
-		this.isNegative = isNegative;
+		this.positiveComment = positiveComment;
 		this.author = author;
 		this.commentedAgency = commentedAgency;
 	}
@@ -96,13 +96,22 @@ public class TComment implements java.io.Serializable {
 		this.tRequest = tRequest;
 	}
 
-	@Column(name = "COMMENT_BODY", nullable = false, length = 4000)
-	public String getCommentBody() {
-		return commentBody;
+	@Column(name = "POSITIVE_COMMENT", length = 4000)
+	public String getPositiveComment() {
+		return positiveComment;
 	}
 
-	public void setCommentBody(String commentBody) {
-		this.commentBody = commentBody;
+	public void setPositiveComment(String positiveComment) {
+		this.positiveComment = positiveComment;
+	}
+	
+	@Column(name = "NEGATIVE_COMMENT", length = 4000)
+	public String getNegativeComment() {
+		return negativeComment;
+	}
+
+	public void setNegativeComment(String negativeComment) {
+		this.negativeComment = negativeComment;
 	}
 
 	@Temporal(TemporalType.DATE)
@@ -113,16 +122,6 @@ public class TComment implements java.io.Serializable {
 
 	public void setCommentDate(Date commentDate) {
 		this.commentDate = commentDate;
-	}
-
-	@Column(name = "IS_NEGATIVE", length = 1, nullable = false)
-	@Type(type = "yes_no")
-	public Boolean getIsNegative() {
-		return isNegative;
-	}
-
-	public void setIsNegative(Boolean isNegative) {
-		this.isNegative = isNegative;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

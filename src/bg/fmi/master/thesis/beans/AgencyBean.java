@@ -34,6 +34,7 @@ import bg.fmi.master.thesis.model.TEventType;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TImage;
 import bg.fmi.master.thesis.model.TRequestFilter;
+import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "agencyBean")
@@ -166,9 +167,10 @@ public class AgencyBean implements Serializable {
 		EntityManager em = HibernateUtil.getEntityManager();
 		
 		Query queryAgencyComments = em
-				.createQuery("select u from TComment u where u.commentedAgency = :agency");
+				.createQuery("select u from TComment u where u.commentedAgency = :agency order by u.author");
 		queryAgencyComments.setParameter("agency", agency);
 		comments = queryAgencyComments.getResultList();
 		return comments;
-	}
+	}	
+	
 }
