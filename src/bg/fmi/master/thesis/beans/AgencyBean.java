@@ -43,22 +43,21 @@ public class AgencyBean implements Serializable {
 
 	private TAgency tAgency = new TAgency();
 	private List<TAgency> agencyList;
-	private Map<TAgency, String> rating = new HashMap<TAgency, String>();
+	private Map<Long, String> rating = new HashMap<Long, String>();
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
 	private List<TComment> comments;
 
 	public AgencyBean() {
-	    EntityManager em = HibernateUtil.getEntityManager();
-		Query query = em
-				.createQuery("select hiredAgency, sum(r.assessment)/(count(r.assessment)), "
-						+ "count(r.assessment) "
-						+ "from TAgency hiredAgency join hiredAgency.executedRequests r "
-						+ "group by hiredAgency.tUserId, hiredAgency.address, hiredAgency.city, hiredAgency.information,"
-						+ "hiredAgency.website");
+		EntityManager em = HibernateUtil.getEntityManager();
+		Query query = em.createQuery("select r.hiredAgency.tUserId, "
+				+ "sum(u.assessment)/(count(u.assessment)), "
+				+ "count(u.assessment) "
+				+ "from TRequest r join r.requestComments u "
+				+ "group by r.hiredAgency.tUserId");
 
 		List<Object[]> list = query.getResultList();
 		for (Object[] element : list) {
-			TAgency ratingForAgency = (TAgency) element[0];
+			Long ratingForAgency = (Long) element[0];
 			String ratingText = "Оценка " + element[1] + "/10, гласували: "
 					+ element[2];
 			rating.put(ratingForAgency, ratingText);
@@ -96,11 +95,11 @@ public class AgencyBean implements Serializable {
 		agencyList = q.getResultList();
 	}
 
-	public Map<TAgency, String> getRating() {
+	public Map<Long, String> getRating() {
 		return rating;
 	}
 
-	public void setRating(Map<TAgency, String> rating) {
+	public void setRating(Map<Long, String> rating) {
 		this.rating = rating;
 	}
 
@@ -127,7 +126,7 @@ public class AgencyBean implements Serializable {
 	public void setAgencyEventTypes(Map<TAgency, String> agencyEventTypes) {
 		this.agencyEventTypes = agencyEventTypes;
 	}
-	
+
 	public List<TComment> getComments() {
 		return comments;
 	}
@@ -152,9 +151,11 @@ public class AgencyBean implements Serializable {
 			}
 			byte[] image = (byte[]) currentAgency.gettUser().getPhoto();
 			if (image == null) {
-			    StreamedContent imageData;
-				File file = new File("F:\\MasterThesis_Radi\\workspace\\MasterThesis\\WebContent\\resources\\images\\agency.png");
-				imageData=new DefaultStreamedContent( new FileInputStream(file));
+				StreamedContent imageData;
+				File file = new File(
+						"F:\\MasterThesis_Radi\\workspace\\MasterThesis\\WebContent\\resources\\images\\agency.png");
+				imageData = new DefaultStreamedContent(
+						new FileInputStream(file));
 				return imageData;
 			} else {
 				return new DefaultStreamedContent(new ByteArrayInputStream(
@@ -162,15 +163,15 @@ public class AgencyBean implements Serializable {
 			}
 		}
 	}
-	
+
 	public List<TComment> getCommentByAgency(TAgency agency) {
 		EntityManager em = HibernateUtil.getEntityManager();
-		
+
 		Query queryAgencyComments = em
-				.createQuery("select u from TComment u where u.commentedAgency = :agency order by u.author");
+				.createQuery("select u from TComment u join u.tRequest r where r.hiredAgency = :agency order by r.author");
 		queryAgencyComments.setParameter("agency", agency);
 		comments = queryAgencyComments.getResultList();
 		return comments;
-	}	
-	
+	}
+
 }

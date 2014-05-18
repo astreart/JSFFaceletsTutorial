@@ -57,7 +57,8 @@
         </f:facet>
 
 		<p:column>
-				#{comment.author.name} <br /> #{comment.commentDate}
+				#{comment.tRequest.author.name}
+				 <br /> #{comment.commentDate}
 		</p:column>
 
 		<p:column>
@@ -69,7 +70,7 @@
 				<p:column>
 					<h:outputText
 						value="#{comment.positiveComment != null  ? comment.positiveComment : 'Няма положителен коментар към оценката'}"
- style="#{comment.positiveComment != null ? '' : 'font-style:italic;'}"/>
+						style="#{comment.positiveComment != null ? '' : 'font-style:italic;'}" />
 				</p:column>
 			</p:row>
 			<hr />
@@ -79,8 +80,8 @@
 				</p:column>
 				<p:column>
 					<h:outputText
-						value="#{comment.negativeComment != null  ? comment.negativeComment : 'Няма отрицателен коментар към оценката'}" 
-						style="#{comment.negativeComment != null ? '' : 'font-style:italic;'}"/>
+						value="#{comment.negativeComment != null  ? comment.negativeComment : 'Няма отрицателен коментар към оценката'}"
+						style="#{comment.negativeComment != null ? '' : 'font-style:italic;'}" />
 				</p:column>
 			</p:row>
 			<br />
@@ -89,7 +90,7 @@
 
 		<p:column>
 			<center>Оценка:</center>
-			<center>#{comment.tRequest.assessment}</center>
+			<center>#{comment.assessment}</center>
 		</p:column>
 
 	</p:dataTable>

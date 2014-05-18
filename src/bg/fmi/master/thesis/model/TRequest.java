@@ -36,12 +36,12 @@ public class TRequest implements java.io.Serializable {
 	 * Автор на запитването
 	 */
 	private TUser author;
-	
-    /**
-     * Заглавие на запитването
-     */
+
+	/**
+	 * Заглавие на запитването
+	 */
 	private String title;
-	
+
 	/**
 	 * Описание
 	 */
@@ -58,11 +58,6 @@ public class TRequest implements java.io.Serializable {
 	private TAgency hiredAgency;
 
 	/**
-	 * Оценка за това как е било организирано събитието от наетата агенция
-	 */
-	private int assessment;
-
-	/**
 	 * Флаг, показващ дали запитването е активно
 	 */
 	private Boolean isActive;
@@ -71,7 +66,6 @@ public class TRequest implements java.io.Serializable {
 	 * Флаг, показващ дали запитването е отменено
 	 */
 	private Boolean isCancelled;
-	
 
 	/**
 	 * Тип на събитието, за което е пуснато запитване
@@ -88,31 +82,38 @@ public class TRequest implements java.io.Serializable {
 	 */
 	private Set<TAgencyRequest> tAgencyRequests = new HashSet<TAgencyRequest>(0);
 
-	public TRequest() {	
-		}
+	/**
+	 * Коментар за наетата агенция
+	 */
+	private Set<TComment> requestComments = new HashSet<TComment>(0);
+
+	public TRequest() {
+	}
 
 	public TRequest(TUser author, String description, Date requestDate) {
 		this.author = author;
 		this.description = description;
 		this.requestDate = requestDate;
-	}	
+	}
 
-	public TRequest(TUser author, String title, String description, Date requestDate,
-			TAgency hiredAgency, int assessment, Boolean isActive,
-			Boolean isCancelled, Set<TRequestFilter> tRequestFilters,
-			Set<TAgencyRequest> tAgencyRequests, TEventType tEventType) {
+	public TRequest(TUser author, String title, String description,
+			Date requestDate, TAgency hiredAgency,
+			Boolean isActive, Boolean isCancelled,
+			Set<TRequestFilter> tRequestFilters,
+			Set<TAgencyRequest> tAgencyRequests, TEventType tEventType,
+			Set<TComment> requestComments) {
 		super();
 		this.author = author;
 		this.title = title;
 		this.description = description;
 		this.requestDate = requestDate;
 		this.hiredAgency = hiredAgency;
-		this.assessment = assessment;
 		this.isActive = isActive;
 		this.isCancelled = isCancelled;
 		this.tRequestFilters = tRequestFilters;
 		this.tAgencyRequests = tAgencyRequests;
 		this.tEventType = tEventType;
+		this.requestComments = requestComments;
 	}
 
 	public TRequest(TRequest tRequest) {
@@ -121,7 +122,6 @@ public class TRequest implements java.io.Serializable {
 		this.description = tRequest.description;
 		this.requestDate = tRequest.requestDate;
 		this.hiredAgency = tRequest.hiredAgency;
-		this.assessment = tRequest.assessment;
 		this.isActive = tRequest.isActive;
 		this.isCancelled = tRequest.isCancelled;
 		this.tRequestFilters = tRequest.tRequestFilters;
@@ -149,7 +149,7 @@ public class TRequest implements java.io.Serializable {
 	public void setAuthor(TUser author) {
 		this.author = author;
 	}
-	
+
 	@Column(name = "TITLE", nullable = false, length = 128)
 	public String getTitle() {
 		return title;
@@ -157,7 +157,7 @@ public class TRequest implements java.io.Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}	
+	}
 
 	@Column(name = "DESCRIPTION", nullable = false, length = 4000)
 	public String getDescription() {
@@ -188,15 +188,6 @@ public class TRequest implements java.io.Serializable {
 		this.hiredAgency = hiredAgency;
 	}
 
-	@Column(name = "ASSESSMENT")
-	public int getAssessment() {
-		return this.assessment;
-	}
-
-	public void setAssessment(int assessment) {
-		this.assessment = assessment;
-	}
-
 	@Column(name = "IS_ACTIVE", length = 1)
 	@Type(type = "yes_no")
 	public Boolean getIsActive() {
@@ -224,6 +215,15 @@ public class TRequest implements java.io.Serializable {
 
 	public void settAgencyRequests(Set<TAgencyRequest> tAgencyRequests) {
 		this.tAgencyRequests = tAgencyRequests;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")
+	public Set<TComment> getRequestComments() {
+		return requestComments;
+	}
+
+	public void setRequestComments(Set<TComment> requestComments) {
+		this.requestComments = requestComments;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tRequest")

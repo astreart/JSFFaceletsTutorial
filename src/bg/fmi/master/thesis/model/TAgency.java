@@ -63,11 +63,6 @@ public class TAgency implements java.io.Serializable {
 	private Set<TRequest> executedRequests = new HashSet<TRequest>(0);
 
 	/**
-	 * Коментари, направени за дадена агенция
-	 */
-	private Set<TComment> comments = new HashSet<TComment>(0);
-
-	/**
 	 * Типове събития, които огранизира дадена агенция
 	 */
 	private Set<TAgencyEventType> tAgencyEventTypes = new HashSet<TAgencyEventType>(
@@ -85,7 +80,7 @@ public class TAgency implements java.io.Serializable {
 
 	public TAgency(TUser tUser, String website, String city, String address,
 			String information, Set<TRequest> executedRequests,
-			Set<TAgencyEventType> tAgencyEventTypes, Set<TComment> comments) {
+			Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tUser = tUser;
 		this.website = website;
 		this.city = city;
@@ -93,7 +88,6 @@ public class TAgency implements java.io.Serializable {
 		this.information = information;
 		this.executedRequests = executedRequests;
 		this.tAgencyEventTypes = tAgencyEventTypes;
-		this.comments = comments;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY", allocationSize = 1)
@@ -170,15 +164,6 @@ public class TAgency implements java.io.Serializable {
 
 	public void settAgencyEventTypes(Set<TAgencyEventType> tAgencyEventTypes) {
 		this.tAgencyEventTypes = tAgencyEventTypes;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentedAgency")
-	public Set<TComment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<TComment> comments) {
-		this.comments = comments;
 	}
 
 	@Override

@@ -69,12 +69,6 @@ public class TUser implements java.io.Serializable {
 	 * Заявки, направени от даден потребител
 	 */
 	private Set<TRequest> userRequests = new HashSet<TRequest>(0);
-
-	/**
-	 * Коментари, направени от даден потребител
-	 */
-	private Set<TComment> userComments = new HashSet<TComment>(0);
-
 	/**
 	 * Агенции, до които е направено запитването
 	 */
@@ -117,7 +111,7 @@ public class TUser implements java.io.Serializable {
 			String email, TRole userRole, Set<TRequest> userRequests,
 			Set<TAgencyRequest> tAgencyRequests, Set<TMessage> sentMessages,
 			Set<TMessageUser> receivedMessages, Set<TAgency> tAgencies,
-			byte[] photo, Set<TComment> userComments) {
+			byte[] photo) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -131,7 +125,6 @@ public class TUser implements java.io.Serializable {
 		this.receivedMessages = receivedMessages;
 		this.tAgencies = tAgencies;
 		this.photo = photo;
-		this.userComments = userComments;
 	}
 
 	public TUser(TUser tUser) {
@@ -259,15 +252,6 @@ public class TUser implements java.io.Serializable {
 
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-	public Set<TComment> getUserComments() {
-		return userComments;
-	}
-
-	public void setUserComments(Set<TComment> userComments) {
-		this.userComments = userComments;
 	}
 
 	@Override

@@ -27,13 +27,16 @@
 		</f:facet>
 
 		<h:outputLabel for="title" value="Заглавие " style="font-weight:bold" />
-		<p:inputText id="title" required="true" style="width: 97%"
-			value="#{requestBean.tRequest.title}" resetValues="true" />
+		<p:inputText id="title" required="true"
+			requiredMessage="Моля, въведете заглавие на събитието, което искате да организираме!"
+			style="width: 97%" value="#{requestBean.tRequest.title}"
+			resetValues="true" />
 
 		<h:outputLabel for="description" value="Описание"
 			style="font-weight:bold" />
 		<p:inputTextarea id="description" rows="5" cols="30" maxlength="4000"
-			style="width: 97%" autoResize="false"
+			style="width: 97%" autoResize="false" required="true"
+			requiredMessage="Моля, опишете какво желаете да представлява събитието, което искате да организирате!"
 			value="#{requestBean.tRequest.description}" />
 
 		<b>Тип на събитието</b>

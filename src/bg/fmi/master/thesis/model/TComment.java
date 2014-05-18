@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,7 +40,7 @@ public class TComment implements java.io.Serializable {
 	 * Позитивен коментар
 	 */
 	private String positiveComment;
-	
+
 	/*
 	 * Негативен коментар
 	 */
@@ -51,27 +52,21 @@ public class TComment implements java.io.Serializable {
 	private Date commentDate;
 
 	/**
-	 * Автор на коментара
+	 * Оценка за това как е било организирано събитието от наетата агенция
 	 */
-	private TUser author;
-
-	/**
-	 * Агенция, за която се отнася коментара
-	 */
-	private TAgency commentedAgency;
+	private int assessment;
 
 	public TComment() {
 	}
-	
-	public TComment(TRequest tRequest, String positiveComment, Date commentDate,
-			String negativeComment, TUser author, TAgency commentedAgency) {
+
+	public TComment(TRequest tRequest, String positiveComment,
+			Date commentDate, String negativeComment, int assessment) {
 		super();
 		this.tRequest = tRequest;
 		this.positiveComment = positiveComment;
 		this.commentDate = commentDate;
 		this.positiveComment = positiveComment;
-		this.author = author;
-		this.commentedAgency = commentedAgency;
+		this.assessment = assessment;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_COMMENT", allocationSize = 1)
@@ -104,7 +99,7 @@ public class TComment implements java.io.Serializable {
 	public void setPositiveComment(String positiveComment) {
 		this.positiveComment = positiveComment;
 	}
-	
+
 	@Column(name = "NEGATIVE_COMMENT", length = 4000)
 	public String getNegativeComment() {
 		return negativeComment;
@@ -124,24 +119,13 @@ public class TComment implements java.io.Serializable {
 		this.commentDate = commentDate;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AUTHOR_ID", nullable = false)
-	public TUser getAuthor() {
-		return this.author;
+	@Column(name = "ASSESSMENT", nullable = false)
+	public int getAssessment() {
+		return this.assessment;
 	}
 
-	public void setAuthor(TUser author) {
-		this.author = author;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AGENCY_ID", nullable = false)
-	public TAgency getCommentedAgency() {
-		return commentedAgency;
-	}
-
-	public void setCommentedAgency(TAgency commentedAgency) {
-		this.commentedAgency = commentedAgency;
+	public void setAssessment(int assessment) {
+		this.assessment = assessment;
 	}
 
 	@Override
