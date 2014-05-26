@@ -30,3 +30,8 @@
     text-decoration: none;
     background-color: white;
 }
+
+/*capitalize text*/
+.capitalized {
+    text-transform: capitalize;
+}

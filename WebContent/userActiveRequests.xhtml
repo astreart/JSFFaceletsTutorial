@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head></h:head>
+<f:view>
+	<h:form>
+
+		<h:outputStylesheet library="css" name="css.css" />
+
+		<p:dataGrid value="#{userRequestBean.userActiveRequests}" columns="1"
+			var="userActiveRequest" selection="#{userRequestBean.request}"
+			rowKey="#{userActiveRequest.id}">
+			<f:facet name="header">
+            Моите активни запитвания
+        </f:facet>
+
+			<h:panelGrid columns="1" cellpadding="3" cellspacing="1">
+				<h:outputText value="#{userActiveRequest.title.toUpperCase()}"
+					style="font-weight: bold;" />
+				<h:outputText value="#{userActiveRequest.description}" />
+
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText value="Статус: " style="font-weight: bold;" />
+					</p:column>
+					<p:column colspan="2">
+						<h:outputText
+							value="#{userActiveRequest.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
+							style="#{userActiveRequest.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText
+							value="#{userActiveRequest.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
+					</p:column>
+					<p:column colspan="2">
+						<h:outputText
+							value="#{userActiveRequest.hiredAgency != null ? userActiveRequest.hiredAgency.tUser.name : ''}"
+							style="font-weight: bold;" />
+					</p:column>
+				</p:row>
+
+				<h:form rendered="#{not empty userActiveRequest.hiredAgency}">
+					<h:commandLink
+						value="Виж детайли за агенция #{userActiveRequest.hiredAgency.tUser.name}"
+						action="agencyDetail?faces-redirect=true">
+						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+							value="${userActiveRequest.hiredAgency}" />
+					</h:commandLink>
+				</h:form>
+
+				<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+					<p:commandButton value="Прекрати"
+						action="#{userRequestBean.cancelRequest()}">
+						<f:setPropertyActionListener target="#{userRequestBean.request}"
+							value="${userActiveRequest}" />
+					</p:commandButton>
+				</h:form>
+
+			</h:panelGrid>
+			<hr />
+		</p:dataGrid>
+
+	</h:form>
+</f:view>
+</html>
