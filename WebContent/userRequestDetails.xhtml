@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head></h:head>
+<f:view>
+	<h:form>
+
+		<h:outputStylesheet library="css" name="css.css" />
+
+		<h:panelGrid columns="1" cellpadding="3" cellspacing="1">
+			<h:outputText
+				value="#{(userRequestBean.request.title.toUpperCase())}"
+				style="font-weight: bold;" />
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Дата на запитването: "
+						style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText value="#{userRequestBean.request.requestDate}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Категория: " style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userRequestBean.request.tEventType.eventTypeName}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Описание: " style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText value="#{userRequestBean.request.description}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Статус: " style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userRequestBean.request.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
+						style="#{userRequestBean.request.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userRequestBean.request.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userRequestBean.request.hiredAgency != null ? userRequestBean.request.hiredAgency.tUser.name : ''}"
+						style="font-weight: bold;" />
+				</p:column>
+			</p:row>
+		</h:panelGrid>
+	</h:form>
+
+	<h:form
+		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+		<h:commandLink
+			value="Виж детайли за агенция #{userRequestBean.request.hiredAgency.tUser.name}"
+			action="agencyDetail?faces-redirect=true">
+			<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+				value="${userRequestBean.request.hiredAgency}" />
+		</h:commandLink>
+	</h:form>
+
+	<h:form rendered="#{empty userRequestBean.request.hiredAgency.city}">
+		<p:commandButton value="Прекрати"
+			action="#{userRequestBean.cancelRequest()}">
+		</p:commandButton>
+	</h:form>
+
+
+</f:view>
+</html>

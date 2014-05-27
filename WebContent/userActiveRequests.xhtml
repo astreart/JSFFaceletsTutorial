@@ -62,6 +62,13 @@
 					</p:commandButton>
 				</h:form>
 
+
+
+				<p:commandButton value="Детайли"
+					action="userRequestDetails?faces-redirect=true">
+					<f:setPropertyActionListener target="#{userRequestBean.request}"
+						value="${userActiveRequest}" />
+				</p:commandButton>
 			</h:panelGrid>
 			<hr />
 		</p:dataGrid>
