@@ -72,6 +72,23 @@ public class UserRequestBean implements Serializable {
 		return "cancelRequest";
 	}
 	
+	public void hireAgency(){
+		  EntityManager em = HibernateUtil.getEntityManager();
+			em.getTransaction().begin();
+			
+			Query queryAgency = em
+					.createQuery("select agency "
+							+ "from TAgency agency "
+							+ "where agency.tUserId = :agencyId ");
+
+			queryAgency.setParameter("agencyId", Long.valueOf(selectedAgencyId));
+			
+			TAgency agency = (TAgency) queryAgency.getSingleResult();
+			request.setHiredAgency(agency);
+			em.merge(request);
+			em.getTransaction().commit();
+	}
+	
 	public List<TRequest> getUserActiveRequests() {
 		return userActiveRequests;
 	}

@@ -65,16 +65,22 @@
 			</h:form>
 
 			<h:form>
-				<h:selectOneMenu
-					value="#{userRequestBean.selectedAgencyId}"
+			    Наемете агенция, която да организира Вашето събитие <br/>
+				<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
 					panelStyle="width:150px" effect="fade" style="width:97%"
 					required="true"
 					requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
 					<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
-					<f:selectItems value="#{userRequestBean.requestAgencies[userActiveRequest]}"
-						var="agency" itemLabel="#{agency[0]}"
-						itemValue="#{agency[1]}" />
+					<f:selectItems
+						value="#{userRequestBean.requestAgencies[userActiveRequest]}"
+						var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
 				</h:selectOneMenu>
+
+				<p:commandButton value="Наеми"
+					action="#{userRequestBean.hireAgency}">
+					<f:setPropertyActionListener target="#{userRequestBean.request}"
+						value="${userActiveRequest}" />
+				</p:commandButton>
 			</h:form>
 
 			<p:commandButton value="Детайли"
