@@ -45,13 +45,16 @@ public class UserRequestBean implements Serializable {
 		}
 	}
 
-	public void cancelRequest (){
+	public String cancelRequest(){
         EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		request.setIsCancelled(true);
 		request.setIsActive(false);
 		em.merge(request);
 		em.getTransaction().commit();
+		//remove the object from the List
+		userActiveRequests.remove(request);
+		return "cancelRequest";
 	}
 	
 	public List<TRequest> getUserActiveRequests() {

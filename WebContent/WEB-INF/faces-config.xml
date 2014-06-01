@@ -17,6 +17,13 @@
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>           
+        <navigation-case>
+            <from-outcome>cancelRequest</from-outcome>
+            <to-view-id>/userCancelledRequests.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 	<converter>
 		<converter-id>tEventTypeConverter</converter-id>
 		<converter-class>bg.fmi.master.thesis.beans.TEventTypeConverter</converter-class>

@@ -78,9 +78,9 @@
 	</h:form>
 
 	<h:form rendered="#{empty userRequestBean.request.hiredAgency.city}">
-		<p:commandButton value="Прекрати"
-			action="#{userRequestBean.cancelRequest()}">
-		</p:commandButton>
+		Ако желаете да спрете Вашето запитване, моля натиснете <p:commandLink
+			value="ТУК" action="#{userRequestBean.cancelRequest()}">
+		</p:commandLink>
 	</h:form>
 
 
