@@ -17,6 +17,7 @@ import javax.persistence.Parameter;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import bg.fmi.master.thesis.model.TAgency;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TRequest;
 import bg.fmi.master.thesis.model.TRequestFilter;
@@ -31,17 +32,30 @@ public class UserRequestBean implements Serializable {
 	
 	private List<TRequest> userActiveRequests;
 	private TRequest request = new TRequest();
+	private Map<TRequest, List<TAgency>> requestAgencies = new HashMap<TRequest, List<TAgency>>();
 	
-
 	public UserRequestBean(){
-		 System.out.println(request);
 		EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em.createQuery("select r " +
 				"from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
 		query.setParameter("userId", Long.valueOf(11));
 		userActiveRequests = query.getResultList();
-		for (TRequest a: userActiveRequests){
-			System.out.println(a.getTitle());
+		
+		for (TRequest req: userActiveRequests){
+			if (req.getHiredAgency() == null){
+				Query queryAgencies = em
+						.createQuery("select agency.id "
+								+ "from TUser agency join agency.sentMessages msg "
+								+ "join msg.tRequest req "
+								+ "where agency.userRole.id=1 and req.id = :requestId "
+								+ "group by agency.id");
+
+				queryAgencies.setParameter("requestId", req.getId());
+				
+				List<TAgency> agenciesAnsweredRequest = queryAgencies.getResultList();
+				requestAgencies.put(req, agenciesAnsweredRequest);
+			}
+			System.out.print("TEST");
 		}
 	}
 
@@ -72,5 +86,12 @@ public class UserRequestBean implements Serializable {
 	public void setRequest(TRequest request) {
 		this.request = request;
 	}
-	
+
+	public Map<TRequest, List<TAgency>> getRequestAgencies() {
+		return requestAgencies;
+	}
+
+	public void setRequestAgencies(Map<TRequest, List<TAgency>> requestAgencies) {
+		this.requestAgencies = requestAgencies;
+	}
 }
