@@ -32,7 +32,8 @@ public class UserRequestBean implements Serializable {
 	
 	private List<TRequest> userActiveRequests;
 	private TRequest request = new TRequest();
-	private Map<TRequest, List<TAgency>> requestAgencies = new HashMap<TRequest, List<TAgency>>();
+	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
+	public String selectedAgencyId;
 	
 	public UserRequestBean(){
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -44,15 +45,15 @@ public class UserRequestBean implements Serializable {
 		for (TRequest req: userActiveRequests){
 			if (req.getHiredAgency() == null){
 				Query queryAgencies = em
-						.createQuery("select agency.id "
+						.createQuery("select agency.name, agency.id "
 								+ "from TUser agency join agency.sentMessages msg "
 								+ "join msg.tRequest req "
 								+ "where agency.userRole.id=1 and req.id = :requestId "
-								+ "group by agency.id");
+								+ "group by agency.id, agency.name");
 
 				queryAgencies.setParameter("requestId", req.getId());
 				
-				List<TAgency> agenciesAnsweredRequest = queryAgencies.getResultList();
+				List<TUser> agenciesAnsweredRequest = queryAgencies.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			}
 			System.out.print("TEST");
@@ -87,11 +88,20 @@ public class UserRequestBean implements Serializable {
 		this.request = request;
 	}
 
-	public Map<TRequest, List<TAgency>> getRequestAgencies() {
+	public Map<TRequest, List<TUser>> getRequestAgencies() {
 		return requestAgencies;
 	}
 
-	public void setRequestAgencies(Map<TRequest, List<TAgency>> requestAgencies) {
+	public void setRequestAgencies(Map<TRequest, List<TUser>> requestAgencies) {
 		this.requestAgencies = requestAgencies;
 	}
+
+	public String getSelectedAgencyId() {
+		return selectedAgencyId;
+	}
+
+	public void setSelectedAgencyId(String selectedAgencyId) {
+		this.selectedAgencyId = selectedAgencyId;
+	}
+	
 }

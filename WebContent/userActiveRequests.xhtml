@@ -7,71 +7,84 @@
 <h:head></h:head>
 <f:view>
 
-		<h:outputStylesheet library="css" name="css.css" />
+	<h:outputStylesheet library="css" name="css.css" />
 
-		<p:dataGrid id = "dataGrid" value="#{userRequestBean.userActiveRequests}" columns="1"
-			var="userActiveRequest" selection="#{userRequestBean.request}"
-			rowKey="#{userActiveRequest.id}">
-			<f:facet name="header">
+	<p:dataGrid id="dataGrid" value="#{userRequestBean.userActiveRequests}"
+		columns="1" var="userActiveRequest"
+		selection="#{userRequestBean.request}"
+		rowKey="#{userActiveRequest.id}">
+		<f:facet name="header">
             Моите активни запитвания
         </f:facet>
 
-			<h:panelGrid id="panelGrid" columns="1" cellpadding="3" cellspacing="1">
-				<h:outputText value="#{userActiveRequest.title.toUpperCase()}"
-					style="font-weight: bold;" />
-				<h:outputText value="#{userActiveRequest.description}" />
+		<h:panelGrid id="panelGrid" columns="1" cellpadding="3"
+			cellspacing="1">
+			<h:outputText value="#{userActiveRequest.title.toUpperCase()}"
+				style="font-weight: bold;" />
+			<h:outputText value="#{userActiveRequest.description}" />
 
-				<p:row>
-					<p:column colspan="2">
-						<h:outputText value="Статус: " style="font-weight: bold;" />
-					</p:column>
-					<p:column colspan="2">
-						<h:outputText
-							value="#{userActiveRequest.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
-							style="#{userActiveRequest.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Статус: " style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userActiveRequest.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
+						style="#{userActiveRequest.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column colspan="2">
-						<h:outputText
-							value="#{userActiveRequest.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
-					</p:column>
-					<p:column colspan="2">
-						<h:outputText
-							value="#{userActiveRequest.hiredAgency != null ? userActiveRequest.hiredAgency.tUser.name : ''}"
-							style="font-weight: bold;" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userActiveRequest.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText
+						value="#{userActiveRequest.hiredAgency != null ? userActiveRequest.hiredAgency.tUser.name : ''}"
+						style="font-weight: bold;" />
+				</p:column>
+			</p:row>
 
-				<h:form rendered="#{not empty userActiveRequest.hiredAgency}">
-					<h:commandLink
-						value="Виж детайли за агенция #{userActiveRequest.hiredAgency.tUser.name}"
-						action="agencyDetail?faces-redirect=true">
-						<f:setPropertyActionListener target="#{agencyBean.tAgency}"
-							value="${userActiveRequest.hiredAgency}" />
-					</h:commandLink>
-				</h:form>
+			<h:form rendered="#{not empty userActiveRequest.hiredAgency}">
+				<h:commandLink
+					value="Виж детайли за агенция #{userActiveRequest.hiredAgency.tUser.name}"
+					action="agencyDetail?faces-redirect=true">
+					<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+						value="${userActiveRequest.hiredAgency}" />
+				</h:commandLink>
+			</h:form>
 
-				<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+			<h:form rendered="#{empty userActiveRequest.hiredAgency}">
 					Ако желаете да спрете Вашето запитване, моля натиснете <p:commandLink
-						value="ТУК" action="#{userRequestBean.cancelRequest()}"
-						update = ":dataGrid" >
-						<f:setPropertyActionListener target="#{userRequestBean.request}"
-							value="${userActiveRequest}" />
-					</p:commandLink>
-				</h:form>
-
-
-
-				<p:commandButton value="Детайли"
-					action="userRequestDetails?faces-redirect=true">
+					value="ТУК" action="#{userRequestBean.cancelRequest()}"
+					update=":dataGrid">
 					<f:setPropertyActionListener target="#{userRequestBean.request}"
 						value="${userActiveRequest}" />
-				</p:commandButton>
-			</h:panelGrid>
-			<hr />
-		</p:dataGrid>
+				</p:commandLink>
+			</h:form>
+
+			<h:form>
+				<h:selectOneMenu
+					value="#{userRequestBean.selectedAgencyId}"
+					panelStyle="width:150px" effect="fade" style="width:97%"
+					required="true"
+					requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
+					<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
+					<f:selectItems value="#{userRequestBean.requestAgencies[userActiveRequest]}"
+						var="agency" itemLabel="#{agency[0]}"
+						itemValue="#{agency[1]}" />
+				</h:selectOneMenu>
+			</h:form>
+
+			<p:commandButton value="Детайли"
+				action="userRequestDetails?faces-redirect=true">
+				<f:setPropertyActionListener target="#{userRequestBean.request}"
+					value="${userActiveRequest}" />
+			</p:commandButton>
+		</h:panelGrid>
+		<hr />
+	</p:dataGrid>
 
 
 </f:view>
