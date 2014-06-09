@@ -1,37 +1,50 @@
 /* toggleable fieldset */
 .ui-fieldset-toggleable .ui-fieldset-legend {
-    cursor: pointer;
-    padding: 0.5em 1em 0.5em 0.5em;
-    width: 700px;
+	cursor: pointer;
+	padding: 0.5em 1em 0.5em 0.5em;
+	width: 700px;
 }
 
 /* button if toggleable fieldset */
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
-    background-color: #FDDC6C;
-    font-family: Segoe UI,Arial,sans-serif;
-    font-size: 1em;
+.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+	{
+	background-color: #FDDC6C;
+	font-family: Segoe UI, Arial, sans-serif;
+	font-size: 1em;
 }
 
 /* selectonemenu color of selected item */
 .ui-selectonemenu-item.ui-state-highlight {
-    background: #a9c6c9;
+	background: #a9c6c9;
 }
 
 /* accordion */
 .ui-accordion .ui-accordion-header a {
-                background-color: #fddb67;
-                font-style: inherit;
-      color: black;
-            }
-            
-/*link*/           
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
- /*    color: black; */
-    text-decoration: none;
-    background-color: white;
+	background-color: #fddb67;
+	font-style: inherit;
+	color: black;
+}
+
+/*link*/
+.ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
+	/*    color: black; */
+	text-decoration: none;
+	background-color: white;
 }
 
 /*capitalize text*/
 .capitalized {
-    text-transform: capitalize;
+	text-transform: capitalize;
+}
+
+ui-datagrid ui-widget {
+	width: 33.33%;
+}
+
+/*selectOneMenu */
+.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+	{
+	background-color: #fef1c6;
+	font-family: Segoe UI, Arial, sans-serif;
+	font-size: 1em;
 }

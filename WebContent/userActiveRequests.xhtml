@@ -64,9 +64,10 @@
 				</p:commandLink>
 			</h:form>
 
-			<h:form>
-			    Наемете агенция, която да организира Вашето събитие <br/>
-				<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
+
+			<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+			Моля, изберете от падащото меню агенция 
+					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
 					panelStyle="width:150px" effect="fade" style="width:97%"
 					required="true"
 					requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
@@ -75,12 +76,12 @@
 						value="#{userRequestBean.requestAgencies[userActiveRequest]}"
 						var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
 				</h:selectOneMenu>
-
-				<p:commandButton value="Наеми"
-					action="#{userRequestBean.hireAgency}">
+				, която да организира Вашето събитие и 
+			<p:commandLink value="ПОТВЪРДЕТЕ"
+					action="#{userRequestBean.hireAgency()}" update=":dataGrid">
 					<f:setPropertyActionListener target="#{userRequestBean.request}"
 						value="${userActiveRequest}" />
-				</p:commandButton>
+				</p:commandLink>
 			</h:form>
 
 			<p:commandButton value="Детайли"
