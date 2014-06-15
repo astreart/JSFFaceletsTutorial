@@ -82,25 +82,25 @@
 			value="ТУК" action="#{userRequestBean.cancelRequest()}">
 		</p:commandLink>
 	</h:form>
-	
-	<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+
+	<h:form rendered="#{empty userRequestBean.request.hiredAgency}">
 			Моля, изберете от падащото меню агенция 
 					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
-					panelStyle="width:150px" effect="fade" style="width:97%"
-					required="true"
-					requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
-					<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
-					<f:selectItems
-						value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
-						var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
-				</h:selectOneMenu>
+			panelStyle="width:150px" effect="fade" style="width:97%"
+			required="true"
+			requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
+			<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
+			<f:selectItems
+				value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
+				var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
+		</h:selectOneMenu>
 				, която да организира Вашето събитие и 
 			<p:commandLink value="ПОТВЪРДЕТЕ"
-					action="#{userRequestBean.hireAgency()}">
-					<f:setPropertyActionListener target="#{userRequestBean.request}"
-						value="#{userRequestBean.request}" />
-				</p:commandLink>
-			</h:form>
+			action="#{userRequestBean.hireAgency()}">
+			<f:setPropertyActionListener target="#{userRequestBean.request}"
+				value="#{userRequestBean.request}" />
+		</p:commandLink>
+	</h:form>
 
 	<h:form>
 		<p:panel
@@ -114,19 +114,23 @@
 
 						<p:dataTable var="message"
 							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}">
-							<p:column headerText="Дата" style="text-align: center">
+							<p:column headerText="Дата"
+								style="text-align: center; width:200px;">
 								<p:row>
 									<h:outputText value="#{message[0]}" />
 								</p:row>
 								<br />
 								<p:row>
 									<h:outputText value="#{message[2]}" style="font-weight:bold">
-									<f:convertDateTime pattern="dd.MM.yyyy hh:mm:ss" /></h:outputText>
+										<f:convertDateTime pattern="dd.MM.yyyy hh:mm:ss" />
+									</h:outputText>
 								</p:row>
 							</p:column>
 
 
-							<p:column headerText="Съобщение" style="text-align: center">
+							<p:column
+								headerText="Разменени съобщение с агенция #{agency[0]}, в отговор на направеното запитване"
+								style="text-align: left">
 								<h:outputText value="#{message[1]}" />
 							</p:column>
 

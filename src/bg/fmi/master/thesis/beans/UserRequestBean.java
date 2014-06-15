@@ -73,7 +73,7 @@ public class UserRequestBean implements Serializable {
 		return "cancelRequest";
 	}
 
-	public void hireAgency() {
+	public String hireAgency() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 		em.getTransaction().begin();
@@ -87,6 +87,8 @@ public class UserRequestBean implements Serializable {
 		request.setHiredAgency(agency);
 		em.merge(request);
 		em.getTransaction().commit();
+		
+		return "userActiveRequests";
 	}
 
 	// HERE I AM
