@@ -159,7 +159,7 @@ public class TMessage implements java.io.Serializable{
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DATE_SENT", nullable = false, length = 7)
+	@Column(name = "DATE_SENT", columnDefinition = "date default sysdate")
 	public Date getDateSent() {
 		return dateSent;
 	}

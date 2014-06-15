@@ -107,14 +107,7 @@ public class UserRequestBean implements Serializable {
 		queryMessageGroup.setParameter("requestID",
 				Long.valueOf(requestVar.getId()));
 		queryMessageGroup.setParameter("agencyId", agencyId);
-		messageGroup = (Long) queryMessageGroup.getSingleResult();
-
-		 if (messageGroup!= null) {
-				System.out.println("messageGroup: " + messageGroup);
-         } else {
-             System.out.println("null");
-         }
-		 
+		messageGroup = (Long) queryMessageGroup.getSingleResult();		 
 
 		Query queryMessages = em
 				.createQuery("select user.name, msg.messageBody, msg.dateSent "
