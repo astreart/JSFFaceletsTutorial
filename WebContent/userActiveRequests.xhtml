@@ -64,8 +64,9 @@
 				</p:commandLink>
 			</h:form>
 
-
-			<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+			<h:form
+				rendered="#{empty userActiveRequest.hiredAgency.city and
+	        not empty userRequestBean.requestAgencies[userActiveRequest]}">
 			Моля, изберете от падащото меню агенция 
 					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
 					panelStyle="width:150px" effect="fade" style="width:97%"
@@ -82,6 +83,12 @@
 					<f:setPropertyActionListener target="#{userRequestBean.request}"
 						value="${userActiveRequest}" />
 				</p:commandLink>
+			</h:form>
+
+			<h:form
+				rendered="#{empty userActiveRequest.hiredAgency.city and empty userRequestBean.requestAgencies[userActiveRequest]}">
+				За да може да наемете агенция, първо трябва да осъществите комуникация <br />
+				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
 			<p:commandButton value="Детайли"
