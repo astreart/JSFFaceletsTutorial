@@ -34,10 +34,9 @@ public class UserRequestBean implements Serializable {
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
-	EntityManager em = HibernateUtil.getEntityManager();
 
 	public UserRequestBean() {
-		// EntityManager em = HibernateUtil.getEntityManager();
+	    EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
@@ -63,7 +62,7 @@ public class UserRequestBean implements Serializable {
 	}
 
 	public String cancelRequest() {
-		// EntityManager em = HibernateUtil.getEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		request.setIsCancelled(true);
 		request.setIsActive(false);
@@ -75,7 +74,8 @@ public class UserRequestBean implements Serializable {
 	}
 
 	public void hireAgency() {
-		// EntityManager em = HibernateUtil.getEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();
+		if (!em.getTransaction().isActive())
 		em.getTransaction().begin();
 
 		Query queryAgency = em.createQuery("select agency "
@@ -91,7 +91,8 @@ public class UserRequestBean implements Serializable {
 
 	// HERE I AM
 	public List<Object> showMessages(TRequest requestVar, Long agencyId) {
-
+		EntityManager em = HibernateUtil.getEntityManager();
+		
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
 

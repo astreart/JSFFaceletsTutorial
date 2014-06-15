@@ -82,9 +82,28 @@
 			value="ТУК" action="#{userRequestBean.cancelRequest()}">
 		</p:commandLink>
 	</h:form>
+	
+	<h:form rendered="#{empty userActiveRequest.hiredAgency}">
+			Моля, изберете от падащото меню агенция 
+					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
+					panelStyle="width:150px" effect="fade" style="width:97%"
+					required="true"
+					requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
+					<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
+					<f:selectItems
+						value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
+						var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
+				</h:selectOneMenu>
+				, която да организира Вашето събитие и 
+			<p:commandLink value="ПОТВЪРДЕТЕ"
+					action="#{userRequestBean.hireAgency()}">
+					<f:setPropertyActionListener target="#{userRequestBean.request}"
+						value="#{userRequestBean.request}" />
+				</p:commandLink>
+			</h:form>
 
 	<h:form>
-		<p:panel id="basic"
+		<p:panel
 			header="Разменени съобщения с агенции за организиране на събития"
 			footer="" style="margin-bottom:20px">
 			<p:accordionPanel style="border:1px solid;" activeIndex="-1">
@@ -92,13 +111,26 @@
 					items="#{userRequestBean.requestAgencies[userRequestBean.request]}"
 					var="agency">
 					<p:tab title="#{agency[0]}">
-						<c:forEach
-							items="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
-							var="message">
 
-							<h:outputText value="#{message[1]}"
-								style="width: 100px; white-space: normal; border: 3px" />
-						</c:forEach>
+						<p:dataTable var="message"
+							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}">
+							<p:column headerText="Дата" style="text-align: center">
+								<p:row>
+									<h:outputText value="#{message[0]}" />
+								</p:row>
+								<br />
+								<p:row>
+									<h:outputText value="#{message[2]}" style="font-weight:bold">
+									<f:convertDateTime pattern="dd.MM.yyyy hh:mm:ss" /></h:outputText>
+								</p:row>
+							</p:column>
+
+
+							<p:column headerText="Съобщение" style="text-align: center">
+								<h:outputText value="#{message[1]}" />
+							</p:column>
+
+						</p:dataTable>
 
 					</p:tab>
 				</c:forEach>
