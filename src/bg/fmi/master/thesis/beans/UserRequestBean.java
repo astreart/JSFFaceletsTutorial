@@ -34,9 +34,10 @@ public class UserRequestBean implements Serializable {
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
+	EntityManager em = HibernateUtil.getEntityManager();
 	
 	public UserRequestBean(){
-		EntityManager em = HibernateUtil.getEntityManager();
+		//EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em.createQuery("select r " +
 				"from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
 		query.setParameter("userId", Long.valueOf(11));
@@ -56,12 +57,11 @@ public class UserRequestBean implements Serializable {
 				List<TUser> agenciesAnsweredRequest = queryAgencies.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			}
-			System.out.print("TEST");
 		}
 	}
 
 	public String cancelRequest(){
-        EntityManager em = HibernateUtil.getEntityManager();
+       // EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		request.setIsCancelled(true);
 		request.setIsActive(false);
@@ -73,7 +73,7 @@ public class UserRequestBean implements Serializable {
 	}
 	
 	public void hireAgency(){
-		  EntityManager em = HibernateUtil.getEntityManager();
+		//  EntityManager em = HibernateUtil.getEntityManager();
 			em.getTransaction().begin();
 			
 			Query queryAgency = em
@@ -87,6 +87,26 @@ public class UserRequestBean implements Serializable {
 			request.setHiredAgency(agency);
 			em.merge(request);
 			em.getTransaction().commit();
+	}
+	
+	//HERE I AM
+	public void showMessages(TRequest requestVar, Long agencyId){
+		
+		if (!em.getTransaction().isActive()) 
+		em.getTransaction().begin();
+		
+		System.out.println ("AgencyID: " + agencyId );
+		Query queryMessages= em
+				.createQuery("select user.name, msg.messageBody, msg.dateSent "
+						+ "from TUser user join user.sentMessages msg "
+						+ "where user.id = :userId "
+						+ "order by msg.dateSent asc");
+
+		queryMessages.setParameter("userId", Long.valueOf(requestVar.getAuthor().getId()));
+		//queryMessages.setParameter("agencyId", Long.valueOf(agencyId));
+		
+		List<Object> messages = queryMessages.getResultList();
+	
 	}
 	
 	public List<TRequest> getUserActiveRequests() {
@@ -120,5 +140,4 @@ public class UserRequestBean implements Serializable {
 	public void setSelectedAgencyId(String selectedAgencyId) {
 		this.selectedAgencyId = selectedAgencyId;
 	}
-	
 }
