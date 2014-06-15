@@ -69,9 +69,9 @@ public class TMessage implements java.io.Serializable{
 	private Boolean isRead;
 	
 	/*
-	 * Външен ключ към T_MESSAGE. Показва с кое съобщение е свързано текущото
+	 * Група, към която спада съобщението
 	 */
-	private TMessage tMessage;
+	private Long messageGroup;
 	
 	public TMessage() {
 	}
@@ -88,7 +88,7 @@ public class TMessage implements java.io.Serializable{
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String title, String messageBody,
-			Date dateSent, Boolean isRead, TMessage tMessage){
+			Date dateSent, Boolean isRead, Long messageGroup){
 		this.tUser = tUser;
 		this.tMessageUsers = tMessageUsers;
 		this.tRequest = tRequest;
@@ -96,7 +96,7 @@ public class TMessage implements java.io.Serializable{
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
 		this.isRead = isRead;
-		this.tMessage = tMessage;
+		this.messageGroup = messageGroup;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_MESSAGE", allocationSize = 1)
@@ -178,14 +178,13 @@ public class TMessage implements java.io.Serializable{
 		this.isRead = isRead;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PARENT_ID")
-	public TMessage gettMessage() {
-		return tMessage;
+	@Column(name = "MESSAGE_GROUP", nullable = false)
+	public Long getMessageGroup() {
+		return messageGroup;
 	}
 
-	public void settMessage(TMessage tMessage) {
-		this.tMessage = tMessage;
+	public void setMessageGroup(Long messageGroup) {
+		this.messageGroup = messageGroup;
 	}
 
 	@Override

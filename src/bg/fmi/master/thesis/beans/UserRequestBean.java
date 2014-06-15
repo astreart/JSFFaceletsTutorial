@@ -27,24 +27,25 @@ import bg.fmi.master.thesis.util.HibernateUtil;
 @ManagedBean(name = "userRequestBean")
 @SessionScoped
 public class UserRequestBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<TRequest> userActiveRequests;
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
 	EntityManager em = HibernateUtil.getEntityManager();
-	
-	public UserRequestBean(){
-		//EntityManager em = HibernateUtil.getEntityManager();
-		Query query = em.createQuery("select r " +
-				"from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
+
+	public UserRequestBean() {
+		// EntityManager em = HibernateUtil.getEntityManager();
+		Query query = em
+				.createQuery("select r "
+						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
 		query.setParameter("userId", Long.valueOf(11));
 		userActiveRequests = query.getResultList();
-		
-		for (TRequest req: userActiveRequests){
-			if (req.getHiredAgency() == null){
+
+		for (TRequest req : userActiveRequests) {
+			if (req.getHiredAgency() == null) {
 				Query queryAgencies = em
 						.createQuery("select agency.name, agency.id "
 								+ "from TUser agency join agency.sentMessages msg "
@@ -53,62 +54,85 @@ public class UserRequestBean implements Serializable {
 								+ "group by agency.id, agency.name");
 
 				queryAgencies.setParameter("requestId", req.getId());
-				
-				List<TUser> agenciesAnsweredRequest = queryAgencies.getResultList();
+
+				List<TUser> agenciesAnsweredRequest = queryAgencies
+						.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			}
 		}
 	}
 
-	public String cancelRequest(){
-       // EntityManager em = HibernateUtil.getEntityManager();
+	public String cancelRequest() {
+		// EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		request.setIsCancelled(true);
 		request.setIsActive(false);
 		em.merge(request);
 		em.getTransaction().commit();
-		//remove the object from the List
+		// remove the object from the List
 		userActiveRequests.remove(request);
 		return "cancelRequest";
 	}
-	
-	public void hireAgency(){
-		//  EntityManager em = HibernateUtil.getEntityManager();
-			em.getTransaction().begin();
-			
-			Query queryAgency = em
-					.createQuery("select agency "
-							+ "from TAgency agency "
-							+ "where agency.tUserId = :agencyId ");
 
-			queryAgency.setParameter("agencyId", Long.valueOf(selectedAgencyId));
-			
-			TAgency agency = (TAgency) queryAgency.getSingleResult();
-			request.setHiredAgency(agency);
-			em.merge(request);
-			em.getTransaction().commit();
-	}
-	
-	//HERE I AM
-	public void showMessages(TRequest requestVar, Long agencyId){
-		
-		if (!em.getTransaction().isActive()) 
+	public void hireAgency() {
+		// EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
-		
-		System.out.println ("AgencyID: " + agencyId );
-		Query queryMessages= em
+
+		Query queryAgency = em.createQuery("select agency "
+				+ "from TAgency agency " + "where agency.tUserId = :agencyId ");
+
+		queryAgency.setParameter("agencyId", Long.valueOf(selectedAgencyId));
+
+		TAgency agency = (TAgency) queryAgency.getSingleResult();
+		request.setHiredAgency(agency);
+		em.merge(request);
+		em.getTransaction().commit();
+	}
+
+	// HERE I AM
+	public List<Object> showMessages(TRequest requestVar, Long agencyId) {
+
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
+
+		System.out.println("AgencyID: " + agencyId);
+
+		Long messageGroup = null;
+
+		Query queryMessageGroup = em.createQuery("select msg.messageGroup "
+				+ "from TUser user join user.sentMessages msg "
+				+ "where user.id = :agencyId and msg.tRequest.id = :requestID "
+				+ "group by msg.messageGroup");
+
+		queryMessageGroup.setParameter("requestID",
+				Long.valueOf(requestVar.getId()));
+		queryMessageGroup.setParameter("agencyId", agencyId);
+		messageGroup = (Long) queryMessageGroup.getSingleResult();
+
+		 if (messageGroup!= null) {
+				System.out.println("messageGroup: " + messageGroup);
+         } else {
+             System.out.println("null");
+         }
+		 
+
+		Query queryMessages = em
 				.createQuery("select user.name, msg.messageBody, msg.dateSent "
 						+ "from TUser user join user.sentMessages msg "
-						+ "where user.id = :userId "
+						+ "where user.id in (:userId, :agencyId) "
+						+ "and msg.messageGroup = :messageGroup "
 						+ "order by msg.dateSent asc");
 
-		queryMessages.setParameter("userId", Long.valueOf(requestVar.getAuthor().getId()));
-		//queryMessages.setParameter("agencyId", Long.valueOf(agencyId));
-		
+		queryMessages.setParameter("userId",
+				Long.valueOf(requestVar.getAuthor().getId()));
+		queryMessages.setParameter("agencyId", agencyId);
+		queryMessages.setParameter("messageGroup", messageGroup);
+
 		List<Object> messages = queryMessages.getResultList();
-	
+		return messages;
+
 	}
-	
+
 	public List<TRequest> getUserActiveRequests() {
 		return userActiveRequests;
 	}
