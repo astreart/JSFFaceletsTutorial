@@ -47,12 +47,7 @@ public class TMessage implements java.io.Serializable{
 	 * Заявка, към която се отнася съобщението
 	 */
 	private TRequest tRequest;
-	
-	/*
-	 * Заглавие
-	 */
-	private String title;
-	
+
 	/*
 	 * Съдържание
 	 */
@@ -64,11 +59,6 @@ public class TMessage implements java.io.Serializable{
 	private Date dateSent;
 
 	/*
-	 * Флаг, показващ дали съобщението е прочетено
-	 */
-	private Boolean isRead;
-	
-	/*
 	 * Група, към която спада съобщението
 	 */
 	private Long messageGroup;
@@ -76,15 +66,13 @@ public class TMessage implements java.io.Serializable{
 	public TMessage() {
 	}
 	
-	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String title, String messageBody,
-			Date dateSent, Boolean isRead){
+	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String messageBody,
+			Date dateSent){
 		this.tUser = tUser;
 		this.tMessageUsers = tMessageUsers;
 		this.tRequest = tRequest;
-		this.title = title;
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
-		this.isRead = isRead;
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String title, String messageBody,
@@ -92,10 +80,8 @@ public class TMessage implements java.io.Serializable{
 		this.tUser = tUser;
 		this.tMessageUsers = tMessageUsers;
 		this.tRequest = tRequest;
-		this.title = title;
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
-		this.isRead = isRead;
 		this.messageGroup = messageGroup;
 	}
 
@@ -140,15 +126,6 @@ public class TMessage implements java.io.Serializable{
 		this.tRequest = tRequest;
 	}
 
-	@Column(name = "TITLE", length = 60, nullable = false)
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	@Column(name = "MESSAGE_BODY", length = 4000, nullable = false)
 	public String getMessageBody() {
 		return messageBody;
@@ -166,16 +143,6 @@ public class TMessage implements java.io.Serializable{
 
 	public void setDateSent(Date dateSent) {
 		this.dateSent = dateSent;
-	}
-
-	public Boolean getIsRead() {
-		return isRead;
-	}
-
-	@Column(name = "IS_READ", length = 1, nullable = false)
-	@Type(type = "yes_no")
-	public void setIsRead(Boolean isRead) {
-		this.isRead = isRead;
 	}
 
 	@Column(name = "MESSAGE_GROUP", nullable = false)

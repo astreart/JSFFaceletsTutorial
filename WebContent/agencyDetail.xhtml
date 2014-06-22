@@ -19,7 +19,7 @@
 		</h:outputLink>
 		<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
 			<b>Агенция:</b>
-			<h:outputText value="#{agencyBean.tAgency.tUser.name}" />
+			<h:outputText value="#{agencyBean.tAgency.tUser.name}, #{agencyBean.rating[agencyBean.tAgency.tUserId]}" />
 			<b>Организира:</b>
 			<h:outputText
 				value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />

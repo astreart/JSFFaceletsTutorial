@@ -123,28 +123,54 @@
 					<p:tab title="#{agency[0]}">
 
 						<p:dataTable var="message"
-							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}">
-							<p:column headerText="Дата"
+							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
+							id = "dataTable#{agency[1]}">
+
+							<f:facet name="footer">
+								<p:commandButton type="button" onclick="tableDialog#{agency[1]}.show()"
+									value="Изпрати съобщение" image="add" />
+							</f:facet>
+
+							<p:column headerText="Написано от"
 								style="text-align: center; width:200px;">
 								<p:row>
-									<h:outputText value="#{message[0]}" />
+									<h:outputText value="#{message[0]}," />
 								</p:row>
 								<br />
 								<p:row>
 									<h:outputText value="#{message[2]}" style="font-weight:bold">
-										<f:convertDateTime pattern="dd.MM.yyyy hh:mm:ss" />
+										<f:convertDateTime pattern="dd.MM.yyyy" timeZone="GMT+2"
+											type="both" dateStyle="long" />
 									</h:outputText>
 								</p:row>
 							</p:column>
 
 
 							<p:column
-								headerText="Разменени съобщение с агенция #{agency[0]}, в отговор на направеното запитване"
+								headerText="Разменени съобщение с агенция #{agency[0]}, в отговор на направеното по-горе запитване"
 								style="text-align: left">
 								<h:outputText value="#{message[1]}" />
 							</p:column>
 
 						</p:dataTable>
+
+						<p:dialog widgetVar="tableDialog#{agency[1]}" showEffect="explode"
+							hideEffect="explode" header="Напиши съобщение">
+
+							<h:panelGrid columns="1" id="newColumnGrid#{agency[1]}">
+
+								<p:inputTextarea rows="5" cols="32" autoResize="false" />
+								<p:commandButton value="Публикувай съобщението на стената"
+									actionListener="#{tableBean.addColumn}"
+									
+									update="dataTable#{agency[1]} newColumnGrid#{agency[1]}" 
+									oncomplete="tableDialog.hide()"/>
+									
+									<h:outputText value="dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
+
+							</h:panelGrid>
+
+						</p:dialog>
 
 					</p:tab>
 				</c:forEach>
