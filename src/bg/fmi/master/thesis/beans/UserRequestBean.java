@@ -38,13 +38,14 @@ public class UserRequestBean implements Serializable {
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
+	private Long messageToAgencyId;
 
 	public UserRequestBean() {
-	    EntityManager em = HibernateUtil.getEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
-		//TODO: Depends on the logged user
+		// TODO: Depends on the logged user
 		query.setParameter("userId", Long.valueOf(11));
 		userActiveRequests = query.getResultList();
 
@@ -81,7 +82,7 @@ public class UserRequestBean implements Serializable {
 	public String hireAgency() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
-		em.getTransaction().begin();
+			em.getTransaction().begin();
 
 		Query queryAgency = em.createQuery("select agency "
 				+ "from TAgency agency " + "where agency.tUserId = :agencyId ");
@@ -92,18 +93,15 @@ public class UserRequestBean implements Serializable {
 		request.setHiredAgency(agency);
 		em.merge(request);
 		em.getTransaction().commit();
-		
+
 		return "userActiveRequests";
 	}
 
-	// HERE I AM
 	public List<Object> showMessages(TRequest requestVar, Long agencyId) {
 		EntityManager em = HibernateUtil.getEntityManager();
-		
+
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
-
-		System.out.println("AgencyID: " + agencyId);
 
 		Long messageGroup = null;
 
@@ -115,7 +113,7 @@ public class UserRequestBean implements Serializable {
 		queryMessageGroup.setParameter("requestID",
 				Long.valueOf(requestVar.getId()));
 		queryMessageGroup.setParameter("agencyId", agencyId);
-		messageGroup = (Long) queryMessageGroup.getSingleResult();		 
+		messageGroup = (Long) queryMessageGroup.getSingleResult();
 
 		Query queryMessages = em
 				.createQuery("select user.name, msg.messageBody, msg.dateSent, msg.messageGroup  "
@@ -132,26 +130,33 @@ public class UserRequestBean implements Serializable {
 		List<Object> messages = queryMessages.getResultList();
 		return messages;
 	}
-	
-	public void addMessage(TRequest requestVar){//, Long messageGroupVar){
-		System.out.println("TEST");
+
+	public void addMessage(TRequest requestVar) {// , Long messageGroupVar){
+
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
-		
-		TMessage msg= new TMessage(message);
+
+		TMessage msg = new TMessage(message);
 
 		msg.setDateSent(new Date());
 		msg.settRequest(requestVar);
-		//msg.setMessageGroup(messageGroupVar);
-		msg.setMessageGroup(Long.valueOf(1));
-		
-		System.out.println("messageBody: " + message.getMessageBody());
+
+		Query queryMessageGroup = em.createQuery("select msg.messageGroup "
+				+ "from TUser user join user.sentMessages msg "
+				+ "where user.id = :agencyId and msg.tRequest.id = :requestID "
+				+ "group by msg.messageGroup");
+
+		queryMessageGroup.setParameter("requestID",
+				Long.valueOf(requestVar.getId()));
+		queryMessageGroup.setParameter("agencyId", messageToAgencyId);
+		msg.setMessageGroup((Long) queryMessageGroup.getSingleResult());
+
 		msg.setMessageBody(message.getMessageBody());
-		
+
 		message.setMessageBody(null);
 
-		//TODO: Depends on the logged user
+		// TODO: Depends on the logged user
 		Query q = em.createQuery("select u from TUser u where u.id = 11");
 		TUser tUser = (TUser) q.getSingleResult();
 		msg.settUser(tUser);
@@ -161,7 +166,7 @@ public class UserRequestBean implements Serializable {
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		}
-		
+
 		em.getTransaction().commit();
 
 	}
@@ -204,5 +209,9 @@ public class UserRequestBean implements Serializable {
 
 	public void setMessage(TMessage message) {
 		this.message = message;
+	}
+
+	public void setMessageToAgencyIdValue(Long messageToAgencyId) {
+		this.messageToAgencyId = messageToAgencyId;
 	}
 }

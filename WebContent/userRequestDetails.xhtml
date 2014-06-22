@@ -111,7 +111,7 @@
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
-	<h:form
+	<h:form id="form"
 		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">
 		<p:panel
 			header="Разменени съобщения с агенции за организиране на събития"
@@ -127,9 +127,9 @@
 							id="dataTable#{agency[1]}">
 
 							<f:facet name="footer">
-								<p:commandButton type="button"
-									onclick="tableDialog#{agency[1]}.show()"
-									value="Изпрати съобщение" />
+								<p:commandButton
+									action="#{userRequestBean.setMessageToAgencyIdValue(agency[1])}"
+									onclick="tableDialog.show()" value="Изпрати съобщение" />
 							</f:facet>
 
 							<p:column headerText="Написано от"
@@ -154,30 +154,23 @@
 							</p:column>
 
 						</p:dataTable>
-
-						<p:dialog widgetVar="tableDialog#{agency[1]}" showEffect="explode"
-							hideEffect="explode" header="Напиши съобщение">
-
-							<h:panelGrid columns="1" id="newColumnGrid#{agency[1]}">
-
-								<p:inputTextarea rows="5" cols="32" autoResize="false"
-									value="#{userRequestBean.message.messageBody}"
-									resetValues="true"/>
-								<p:commandButton value="Публикувай съобщението на стената"
-									actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
-									update="dataTable#{agency[1]} newColumnGrid#{agency[1]}"
-									oncomplete="tableDialog#{agency[1]}.hide()" />
-
-								<h:outputText
-									value="tableDialog#{agency[1]} dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
-
-							</h:panelGrid>
-
-						</p:dialog>
-
 					</p:tab>
 				</c:forEach>
+
 			</p:accordionPanel>
+
+			<p:dialog widgetVar="tableDialog" showEffect="explode"
+				hideEffect="explode" header="Напиши съобщение">
+
+				<h:panelGrid columns="1">
+					<p:inputTextarea rows="5" cols="32" autoResize="false"
+						value="#{userRequestBean.message.messageBody}" resetValues="true" />
+					<p:commandButton value="Публикувай съобщението на стената"
+						actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
+						oncomplete="tableDialog.hide()" update="form" />
+				</h:panelGrid>
+			</p:dialog>
+
 		</p:panel>
 	</h:form>
 
