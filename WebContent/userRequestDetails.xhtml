@@ -161,15 +161,15 @@
 							<h:panelGrid columns="1" id="newColumnGrid#{agency[1]}">
 
 								<p:inputTextarea rows="5" cols="32" autoResize="false"
-									value="#{userRequestBean.message.messageBody}" required="true"
-									requiredMessage="Моля, въведете текст на събитието, което искате да изпратите"
-									resetValues="true" />
+									value="#{userRequestBean.message.messageBody}"
+									resetValues="true"/>
 								<p:commandButton value="Публикувай съобщението на стената"
 									actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
+									update="dataTable#{agency[1]} newColumnGrid#{agency[1]}"
 									oncomplete="tableDialog#{agency[1]}.hide()" />
 
 								<h:outputText
-									value="dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
+									value="tableDialog#{agency[1]} dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
 
 							</h:panelGrid>
 

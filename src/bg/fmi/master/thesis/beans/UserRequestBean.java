@@ -17,6 +17,8 @@ import javax.persistence.Parameter;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import com.sun.mail.handlers.message_rfc822;
+
 import bg.fmi.master.thesis.model.TAgency;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TMessage;
@@ -134,13 +136,20 @@ public class UserRequestBean implements Serializable {
 	public void addMessage(TRequest requestVar){//, Long messageGroupVar){
 		System.out.println("TEST");
 		EntityManager em = HibernateUtil.getEntityManager();
-		em.getTransaction().begin();
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
+		
 		TMessage msg= new TMessage(message);
 
 		msg.setDateSent(new Date());
 		msg.settRequest(requestVar);
 		//msg.setMessageGroup(messageGroupVar);
 		msg.setMessageGroup(Long.valueOf(1));
+		
+		System.out.println("messageBody: " + message.getMessageBody());
+		msg.setMessageBody(message.getMessageBody());
+		
+		message.setMessageBody(null);
 
 		//TODO: Depends on the logged user
 		Query q = em.createQuery("select u from TUser u where u.id = 11");
