@@ -124,11 +124,12 @@
 
 						<p:dataTable var="message"
 							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
-							id = "dataTable#{agency[1]}">
+							id="dataTable#{agency[1]}">
 
 							<f:facet name="footer">
-								<p:commandButton type="button" onclick="tableDialog#{agency[1]}.show()"
-									value="Изпрати съобщение" image="add" />
+								<p:commandButton type="button"
+									onclick="tableDialog#{agency[1]}.show()"
+									value="Изпрати съобщение" />
 							</f:facet>
 
 							<p:column headerText="Написано от"
@@ -159,14 +160,16 @@
 
 							<h:panelGrid columns="1" id="newColumnGrid#{agency[1]}">
 
-								<p:inputTextarea rows="5" cols="32" autoResize="false" />
+								<p:inputTextarea rows="5" cols="32" autoResize="false"
+									value="#{userRequestBean.message.messageBody}" required="true"
+									requiredMessage="Моля, въведете текст на събитието, което искате да изпратите"
+									resetValues="true" />
 								<p:commandButton value="Публикувай съобщението на стената"
-									actionListener="#{tableBean.addColumn}"
-									
-									update="dataTable#{agency[1]} newColumnGrid#{agency[1]}" 
-									oncomplete="tableDialog.hide()"/>
-									
-									<h:outputText value="dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
+									actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
+									oncomplete="tableDialog#{agency[1]}.hide()" />
+
+								<h:outputText
+									value="dataTable#{agency[1]} newColumnGrid#{agency[1]}" />
 
 							</h:panelGrid>
 

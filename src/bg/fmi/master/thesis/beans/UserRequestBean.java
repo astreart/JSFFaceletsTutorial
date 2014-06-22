@@ -19,6 +19,7 @@ import javax.persistence.Query;
 
 import bg.fmi.master.thesis.model.TAgency;
 import bg.fmi.master.thesis.model.TFilterType;
+import bg.fmi.master.thesis.model.TMessage;
 import bg.fmi.master.thesis.model.TRequest;
 import bg.fmi.master.thesis.model.TRequestFilter;
 import bg.fmi.master.thesis.model.TUser;
@@ -34,12 +35,14 @@ public class UserRequestBean implements Serializable {
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
+	private TMessage message = new TMessage();
 
 	public UserRequestBean() {
 	    EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
+		//TODO: Depends on the logged user
 		query.setParameter("userId", Long.valueOf(11));
 		userActiveRequests = query.getResultList();
 
@@ -113,7 +116,7 @@ public class UserRequestBean implements Serializable {
 		messageGroup = (Long) queryMessageGroup.getSingleResult();		 
 
 		Query queryMessages = em
-				.createQuery("select user.name, msg.messageBody, msg.dateSent "
+				.createQuery("select user.name, msg.messageBody, msg.dateSent, msg.messageGroup  "
 						+ "from TUser user join user.sentMessages msg "
 						+ "where user.id in (:userId, :agencyId) "
 						+ "and msg.messageGroup = :messageGroup "
@@ -126,6 +129,31 @@ public class UserRequestBean implements Serializable {
 
 		List<Object> messages = queryMessages.getResultList();
 		return messages;
+	}
+	
+	public void addMessage(TRequest requestVar){//, Long messageGroupVar){
+		System.out.println("TEST");
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		TMessage msg= new TMessage(message);
+
+		msg.setDateSent(new Date());
+		msg.settRequest(requestVar);
+		//msg.setMessageGroup(messageGroupVar);
+		msg.setMessageGroup(Long.valueOf(1));
+
+		//TODO: Depends on the logged user
+		Query q = em.createQuery("select u from TUser u where u.id = 11");
+		TUser tUser = (TUser) q.getSingleResult();
+		msg.settUser(tUser);
+
+		try {
+			em.persist(msg);
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		}
+		
+		em.getTransaction().commit();
 
 	}
 
@@ -159,5 +187,13 @@ public class UserRequestBean implements Serializable {
 
 	public void setSelectedAgencyId(String selectedAgencyId) {
 		this.selectedAgencyId = selectedAgencyId;
+	}
+
+	public TMessage getMessage() {
+		return message;
+	}
+
+	public void setMessage(TMessage message) {
+		this.message = message;
 	}
 }

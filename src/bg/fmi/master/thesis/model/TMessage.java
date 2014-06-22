@@ -67,12 +67,13 @@ public class TMessage implements java.io.Serializable{
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String messageBody,
-			Date dateSent){
+			Date dateSent, Long messageGroup){
 		this.tUser = tUser;
 		this.tMessageUsers = tMessageUsers;
 		this.tRequest = tRequest;
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
+		this.messageGroup = messageGroup;
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String title, String messageBody,
@@ -83,6 +84,15 @@ public class TMessage implements java.io.Serializable{
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
 		this.messageGroup = messageGroup;
+	}
+	
+	public TMessage(TMessage tMessage) {
+		this.tUser = tMessage.tUser;
+		this.tMessageUsers = tMessage.tMessageUsers;
+		this.tRequest = tMessage.tRequest;
+		this.messageBody = tMessage.messageBody;
+		this.dateSent = tMessage.dateSent;
+		this.messageGroup = tMessage.messageGroup;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_MESSAGE", allocationSize = 1)
