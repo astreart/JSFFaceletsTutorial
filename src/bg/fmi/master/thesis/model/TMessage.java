@@ -145,7 +145,7 @@ public class TMessage implements java.io.Serializable{
 		this.messageBody = messageBody;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE_SENT", columnDefinition = "date default sysdate")
 	public Date getDateSent() {
 		return dateSent;

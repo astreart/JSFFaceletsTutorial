@@ -1,6 +1,9 @@
 package bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -131,14 +134,14 @@ public class UserRequestBean implements Serializable {
 		return messages;
 	}
 
-	public void addMessage(TRequest requestVar) {// , Long messageGroupVar){
+	public void addMessage(TRequest requestVar){
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
 
 		TMessage msg = new TMessage(message);
-
+		
 		msg.setDateSent(new Date());
 		msg.settRequest(requestVar);
 
