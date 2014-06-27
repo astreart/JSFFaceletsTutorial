@@ -93,7 +93,7 @@ public class RequestBean implements Serializable {
 
 		newRequest.setRequestDate(new Date());
 
-		Query q = em.createQuery("select u from TUser u where u.id = 2");
+		Query q = em.createQuery("select u from TUser u where u.id = 11");
 		TUser author1 = (TUser) q.getSingleResult();
 		newRequest.setAuthor(author1);
 

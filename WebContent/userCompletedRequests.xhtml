@@ -7,36 +7,36 @@
 <h:head></h:head>
 <f:view>
 
-		<h:outputStylesheet library="css" name="css.css" />
-            
-            <p:dataGrid id="dataGrid" value="#{userRequestBean.userCancelledRequests}"
-		columns="1" var="userCancelledRequest"
+	<h:outputStylesheet library="css" name="css.css" />
+
+	<p:dataGrid id="dataGrid" value="#{userRequestBean.userCompletedRequests}"
+		columns="1" var="userCompletedRequest"
 		selection="#{userRequestBean.request}"
-		rowKey="#{userCancelledRequest.id}">
+		rowKey="#{userCompletedRequest.id}">
 		<f:facet name="header">
-            Моите отменени запитвания
+            Моите приключили запитвания
         </f:facet>
 
 		<h:panelGrid id="panelGrid" columns="1" cellpadding="3"
 			cellspacing="1">
-			<h:outputText value="#{userCancelledRequests.title.toUpperCase()}"
+			<h:outputText value="#{userCompletedRequests.title.toUpperCase()}"
 				style="font-weight: bold;" />
-			<h:outputText value="#{userCancelledRequests.description}" />
+			<h:outputText value="#{userCompletedRequests.description}" />
 
 
 			<h:outputText
-				value="Заявката е изпълнена от агенция #{userCancelledRequest.hiredAgency.tUser.name}"
+				value="Заявката е изпълнена от агенция #{userCompletedRequest.hiredAgency.tUser.name}"
 				style="font-weight: bold;" />
 
 			<p:commandButton value="Детайли"
 				action="userRequestDetails?faces-redirect=true">
 				<f:setPropertyActionListener target="#{userRequestBean.request}"
-					value="${userCancelledRequest}" />
+					value="${userCompletedRequest}" />
 			</p:commandButton>
 		</h:panelGrid>
 		<hr />
 	</p:dataGrid>
-            
-       
+
+
 </f:view>
 </html>

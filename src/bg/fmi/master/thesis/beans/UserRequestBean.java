@@ -37,11 +37,14 @@ public class UserRequestBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<TRequest> userActiveRequests;
+	private List<TRequest> userCompletedRequests;
+	private List<TRequest> userCancelledRequests;
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
+	
 
 	public UserRequestBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -68,6 +71,24 @@ public class UserRequestBean implements Serializable {
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			}
 		}
+		
+		
+		//Completed Requests
+		Query queryCompletedRequests = em
+				.createQuery("select r "
+						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'N' and r.isCancelled='N'");
+		// TODO: Depends on the logged user
+		queryCompletedRequests.setParameter("userId", Long.valueOf(11));
+		userCompletedRequests = queryCompletedRequests.getResultList();
+		
+		
+		//Cancelled Requests
+				Query queryCancelledRequests = em
+						.createQuery("select r "
+								+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'N' and r.isCancelled='Y'");
+				// TODO: Depends on the logged user
+				queryCancelledRequests.setParameter("userId", Long.valueOf(11));
+				userCancelledRequests = queryCancelledRequests.getResultList();
 	}
 
 	public String cancelRequest() {
@@ -216,5 +237,21 @@ public class UserRequestBean implements Serializable {
 
 	public void setMessageToAgencyIdValue(Long messageToAgencyId) {
 		this.messageToAgencyId = messageToAgencyId;
+	}
+
+	public List<TRequest> getUserCompletedRequests() {
+		return userCompletedRequests;
+	}
+
+	public void setUserCompletedRequests(List<TRequest> userCompletedRequests) {
+		this.userCompletedRequests = userCompletedRequests;
+	}
+
+	public List<TRequest> getUserCancelledRequests() {
+		return userCancelledRequests;
+	}
+
+	public void setUserCancelledRequests(List<TRequest> userCancelledRequests) {
+		this.userCancelledRequests = userCancelledRequests;
 	}
 }
