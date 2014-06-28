@@ -41,10 +41,11 @@ public class UserRequestBean implements Serializable {
 	private List<TRequest> userCancelledRequests;
 	private TRequest request = new TRequest();
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
+	private Map<TRequest, List<TUser>> cancelledRequestAgencies = new HashMap<TRequest, List<TUser>>();
+	private Map<TRequest, List<TUser>> completedRequestAgencies = new HashMap<TRequest, List<TUser>>();
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
-	
 
 	public UserRequestBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -71,24 +72,57 @@ public class UserRequestBean implements Serializable {
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			}
 		}
-		
-		
-		//Completed Requests
+
+		// Completed Requests
 		Query queryCompletedRequests = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'N' and r.isCancelled='N'");
 		// TODO: Depends on the logged user
 		queryCompletedRequests.setParameter("userId", Long.valueOf(11));
 		userCompletedRequests = queryCompletedRequests.getResultList();
-		
-		
-		//Cancelled Requests
-				Query queryCancelledRequests = em
-						.createQuery("select r "
-								+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'N' and r.isCancelled='Y'");
-				// TODO: Depends on the logged user
-				queryCancelledRequests.setParameter("userId", Long.valueOf(11));
-				userCancelledRequests = queryCancelledRequests.getResultList();
+
+		for (TRequest req : userCompletedRequests) {
+			if (req.getHiredAgency() == null) {
+				Query queryAgencies = em
+						.createQuery("select agency.name, agency.id "
+								+ "from TUser agency join agency.sentMessages msg "
+								+ "join msg.tRequest req "
+								+ "where agency.userRole.id=1 and req.id = :requestId "
+								+ "group by agency.id, agency.name");
+
+				queryAgencies.setParameter("requestId", req.getId());
+
+				List<TUser> agenciesAnsweredRequest = queryAgencies
+						.getResultList();
+				completedRequestAgencies.put(req, agenciesAnsweredRequest);
+			}
+		}
+
+		// Cancelled Requests
+		Query queryCancelledRequests = em
+				.createQuery("select r "
+						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'N' and r.isCancelled='Y'");
+		// TODO: Depends on the logged user
+		queryCancelledRequests.setParameter("userId", Long.valueOf(11));
+		userCancelledRequests = queryCancelledRequests.getResultList();
+
+		for (TRequest req : userCancelledRequests) {
+			if (req.getHiredAgency() == null) {
+				Query queryAgencies = em
+						.createQuery("select agency.name, agency.id "
+								+ "from TUser agency join agency.sentMessages msg "
+								+ "join msg.tRequest req "
+								+ "where agency.userRole.id=1 and req.id = :requestId "
+								+ "group by agency.id, agency.name");
+
+				queryAgencies.setParameter("requestId", req.getId());
+
+				List<TUser> agenciesAnsweredRequest = queryAgencies
+						.getResultList();
+				cancelledRequestAgencies.put(req, agenciesAnsweredRequest);
+			}
+		}
+
 	}
 
 	public String cancelRequest() {
@@ -155,14 +189,14 @@ public class UserRequestBean implements Serializable {
 		return messages;
 	}
 
-	public void addMessage(TRequest requestVar){
+	public void addMessage(TRequest requestVar) {
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
 
 		TMessage msg = new TMessage(message);
-		
+
 		msg.setDateSent(new Date());
 		msg.settRequest(requestVar);
 
@@ -253,5 +287,23 @@ public class UserRequestBean implements Serializable {
 
 	public void setUserCancelledRequests(List<TRequest> userCancelledRequests) {
 		this.userCancelledRequests = userCancelledRequests;
+	}
+
+	public Map<TRequest, List<TUser>> getCancelledRequestAgencies() {
+		return cancelledRequestAgencies;
+	}
+
+	public void setCancelledRequestAgencies(
+			Map<TRequest, List<TUser>> cancelledRequestAgencies) {
+		this.cancelledRequestAgencies = cancelledRequestAgencies;
+	}
+
+	public Map<TRequest, List<TUser>> getCompletedRequestAgencies() {
+		return completedRequestAgencies;
+	}
+
+	public void setCompletedRequestAgencies(
+			Map<TRequest, List<TUser>> completedRequestAgencies) {
+		this.completedRequestAgencies = completedRequestAgencies;
 	}
 }

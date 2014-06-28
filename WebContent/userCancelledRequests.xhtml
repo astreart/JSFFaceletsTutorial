@@ -7,11 +7,11 @@
 <h:head></h:head>
 <f:view>
 
-		<h:outputStylesheet library="css" name="css.css" />
-            
-            <p:dataGrid id="dataGrid" value="#{userRequestBean.userCancelledRequests}"
-		columns="1" var="userCancelledRequest"
-		selection="#{userRequestBean.request}"
+	<h:outputStylesheet library="css" name="css.css" />
+<h:form>
+	<p:dataGrid id="dataGrid"
+		value="#{userRequestBean.userCancelledRequests}" columns="1"
+		var="userCancelledRequest" selection="#{userRequestBean.request}"
 		rowKey="#{userCancelledRequest.id}">
 		<f:facet name="header">
             Моите отменени запитвания
@@ -19,24 +19,30 @@
 
 		<h:panelGrid id="panelGrid" columns="1" cellpadding="3"
 			cellspacing="1">
-			<h:outputText value="#{userCancelledRequests.title.toUpperCase()}"
+			<h:outputText value="#{userCancelledRequest.title.toUpperCase()}"
 				style="font-weight: bold;" />
-			<h:outputText value="#{userCancelledRequests.description}" />
+			<h:outputText value="#{userCancelledRequest.description}" />
 
-
-			<h:outputText
-				value="Заявката е изпълнена от агенция #{userCancelledRequest.hiredAgency.tUser.name}"
-				style="font-weight: bold;" />
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText value="Статус: " style="font-weight: bold;" />
+				</p:column>
+				<p:column colspan="2">
+					<h:outputText value="Заявката е прекратена от клиента."
+						style="color:red;" />
+				</p:column>
+			</p:row>
 
 			<p:commandButton value="Детайли"
-				action="userRequestDetails?faces-redirect=true">
+				action="userCancelledRequestDetails?faces-redirect=true">
 				<f:setPropertyActionListener target="#{userRequestBean.request}"
 					value="${userCancelledRequest}" />
 			</p:commandButton>
 		</h:panelGrid>
 		<hr />
 	</p:dataGrid>
-            
-       
+
+	<h:messages style="color:red;margin:8px;" />
+	</h:form>
 </f:view>
 </html>
