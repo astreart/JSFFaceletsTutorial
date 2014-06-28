@@ -11,18 +11,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Parameter;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.primefaces.event.RateEvent;
+
 import com.sun.mail.handlers.message_rfc822;
 
 import bg.fmi.master.thesis.model.TAgency;
+import bg.fmi.master.thesis.model.TComment;
 import bg.fmi.master.thesis.model.TFilterType;
 import bg.fmi.master.thesis.model.TMessage;
 import bg.fmi.master.thesis.model.TRequest;
@@ -46,6 +51,56 @@ public class UserRequestBean implements Serializable {
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
+	private TComment agencyComment = new TComment();
+
+	private Integer rating;
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public void onrate(RateEvent rateEvent) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Rate Event", "You rated:"
+						+ ((Integer) rateEvent.getRating()).intValue());
+
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public void rateAgency() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
+
+		Query queryAgencyComment = em.createQuery("select comment "
+				+ "from TRequest req join req.requestComments comment "
+				+ "where req.id = :requestId ");
+
+		Long requestId = (Long) request.getId();
+		System.out.println("Request: " + requestId);
+		queryAgencyComment.setParameter("requestId", requestId);
+		agencyComment = (TComment) queryAgencyComment.getSingleResult();
+		
+		if (agencyComment.equals(null)) {
+			System.out.println("Empty");
+			agencyComment = new TComment();
+			agencyComment.settRequest(request);
+			agencyComment.setCommentDate(new Date());
+			agencyComment.setAssessment(rating);
+			em.persist(agencyComment);
+			em.getTransaction().commit();
+		} else {
+			System.out.println("NOT Empty");
+			agencyComment.setAssessment(5);
+			em.merge(agencyComment);
+			em.getTransaction().commit();
+		}
+
+	}
 
 	public UserRequestBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -127,13 +182,15 @@ public class UserRequestBean implements Serializable {
 
 	public String cancelRequest() {
 		EntityManager em = HibernateUtil.getEntityManager();
-		em.getTransaction().begin();
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
 		request.setIsCancelled(true);
 		request.setIsActive(false);
 		em.merge(request);
 		em.getTransaction().commit();
 		// remove the object from the List
 		userActiveRequests.remove(request);
+		userCancelledRequests.add(request);
 		return "cancelRequest";
 	}
 

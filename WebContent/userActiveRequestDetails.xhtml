@@ -111,6 +111,22 @@
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
+
+
+	<h:form
+		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+		
+		<p:rating value="#{userRequestBean.rating}" stars="5"
+				onRate="#{userRequestBean.rateAgency()}" >
+				
+				</p:rating>
+	</h:form>
+	
+	<br/>
+	<br/>
+	
+	
+
 	<h:form id="form"
 		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">
 		<p:panel

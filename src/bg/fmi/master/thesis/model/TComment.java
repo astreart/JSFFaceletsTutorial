@@ -69,6 +69,14 @@ public class TComment implements java.io.Serializable {
 		this.assessment = assessment;
 	}
 
+	public TComment(TComment agencyComment) {
+		this.tRequest = agencyComment.tRequest;
+		this.positiveComment = agencyComment.positiveComment;
+		this.commentDate = agencyComment.commentDate;
+		this.positiveComment = agencyComment.positiveComment;
+		this.assessment = agencyComment.assessment;
+	}
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_COMMENT", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
