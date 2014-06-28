@@ -47,20 +47,18 @@
 					<h:outputText value="Статус: " style="font-weight: bold;" />
 				</p:column>
 				<p:column colspan="2">
-					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
-						style="#{userRequestBean.request.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
+					<h:outputText value="Заявката е приключена." style="color:red;" />
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column colspan="2">
 					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
+						value="Организирането на събитието е осъществено от агенция " />
 				</p:column>
 				<p:column colspan="2">
 					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? userRequestBean.request.hiredAgency.tUser.name : ''}"
+						value="#{userRequestBean.request.hiredAgency.tUser.name}."
 						style="font-weight: bold;" />
 				</p:column>
 			</p:row>
@@ -77,60 +75,20 @@
 		</h:commandLink>
 	</h:form>
 
-	<h:form rendered="#{empty userRequestBean.request.hiredAgency.city}">
-		Ако желаете да спрете Вашето запитване, моля натиснете <p:commandLink
-			value="ТУК" action="#{userRequestBean.cancelRequest()}">
-		</p:commandLink>
-	</h:form>
-
-	<h:form
-		rendered="#{empty userRequestBean.request.hiredAgency.city and
-	        not empty userRequestBean.requestAgencies[userRequestBean.request]}">
-	
-			Моля, изберете от падащото меню агенция 
-					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
-			panelStyle="width:150px" effect="fade" style="width:97%"
-			required="true"
-			requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
-			<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
-			<f:selectItems
-				value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
-				var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
-		</h:selectOneMenu>
-				, която да организира Вашето събитие и 
-			<p:commandLink value="ПОТВЪРДЕТЕ"
-			action="#{userRequestBean.hireAgency()}">
-			<f:setPropertyActionListener target="#{userRequestBean.request}"
-				value="#{userRequestBean.request}" />
-		</p:commandLink>
-	</h:form>
-
-	<h:form
-		rendered="#{empty userRequestBean.request.hiredAgency.city and empty userRequestBean.requestAgencies[userRequestBean.request]}">
-				За да може да наемете агенция, първо трябва да осъществите комуникация <br />
-				с някоя от агенциите, организиращи събития от посочения тип!!!
-			</h:form>
-
 	<h:form id="form"
-		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">
+		rendered="#{not empty userRequestBean.completedRequestAgencies[userRequestBean.request]}">
 		<p:panel
 			header="Разменени съобщения с агенции за организиране на събития"
 			footer="" style="margin-bottom:20px">
 			<p:accordionPanel style="border:1px solid;" activeIndex="-1">
 				<c:forEach
-					items="#{userRequestBean.requestAgencies[userRequestBean.request]}"
+					items="#{userRequestBean.completedRequestAgencies[userRequestBean.request]}"
 					var="agency">
 					<p:tab title="#{agency[0]}">
 
 						<p:dataTable var="message"
 							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
 							id="dataTable#{agency[1]}">
-
-							<f:facet name="footer">
-								<p:commandButton
-									action="#{userRequestBean.setMessageToAgencyIdValue(agency[1])}"
-									onclick="tableDialog.show()" value="Изпрати съобщение" />
-							</f:facet>
 
 							<p:column headerText="Написано от"
 								style="text-align: center; width:200px;">
@@ -158,24 +116,11 @@
 				</c:forEach>
 
 			</p:accordionPanel>
-
-			<p:dialog widgetVar="tableDialog" showEffect="explode"
-				hideEffect="explode" header="Напиши съобщение">
-
-				<h:panelGrid columns="1">
-					<p:inputTextarea rows="5" cols="32" autoResize="false"
-						value="#{userRequestBean.message.messageBody}" resetValues="true" />
-					<p:commandButton value="Публикувай съобщението на стената"
-						actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
-						oncomplete="tableDialog.hide()" update="form" />
-				</h:panelGrid>
-			</p:dialog>
-
 		</p:panel>
 	</h:form>
 
 	<h:form id="form1"
-		rendered="#{empty userRequestBean.requestAgencies[userRequestBean.request]}">
+		rendered="#{empty userRequestBean.completedRequestAgencies[userRequestBean.request]}">
 		<p:panel
 			header="Разменени съобщения с агенции за организиране на събития">
 			Няма разменени съобщения с агенции за организиране на събития.</p:panel>

@@ -8,35 +8,59 @@
 <f:view>
 
 	<h:outputStylesheet library="css" name="css.css" />
-
-	<p:dataGrid id="dataGrid" value="#{userRequestBean.userCompletedRequests}"
-		columns="1" var="userCompletedRequest"
-		selection="#{userRequestBean.request}"
-		rowKey="#{userCompletedRequest.id}">
-		<f:facet name="header">
-            Моите приключили запитвания
+	<h:form>
+		<p:dataGrid id="dataGrid"
+			value="#{userRequestBean.userCompletedRequests}" columns="1"
+			var="userCompletedRequest" selection="#{userRequestBean.request}"
+			rowKey="#{userCompletedRequest.id}">
+			<f:facet name="header">
+            Моите отменени запитвания
         </f:facet>
 
-		<h:panelGrid id="panelGrid" columns="1" cellpadding="3"
-			cellspacing="1">
-			<h:outputText value="#{userCompletedRequests.title.toUpperCase()}"
-				style="font-weight: bold;" />
-			<h:outputText value="#{userCompletedRequests.description}" />
+			<h:panelGrid id="panelGrid" columns="1" cellpadding="3"
+				cellspacing="1">
+				<h:outputText value="#{userCompletedRequest.title.toUpperCase()}"
+					style="font-weight: bold;" />
+				<h:outputText value="#{userCompletedRequest.description}" />
 
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText value="Статус: " style="font-weight: bold;" />
+					</p:column>
+					<p:column colspan="2">
+						<h:outputText value="Приключена." style="color:red;" />
+					</p:column>
+				</p:row>
 
-			<h:outputText
-				value="Заявката е изпълнена от агенция #{userCompletedRequest.hiredAgency.tUser.name}"
-				style="font-weight: bold;" />
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText
+							value="Организирането на събитието е осъществено от агенция " />
+					</p:column>
+					<p:column colspan="2">
+						<h:outputText
+							value="#{userCompletedRequest.hiredAgency.tUser.name}"
+							style="font-weight: bold;" />
+					</p:column>
+				</p:row>
 
-			<p:commandButton value="Детайли"
-				action="userRequestDetails?faces-redirect=true">
-				<f:setPropertyActionListener target="#{userRequestBean.request}"
-					value="${userCompletedRequest}" />
-			</p:commandButton>
-		</h:panelGrid>
-		<hr />
-	</p:dataGrid>
+				<h:commandLink
+					value="Виж детайли за агенция #{userCompletedRequest.hiredAgency.tUser.name}"
+					action="agencyDetail?faces-redirect=true">
+					<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+						value="${userCompletedRequest.hiredAgency}" />
+				</h:commandLink>
+				<h:messages style="color:red;margin:8px;" />
 
+				<p:commandButton value="Детайли"
+					action="userCompletedRequestDetails?faces-redirect=true">
+					<f:setPropertyActionListener target="#{userRequestBean.request}"
+						value="${userCompletedRequest}" />
+				</p:commandButton>
+			</h:panelGrid>
+			<hr />
+		</p:dataGrid>
 
+	</h:form>
 </f:view>
 </html>

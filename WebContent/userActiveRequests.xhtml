@@ -47,8 +47,8 @@
 			</p:row>
 
 			<h:form rendered="#{not empty userActiveRequest.hiredAgency}">
-				<h:commandLink
-					value="Виж детайли за агенция #{userActiveRequest.hiredAgency.tUser.name}"
+				Виж детайли за агенция <h:commandLink
+					value="#{userActiveRequest.hiredAgency.tUser.name}"
 					action="agencyDetail?faces-redirect=true">
 					<f:setPropertyActionListener target="#{agencyBean.tAgency}"
 						value="${userActiveRequest.hiredAgency}" />
