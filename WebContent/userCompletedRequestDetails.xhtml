@@ -74,6 +74,16 @@
 				value="${userRequestBean.request.hiredAgency}" />
 		</h:commandLink>
 	</h:form>
+	
+	<h:form>
+		<h:outputLabel value="Цялостното организиране на събитието е оценено с: " />
+		<p:rating
+			value="#{userRequestBean.completedRequestComment[userRequestBean.request]}"
+			stars="10" rendered="true" disabled="true">
+		</p:rating>
+		<br />
+		<br />
+	</h:form>
 
 	<h:form id="form"
 		rendered="#{not empty userRequestBean.completedRequestAgencies[userRequestBean.request]}">

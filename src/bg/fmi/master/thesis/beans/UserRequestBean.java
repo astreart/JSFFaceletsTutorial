@@ -50,6 +50,7 @@ public class UserRequestBean implements Serializable {
 	private Map<TRequest, List<TUser>> cancelledRequestAgencies = new HashMap<TRequest, List<TUser>>();
 	private Map<TRequest, List<TUser>> completedRequestAgencies = new HashMap<TRequest, List<TUser>>();
 	private Map<TRequest, Integer> requestComment = new HashMap<TRequest, Integer>();
+	private Map<TRequest, Integer> completedRequestComment = new HashMap<TRequest, Integer>();
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
@@ -59,7 +60,7 @@ public class UserRequestBean implements Serializable {
 	public void onrate(RateEvent rateEvent) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Оценяване",
-				"За цялостното организиране на събитието гласувахте с: " 
+				"За цялостното организиране на събитието гласувахте с: "
 						+ ((Integer) rateEvent.getRating()).intValue());
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -161,6 +162,18 @@ public class UserRequestBean implements Serializable {
 				List<TUser> agenciesAnsweredRequest = queryAgencies
 						.getResultList();
 				completedRequestAgencies.put(req, agenciesAnsweredRequest);
+			} else {
+				Query queryAgencyRating = em
+						.createQuery("select comment.assessment "
+								+ "from TRequest req join req.requestComments comment "
+								+ "where req.id = :requestId ");
+				queryAgencyRating.setParameter("requestId", (Long) req.getId());
+				try {
+					assessment = (Integer) queryAgencyRating.getSingleResult();
+				} catch (NoResultException nre) {
+					assessment = 0;
+				}
+				completedRequestComment.put(req, (Integer) assessment);
 			}
 		}
 
@@ -381,6 +394,15 @@ public class UserRequestBean implements Serializable {
 
 	public void setRequestComment(Map<TRequest, Integer> requestComment) {
 		this.requestComment = requestComment;
+	}
+
+	public Map<TRequest, Integer> getCompletedRequestComment() {
+		return completedRequestComment;
+	}
+
+	public void setCompletedRequestComment(
+			Map<TRequest, Integer> completedRequestComment) {
+		this.completedRequestComment = completedRequestComment;
 	}
 
 }
