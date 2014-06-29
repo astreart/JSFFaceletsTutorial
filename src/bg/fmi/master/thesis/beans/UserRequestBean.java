@@ -49,12 +49,14 @@ public class UserRequestBean implements Serializable {
 	private Map<TRequest, List<TUser>> requestAgencies = new HashMap<TRequest, List<TUser>>();
 	private Map<TRequest, List<TUser>> cancelledRequestAgencies = new HashMap<TRequest, List<TUser>>();
 	private Map<TRequest, List<TUser>> completedRequestAgencies = new HashMap<TRequest, List<TUser>>();
+	private Map<TRequest, Integer> requestComment = new HashMap<TRequest, Integer>();
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
-	private TComment agencyComment = new TComment();
+	//private TComment agencyComment = new TComment();
 	private Integer rating;
-
+    private Integer assessment;
+    
 	public Integer getRating() {
 		System.out.println("You Rated: " + rating);
 		return rating;
@@ -72,11 +74,11 @@ public class UserRequestBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
-		rateAgency();
+		rateAgency((Integer) rateEvent.getRating());
 
 	}
 
-	public void rateAgency() {
+	public void rateAgency(Integer rating) {
 		System.out.println("HERE I AM");
 		if (rating == null)
 			return;
@@ -93,25 +95,27 @@ public class UserRequestBean implements Serializable {
 		queryAgencyComment.setParameter("requestId", requestId);
 		// agencyComment = (TComment) queryAgencyComment.getSingleResult();
 
-		TComment singleComment = null;
+		TComment agencyComment = null;
 		try {
-			singleComment = (TComment) queryAgencyComment.getSingleResult();
+			agencyComment = (TComment) queryAgencyComment.getSingleResult();
 		} catch (NoResultException nre) {
 			// Ignore this because as per your logic this is ok!
 		}
 
-		if (singleComment == null) {
+		if (agencyComment == null) {
 			// Do your logic..
 			System.out.println("Empty");
 			agencyComment = new TComment();
 			agencyComment.settRequest(request);
 			agencyComment.setCommentDate(new Date());
-			agencyComment.setAssessment(5);
+			agencyComment.setAssessment(rating);
 			em.persist(agencyComment);
 			em.getTransaction().commit();
 		} else {
 			System.out.println("NOT Empty");
-			agencyComment.setAssessment(5);
+			agencyComment.setAssessment(rating);
+			agencyComment.setCommentDate(new Date());
+			agencyComment.settRequest(request);
 			em.merge(agencyComment);
 			em.getTransaction().commit();
 		}
@@ -119,7 +123,7 @@ public class UserRequestBean implements Serializable {
 	}
 
 	public UserRequestBean() {
-		EntityManager em = HibernateUtil.getEntityManager();
+		EntityManager em = HibernateUtil.getEntityManager();	
 		Query query = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
@@ -141,6 +145,22 @@ public class UserRequestBean implements Serializable {
 				List<TUser> agenciesAnsweredRequest = queryAgencies
 						.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
+			} else
+			{
+				
+				Query queryAgencyRating = em.createQuery("select comment.assessment "
+						+ "from TRequest req join req.requestComments comment "
+						+ "where req.id = :requestId ");
+				queryAgencyRating.setParameter("requestId", (Long) req.getId());
+				System.out.println("Agency: " + (Long) req.getId());
+				try{
+					assessment = (Integer) queryAgencyRating.getSingleResult();
+				}catch (NoResultException nre){
+					System.out.println("Problem");
+					assessment = 0;
+				}
+				System.out.println("Rating in Constructor: " + assessment);
+				requestComment.put(req,(Integer)assessment);
 			}
 		}
 
@@ -379,4 +399,14 @@ public class UserRequestBean implements Serializable {
 			Map<TRequest, List<TUser>> completedRequestAgencies) {
 		this.completedRequestAgencies = completedRequestAgencies;
 	}
+
+	public Map<TRequest, Integer> getRequestComment() {
+		return requestComment;
+	}
+
+	public void setRequestComment(Map<TRequest, Integer> requestComment) {
+		this.requestComment = requestComment;
+	}
+	
+	
 }

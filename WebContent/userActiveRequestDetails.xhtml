@@ -115,7 +115,7 @@
 	<h:form>
     <p:growl id="messages" showDetail="true"></p:growl>
        <h:outputLabel value="Rating:" />
-        <p:rating value = "#{userRequestBean.rating}" stars="10"  rendered="true">
+        <p:rating value = "#{userRequestBean.requestComment[userRequestBean.request]}" stars="10"  rendered="true">
            <p:ajax event="rate" listener="#{userRequestBean.onrate}" update="messages" />  
     </p:rating>
 </h:form>
