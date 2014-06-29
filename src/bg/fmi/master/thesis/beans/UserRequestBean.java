@@ -18,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Parameter;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -52,11 +53,12 @@ public class UserRequestBean implements Serializable {
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
 	private TComment agencyComment = new TComment();
-
 	private Integer rating;
 
 	public Integer getRating() {
+		System.out.println("You Rated: " + rating);
 		return rating;
+
 	}
 
 	public void setRating(Integer rating) {
@@ -69,9 +71,15 @@ public class UserRequestBean implements Serializable {
 						+ ((Integer) rateEvent.getRating()).intValue());
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
+
+		rateAgency();
+
 	}
 
 	public void rateAgency() {
+		System.out.println("HERE I AM");
+		if (rating == null)
+			return;
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
@@ -83,14 +91,22 @@ public class UserRequestBean implements Serializable {
 		Long requestId = (Long) request.getId();
 		System.out.println("Request: " + requestId);
 		queryAgencyComment.setParameter("requestId", requestId);
-		agencyComment = (TComment) queryAgencyComment.getSingleResult();
-		
-		if (agencyComment.equals(null)) {
+		// agencyComment = (TComment) queryAgencyComment.getSingleResult();
+
+		TComment singleComment = null;
+		try {
+			singleComment = (TComment) queryAgencyComment.getSingleResult();
+		} catch (NoResultException nre) {
+			// Ignore this because as per your logic this is ok!
+		}
+
+		if (singleComment == null) {
+			// Do your logic..
 			System.out.println("Empty");
 			agencyComment = new TComment();
 			agencyComment.settRequest(request);
 			agencyComment.setCommentDate(new Date());
-			agencyComment.setAssessment(rating);
+			agencyComment.setAssessment(5);
 			em.persist(agencyComment);
 			em.getTransaction().commit();
 		} else {

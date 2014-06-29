@@ -111,16 +111,14 @@
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
-
-
-	<h:form
-		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
-		
-		<p:rating value="#{userRequestBean.rating}" stars="5"
-				onRate="#{userRequestBean.rateAgency()}" >
-				
-				</p:rating>
-	</h:form>
+	
+	<h:form>
+    <p:growl id="messages" showDetail="true"></p:growl>
+       <h:outputLabel value="Rating:" />
+        <p:rating value = "#{userRequestBean.rating}" stars="10"  rendered="true">
+           <p:ajax event="rate" listener="#{userRequestBean.onrate}" update="messages" />  
+    </p:rating>
+</h:form>
 	
 	<br/>
 	<br/>
