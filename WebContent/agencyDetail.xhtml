@@ -19,7 +19,7 @@
 		</h:outputLink>
 		<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
 			<b>Агенция:</b>
-			<h:outputText value="#{agencyBean.tAgency.tUser.name}, #{agencyBean.rating[agencyBean.tAgency.tUserId]}" />
+			<h:outputText value="#{agencyBean.tAgency.tUser.name}, #{ratingBean.rating[agencyBean.tAgency.tUserId]}" />
 			<b>Организира:</b>
 			<h:outputText
 				value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />
@@ -36,8 +36,6 @@
 	</h:panelGrid>
 	<h:outputText value="#{agencyBean.tAgency.information}" />
 	<br />
-	<br />
-	<h:outputText value="#{agencyBean.rating[agencyBean.tAgency]}" />
 	<br />
 	<h:commandButton value="Изпрати запитване"
 		action="addRequest?faces-redirect=true">

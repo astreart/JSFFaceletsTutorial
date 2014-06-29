@@ -49,20 +49,6 @@ public class AgencyBean implements Serializable {
 
 	public AgencyBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
-		Query query = em.createQuery("select r.hiredAgency.tUserId, "
-				+ "sum(u.assessment)/(count(u.assessment)), "
-				+ "count(u.assessment) "
-				+ "from TRequest r join r.requestComments u "
-				+ "group by r.hiredAgency.tUserId");
-
-		List<Object[]> list = query.getResultList();
-		for (Object[] element : list) {
-			Long ratingForAgency = (Long) element[0];
-			String ratingText = "Оценка " + element[1] + "/10, гласували: "
-					+ element[2];
-			rating.put(ratingForAgency, ratingText);
-		}
-
 		Query queryEventTypes = em
 				.createQuery("select agency, et.eventTypeName "
 						+ "from TAgency agency join agency.tAgencyEventTypes eat "
@@ -173,5 +159,4 @@ public class AgencyBean implements Serializable {
 		comments = queryAgencyComments.getResultList();
 		return comments;
 	}
-
 }

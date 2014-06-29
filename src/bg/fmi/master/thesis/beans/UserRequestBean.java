@@ -54,6 +54,7 @@ public class UserRequestBean implements Serializable {
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
 	private Integer assessment;
+	RatingBean ratingBean = new RatingBean();
 
 	public void onrate(RateEvent rateEvent) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -97,7 +98,7 @@ public class UserRequestBean implements Serializable {
 			em.merge(agencyComment);
 			em.getTransaction().commit();
 		}
-
+		ratingBean.agencyAssessment();
 	}
 
 	public UserRequestBean() {
