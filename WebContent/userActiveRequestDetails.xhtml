@@ -111,19 +111,19 @@
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
-	
-	<h:form>
-    <p:growl id="messages" showDetail="true"></p:growl>
-       <h:outputLabel value="Rating:" />
-        <p:rating value = "#{userRequestBean.requestComment[userRequestBean.request]}" stars="10"  rendered="true">
-           <p:ajax event="rate" listener="#{userRequestBean.onrate}" update="messages" />  
-    </p:rating>
-</h:form>
-	
-	<br/>
-	<br/>
-	
-	
+	<h:form
+		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+		<p:growl id="messages" showDetail="true"></p:growl>
+		<h:outputLabel value="Оценете цялостното организиране на събитието: " />
+		<p:rating
+			value="#{userRequestBean.requestComment[userRequestBean.request]}"
+			stars="10" rendered="true">
+			<p:ajax event="rate" listener="#{userRequestBean.onrate}"
+				update="messages" />
+		</p:rating>
+		<br />
+		<br />
+	</h:form>
 
 	<h:form id="form"
 		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">

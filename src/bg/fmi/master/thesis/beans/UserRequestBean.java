@@ -53,23 +53,12 @@ public class UserRequestBean implements Serializable {
 	public String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
-	//private TComment agencyComment = new TComment();
-	private Integer rating;
-    private Integer assessment;
-    
-	public Integer getRating() {
-		System.out.println("You Rated: " + rating);
-		return rating;
-
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
+	private Integer assessment;
 
 	public void onrate(RateEvent rateEvent) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Rate Event", "You rated:"
+				"Оценяване",
+				"За цялостното организиране на събитието гласувахте с: " 
 						+ ((Integer) rateEvent.getRating()).intValue());
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -79,9 +68,6 @@ public class UserRequestBean implements Serializable {
 	}
 
 	public void rateAgency(Integer rating) {
-		System.out.println("HERE I AM");
-		if (rating == null)
-			return;
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
 			em.getTransaction().begin();
@@ -91,20 +77,15 @@ public class UserRequestBean implements Serializable {
 				+ "where req.id = :requestId ");
 
 		Long requestId = (Long) request.getId();
-		System.out.println("Request: " + requestId);
 		queryAgencyComment.setParameter("requestId", requestId);
-		// agencyComment = (TComment) queryAgencyComment.getSingleResult();
 
 		TComment agencyComment = null;
 		try {
 			agencyComment = (TComment) queryAgencyComment.getSingleResult();
 		} catch (NoResultException nre) {
-			// Ignore this because as per your logic this is ok!
 		}
 
 		if (agencyComment == null) {
-			// Do your logic..
-			System.out.println("Empty");
 			agencyComment = new TComment();
 			agencyComment.settRequest(request);
 			agencyComment.setCommentDate(new Date());
@@ -112,10 +93,7 @@ public class UserRequestBean implements Serializable {
 			em.persist(agencyComment);
 			em.getTransaction().commit();
 		} else {
-			System.out.println("NOT Empty");
 			agencyComment.setAssessment(rating);
-			agencyComment.setCommentDate(new Date());
-			agencyComment.settRequest(request);
 			em.merge(agencyComment);
 			em.getTransaction().commit();
 		}
@@ -123,7 +101,7 @@ public class UserRequestBean implements Serializable {
 	}
 
 	public UserRequestBean() {
-		EntityManager em = HibernateUtil.getEntityManager();	
+		EntityManager em = HibernateUtil.getEntityManager();
 		Query query = em
 				.createQuery("select r "
 						+ "from TUser u join u.userRequests r where u.id = :userId and r.isActive = 'Y'");
@@ -145,22 +123,18 @@ public class UserRequestBean implements Serializable {
 				List<TUser> agenciesAnsweredRequest = queryAgencies
 						.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
-			} else
-			{
-				
-				Query queryAgencyRating = em.createQuery("select comment.assessment "
-						+ "from TRequest req join req.requestComments comment "
-						+ "where req.id = :requestId ");
+			} else {
+				Query queryAgencyRating = em
+						.createQuery("select comment.assessment "
+								+ "from TRequest req join req.requestComments comment "
+								+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
-				System.out.println("Agency: " + (Long) req.getId());
-				try{
+				try {
 					assessment = (Integer) queryAgencyRating.getSingleResult();
-				}catch (NoResultException nre){
-					System.out.println("Problem");
+				} catch (NoResultException nre) {
 					assessment = 0;
 				}
-				System.out.println("Rating in Constructor: " + assessment);
-				requestComment.put(req,(Integer)assessment);
+				requestComment.put(req, (Integer) assessment);
 			}
 		}
 
@@ -407,6 +381,5 @@ public class UserRequestBean implements Serializable {
 	public void setRequestComment(Map<TRequest, Integer> requestComment) {
 		this.requestComment = requestComment;
 	}
-	
-	
+
 }
