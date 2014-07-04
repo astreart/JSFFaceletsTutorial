@@ -114,7 +114,9 @@
 	<h:form
 		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
 		<p:growl id="messages" showDetail="true"></p:growl>
-		<h:outputLabel value="Оценете цялостното организиране на събитието: " />
+		<h:outputLabel
+			value="Оценете цялостното организиране на вашето събитието* "
+			style="color:red;" />
 		<p:rating
 			value="#{userRequestBean.requestComment[userRequestBean.request]}"
 			stars="10" rendered="true">
@@ -124,6 +126,36 @@
 		<br />
 		<br />
 	</h:form>
+
+
+	<h:form>
+		<h:outputText
+			value="Напишете коментарu за организирането на вашето събитие*"
+			style="color:red;" />
+		<p:tabView dynamic="true" cache="true">
+			<p:tab title="Положителен коментар">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:inputTextarea id="positiveComment" rows="5" cols="130"
+						autoResize="false" />
+					<p:watermark for="positiveComment"
+						value="Ако имате положителен коментар за агенцията, която организира вашето събитие, моля напишете го тук" />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Отрицателен коментар">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:inputTextarea id="negativeComment" rows="5" cols="130"
+						autoResize="false" />
+					<p:watermark for="negativeComment"
+						value="Ако имате отрицателен коментар за агенцията, която организира вашето събитие, моля напишете го тук" />
+				</h:panelGrid>
+			</p:tab>
+		</p:tabView>
+		<p:commandButton value="Публикувай коментарите" autoResize="false"></p:commandButton>
+	</h:form>
+
+
+
+
 
 	<h:form id="form"
 		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">

@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.beans;
+﻿package bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -58,10 +58,13 @@ public class UserRequestBean implements Serializable {
 	RatingBean ratingBean = new RatingBean();
 
 	public void onrate(RateEvent rateEvent) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"���������",
-				"�� ���������� ������������ �� ��������� ���������� �: "
-						+ ((Integer) rateEvent.getRating()).intValue());
+		FacesMessage message = new FacesMessage(
+				FacesMessage.SEVERITY_INFO,
+				"Оценяване",
+				"За цялостното организиране на събитието, гласувахте с "
+						+ ((Integer) rateEvent.getRating()).intValue()
+						+ " точки."
+						+ " За да се счита събитието за приключило, трябва да напишете и коментар!");
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
