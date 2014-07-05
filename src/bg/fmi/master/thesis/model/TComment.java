@@ -127,7 +127,7 @@ public class TComment implements java.io.Serializable {
 		this.commentDate = commentDate;
 	}
 
-	@Column(name = "ASSESSMENT", nullable = false)
+	@Column(name = "ASSESSMENT")
 	public int getAssessment() {
 		return this.assessment;
 	}

@@ -9,7 +9,8 @@
 	<h:form>
 
 		<h:outputStylesheet library="css" name="css.css" />
-
+		<h:outputScript library="js" name="timeoutDialog.js" />
+		
 		<h:panelGrid columns="1" cellpadding="3" cellspacing="1">
 			<h:outputText
 				value="#{(userRequestBean.request.title.toUpperCase())}"
@@ -111,6 +112,7 @@
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
+
 	<h:form
 		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
 		<p:growl id="messages" showDetail="true"></p:growl>
@@ -119,7 +121,8 @@
 			style="color:red;" />
 		<p:rating
 			value="#{userRequestBean.requestComment[userRequestBean.request]}"
-			stars="10" rendered="true">
+			stars="10" rendered="true" required="true"
+			requiredMessage="Моля, въведете заглавие на събитието, което искате да организираме!">
 			<p:ajax event="rate" listener="#{userRequestBean.onrate}"
 				update="messages" />
 		</p:rating>
@@ -127,8 +130,8 @@
 		<br />
 	</h:form>
 
-
-	<h:form>
+	<h:form
+		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
 		<h:outputText
 			value="Напишете коментарu за организирането на вашето събитие*"
 			style="color:red;" />
@@ -136,25 +139,43 @@
 			<p:tab title="Положителен коментар">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:inputTextarea id="positiveComment" rows="5" cols="130"
-						autoResize="false" />
+						autoResize="false"
+						value="#{userRequestBean.requestPositiveComment[userRequestBean.request]}" />
 					<p:watermark for="positiveComment"
-						value="Ако имате положителен коментар за агенцията, която организира вашето събитие, моля напишете го тук" />
+						value="Ако имате положителен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
 				</h:panelGrid>
 			</p:tab>
 			<p:tab title="Отрицателен коментар">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:inputTextarea id="negativeComment" rows="5" cols="130"
-						autoResize="false" />
+						autoResize="false"
+						value="#{userRequestBean.requestNegativeComment[userRequestBean.request]}" />
 					<p:watermark for="negativeComment"
-						value="Ако имате отрицателен коментар за агенцията, която организира вашето събитие, моля напишете го тук" />
+						value="Ако имате отрицателен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
 				</h:panelGrid>
 			</p:tab>
 		</p:tabView>
-		<p:commandButton value="Публикувай коментарите" autoResize="false"></p:commandButton>
+		<p:commandButton value="Публикувай коментарите"
+			action="#{userRequestBean.commentAgency}"
+			onclick="ratingDialog.show()" />
+		<p:dialog widgetVar="ratingDialog" header="Информация" width="400"
+			closable="true" resizable="false" showEffect="clip" hideEffect="clip"
+			modal="true" onShow="myFunction();" onHide="myStopFunction();">
+			<p:commandButton
+				value="Вашият коментар е записан! За да се счита вашата заявка за приключила, 
+				трябва да маркирате заявката си като оценена!" />
+		</p:dialog>
 	</h:form>
-
-
-
+	<h:form>
+		<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+			<h:outputText
+				value="Маркирай заявката си като оценена, за да се счита за приключила!" />
+			<p:selectBooleanCheckbox value="#{userRequestBean.isEvaluated}"
+				onLabel="Оценена" offLabel="Неоценена" />
+			<h:commandButton value="Запази"
+				action="#{userRequestBean.markRequestAsCompleted}" />
+		</h:panelGrid>
+	</h:form>
 
 
 	<h:form id="form"

@@ -24,6 +24,13 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>           
+        <navigation-case>
+            <from-outcome>userCompletedRequests</from-outcome>
+            <to-view-id>/userCompletedRequests.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     	<navigation-rule>           
         <navigation-case>
             <from-outcome>userActiveRequests</from-outcome>

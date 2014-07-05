@@ -51,20 +51,41 @@ public class UserRequestBean implements Serializable {
 	private Map<TRequest, List<TUser>> completedRequestAgencies = new HashMap<TRequest, List<TUser>>();
 	private Map<TRequest, Integer> requestComment = new HashMap<TRequest, Integer>();
 	private Map<TRequest, Integer> completedRequestComment = new HashMap<TRequest, Integer>();
-	public String selectedAgencyId;
+	private String selectedAgencyId;
 	private TMessage message = new TMessage();
 	private Long messageToAgencyId;
 	private Integer assessment;
-	RatingBean ratingBean = new RatingBean();
+	private RatingBean ratingBean = new RatingBean();
+	private Boolean isEvaluated;
+	private String negativeComment;
+	private String positiveComment;
+	private Map<TRequest, String> requestPositiveComment = new HashMap<TRequest, String>();
+	private Map<TRequest, String> requestNegativeComment = new HashMap<TRequest, String>();
+
+	public String getNegativeComment() {
+		return negativeComment;
+	}
+
+	public void setNegativeComment(String negativeComment) {
+		this.negativeComment = negativeComment;
+	}
+
+	public String getPositiveComment() {
+		return positiveComment;
+	}
+
+	public void setPositiveComment(String positiveComment) {
+		this.positiveComment = positiveComment;
+	}
 
 	public void onrate(RateEvent rateEvent) {
-		FacesMessage message = new FacesMessage(
-				FacesMessage.SEVERITY_INFO,
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Оценяване",
 				"За цялостното организиране на събитието, гласувахте с "
 						+ ((Integer) rateEvent.getRating()).intValue()
 						+ " точки."
-						+ " За да се счита събитието за приключило, трябва да напишете и коментар!");
+						+ "За да се счита вашата заявка за приключила, "
+						+ "трябва да маркирате заявката си като оценена!");
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -96,13 +117,55 @@ public class UserRequestBean implements Serializable {
 			agencyComment.setCommentDate(new Date());
 			agencyComment.setAssessment(rating);
 			em.persist(agencyComment);
-			em.getTransaction().commit();
 		} else {
 			agencyComment.setAssessment(rating);
 			em.merge(agencyComment);
-			em.getTransaction().commit();
 		}
+		em.getTransaction().commit();
 		ratingBean.agencyAssessment();
+	}
+
+	public void commentAgency() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
+
+		Query queryAgencyComment = em.createQuery("select comment "
+				+ "from TRequest req join req.requestComments comment "
+				+ "where req.id = :requestId ");
+
+		Long requestId = (Long) request.getId();
+		queryAgencyComment.setParameter("requestId", requestId);
+
+		TComment agencyComment = null;
+		try {
+			agencyComment = (TComment) queryAgencyComment.getSingleResult();
+		} catch (NoResultException nre) {
+		}
+
+		if (agencyComment == null) {
+			agencyComment = new TComment();
+			agencyComment.settRequest(request);
+			agencyComment.setCommentDate(new Date());
+			agencyComment.setPositiveComment(requestPositiveComment.get(request));
+			agencyComment.setNegativeComment(requestNegativeComment.get(request));
+			em.persist(agencyComment);
+		} else {
+			agencyComment.setPositiveComment(requestPositiveComment.get(request));
+			agencyComment.setNegativeComment(requestNegativeComment.get(request));
+			em.merge(agencyComment);
+		}
+		em.getTransaction().commit();
+	}
+
+	public String markRequestAsCompleted() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		if (!em.getTransaction().isActive())
+			request.setIsActive(false);
+		em.merge(request);
+		userCompletedRequests.add(request);
+		userActiveRequests.remove(request);
+		return "userCompletedRequests";
 	}
 
 	public UserRequestBean() {
@@ -130,16 +193,28 @@ public class UserRequestBean implements Serializable {
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			} else {
 				Query queryAgencyRating = em
-						.createQuery("select comment.assessment "
+						.createQuery("select comment "
 								+ "from TRequest req join req.requestComments comment "
 								+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
-				try {
+				/*try {
 					assessment = (Integer) queryAgencyRating.getSingleResult();
 				} catch (NoResultException nre) {
 					assessment = 0;
+				}*/try {
+				 TComment result = (TComment) queryAgencyRating.getSingleResult();
+				 assessment = result.getAssessment();
+				 positiveComment = result.getPositiveComment();
+				 negativeComment = result.getNegativeComment();
+				} catch (NoResultException nre) {
+					assessment = 0;
+					positiveComment = null;
+					negativeComment = null;
 				}
+				 
 				requestComment.put(req, (Integer) assessment);
+				requestNegativeComment.put(req, negativeComment);
+				requestPositiveComment.put(req, positiveComment);
 			}
 		}
 
@@ -408,4 +483,27 @@ public class UserRequestBean implements Serializable {
 		this.completedRequestComment = completedRequestComment;
 	}
 
+	public Boolean getIsEvaluated() {
+		return isEvaluated;
+	}
+
+	public void setIsEvaluated(Boolean isEvaluated) {
+		this.isEvaluated = isEvaluated;
+	}
+
+	public Map<TRequest, String> getRequestPositiveComment() {
+		return requestPositiveComment;
+	}
+
+	public void setRequestPositiveComment(Map<TRequest, String> requestPositiveComment) {
+		this.requestPositiveComment = requestPositiveComment;
+	}
+
+	public Map<TRequest, String> getRequestNegativeComment() {
+		return requestNegativeComment;
+	}
+
+	public void setRequestNegativeComment(Map<TRequest, String> requestNegativeComment) {
+		this.requestNegativeComment = requestNegativeComment;
+	}
 }
