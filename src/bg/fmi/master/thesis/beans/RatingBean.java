@@ -61,6 +61,7 @@ public class RatingBean implements Serializable {
 				+ "sum(u.assessment)/(count(u.assessment)), "
 				+ "count(u.assessment) "
 				+ "from TRequest r join r.requestComments u "
+				+ "where u.assessment <> 0 "
 				+ "group by r.hiredAgency.tUserId");
 
 		List<Object[]> list = query.getResultList();

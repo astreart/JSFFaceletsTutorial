@@ -61,6 +61,8 @@ public class UserRequestBean implements Serializable {
 	private String positiveComment;
 	private Map<TRequest, String> requestPositiveComment = new HashMap<TRequest, String>();
 	private Map<TRequest, String> requestNegativeComment = new HashMap<TRequest, String>();
+	private Map<TRequest, String> completedRequestPositiveComment = new HashMap<TRequest, String>();
+	private Map<TRequest, String> completedRequestNegativeComment = new HashMap<TRequest, String>();
 
 	public String getNegativeComment() {
 		return negativeComment;
@@ -169,6 +171,12 @@ public class UserRequestBean implements Serializable {
 		request.setIsActive(false);
 		em.merge(request);
 		em.getTransaction().commit();
+		completedRequestPositiveComment.put(request, requestPositiveComment.get(request));
+		completedRequestNegativeComment.put(request, requestNegativeComment.get(request));
+		completedRequestComment.put(request, (Integer) requestComment.get(request));
+		requestPositiveComment.remove(request);
+		requestNegativeComment.remove(request);
+		requestComment.remove(request);
 		userCompletedRequests.add(request);
 		userActiveRequests.remove(request);
 		return "userCompletedRequests";
@@ -248,15 +256,28 @@ public class UserRequestBean implements Serializable {
 				completedRequestAgencies.put(req, agenciesAnsweredRequest);
 			} else {
 				Query queryAgencyRating = em
-						.createQuery("select comment.assessment "
+						.createQuery("select comment "
 								+ "from TRequest req join req.requestComments comment "
 								+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
+				/*
+				 * try { assessment = (Integer)
+				 * queryAgencyRating.getSingleResult(); } catch
+				 * (NoResultException nre) { assessment = 0; }
+				 */
 				try {
-					assessment = (Integer) queryAgencyRating.getSingleResult();
+					TComment result = (TComment) queryAgencyRating
+							.getSingleResult();
+					assessment = result.getAssessment();
+					positiveComment = result.getPositiveComment();
+					negativeComment = result.getNegativeComment();
 				} catch (NoResultException nre) {
 					assessment = 0;
+					positiveComment = null;
+					negativeComment = null;
 				}
+				completedRequestNegativeComment.put(req, negativeComment);
+				completedRequestPositiveComment.put(req, positiveComment);
 				completedRequestComment.put(req, (Integer) assessment);
 			}
 		}
@@ -513,5 +534,23 @@ public class UserRequestBean implements Serializable {
 	public void setRequestNegativeComment(
 			Map<TRequest, String> requestNegativeComment) {
 		this.requestNegativeComment = requestNegativeComment;
+	}
+
+	public Map<TRequest, String> getCompletedRequestPositiveComment() {
+		return completedRequestPositiveComment;
+	}
+
+	public void setCompletedRequestPositiveComment(
+			Map<TRequest, String> completedRequestPositiveComment) {
+		this.completedRequestPositiveComment = completedRequestPositiveComment;
+	}
+
+	public Map<TRequest, String> getCompletedRequestNegativeComment() {
+		return completedRequestNegativeComment;
+	}
+
+	public void setCompletedRequestNegativeComment(
+			Map<TRequest, String> completedRequestNegativeComment) {
+		this.completedRequestNegativeComment = completedRequestNegativeComment;
 	}
 }
