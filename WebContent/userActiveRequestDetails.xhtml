@@ -118,15 +118,13 @@
 		<p:growl id="messages" showDetail="true"></p:growl>
 		<h:outputLabel
 			value="Оценете цялостното организиране на вашето събитието* "
-			style="color:red;" />
+			style="color:red;font-size: 16px" />
 		<p:rating
 			value="#{userRequestBean.requestComment[userRequestBean.request]}"
-			stars="10" rendered="true" required="true"
-			requiredMessage="Моля, въведете заглавие на събитието, което искате да организираме!">
+			stars="10" rendered="true">
 			<p:ajax event="rate" listener="#{userRequestBean.onrate}"
 				update="messages" />
 		</p:rating>
-		<br />
 		<br />
 	</h:form>
 
@@ -134,7 +132,7 @@
 		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
 		<h:outputText
 			value="Напишете коментарu за организирането на вашето събитие*"
-			style="color:red;" />
+			style="color:red;font-size: 16px" />
 		<p:tabView dynamic="true" cache="true">
 			<p:tab title="Положителен коментар">
 				<h:panelGrid columns="2" cellpadding="10">
@@ -160,7 +158,7 @@
 			onclick="ratingDialog.show()" />
 		<p:dialog widgetVar="ratingDialog" header="Информация" width="400"
 			closable="true" resizable="false" showEffect="clip" hideEffect="clip"
-			modal="true" onShow="myFunction();" onHide="myStopFunction();">
+			modal="true" onShow="ratingDialogStartFunction();" onHide="ratingDialogStopFunction();">
 			<p:commandButton
 				value="Вашият коментар е записан! За да се счита вашата заявка за приключила, 
 				трябва да маркирате заявката си като оценена!" />

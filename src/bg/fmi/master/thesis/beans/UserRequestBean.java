@@ -84,8 +84,8 @@ public class UserRequestBean implements Serializable {
 				"За цялостното организиране на събитието, гласувахте с "
 						+ ((Integer) rateEvent.getRating()).intValue()
 						+ " точки."
-						+ "За да се счита вашата заявка за приключила, "
-						+ "трябва да маркирате заявката си като оценена!");
+						+ " За да се счита вашата заявка за приключила,"
+						+ " трябва да маркирате заявката си като оценена!");
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -147,12 +147,16 @@ public class UserRequestBean implements Serializable {
 			agencyComment = new TComment();
 			agencyComment.settRequest(request);
 			agencyComment.setCommentDate(new Date());
-			agencyComment.setPositiveComment(requestPositiveComment.get(request));
-			agencyComment.setNegativeComment(requestNegativeComment.get(request));
+			agencyComment.setPositiveComment(requestPositiveComment
+					.get(request));
+			agencyComment.setNegativeComment(requestNegativeComment
+					.get(request));
 			em.persist(agencyComment);
 		} else {
-			agencyComment.setPositiveComment(requestPositiveComment.get(request));
-			agencyComment.setNegativeComment(requestNegativeComment.get(request));
+			agencyComment.setPositiveComment(requestPositiveComment
+					.get(request));
+			agencyComment.setNegativeComment(requestNegativeComment
+					.get(request));
 			em.merge(agencyComment);
 		}
 		em.getTransaction().commit();
@@ -192,26 +196,26 @@ public class UserRequestBean implements Serializable {
 						.getResultList();
 				requestAgencies.put(req, agenciesAnsweredRequest);
 			} else {
-				Query queryAgencyRating = em
-						.createQuery("select comment "
-								+ "from TRequest req join req.requestComments comment "
-								+ "where req.id = :requestId ");
+				Query queryAgencyRating = em.createQuery("select comment "
+						+ "from TRequest req join req.requestComments comment "
+						+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
-				/*try {
-					assessment = (Integer) queryAgencyRating.getSingleResult();
-				} catch (NoResultException nre) {
-					assessment = 0;
-				}*/try {
-				 TComment result = (TComment) queryAgencyRating.getSingleResult();
-				 assessment = result.getAssessment();
-				 positiveComment = result.getPositiveComment();
-				 negativeComment = result.getNegativeComment();
+				/*
+				 * try { assessment = (Integer)
+				 * queryAgencyRating.getSingleResult(); } catch
+				 * (NoResultException nre) { assessment = 0; }
+				 */try {
+					TComment result = (TComment) queryAgencyRating
+							.getSingleResult();
+					assessment = result.getAssessment();
+					positiveComment = result.getPositiveComment();
+					negativeComment = result.getNegativeComment();
 				} catch (NoResultException nre) {
 					assessment = 0;
 					positiveComment = null;
 					negativeComment = null;
 				}
-				 
+
 				requestComment.put(req, (Integer) assessment);
 				requestNegativeComment.put(req, negativeComment);
 				requestPositiveComment.put(req, positiveComment);
@@ -495,7 +499,8 @@ public class UserRequestBean implements Serializable {
 		return requestPositiveComment;
 	}
 
-	public void setRequestPositiveComment(Map<TRequest, String> requestPositiveComment) {
+	public void setRequestPositiveComment(
+			Map<TRequest, String> requestPositiveComment) {
 		this.requestPositiveComment = requestPositiveComment;
 	}
 
@@ -503,7 +508,8 @@ public class UserRequestBean implements Serializable {
 		return requestNegativeComment;
 	}
 
-	public void setRequestNegativeComment(Map<TRequest, String> requestNegativeComment) {
+	public void setRequestNegativeComment(
+			Map<TRequest, String> requestNegativeComment) {
 		this.requestNegativeComment = requestNegativeComment;
 	}
 }
