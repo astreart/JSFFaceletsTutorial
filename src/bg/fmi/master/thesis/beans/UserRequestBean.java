@@ -165,8 +165,10 @@ public class UserRequestBean implements Serializable {
 	public String markRequestAsCompleted() {
 		EntityManager em = HibernateUtil.getEntityManager();
 		if (!em.getTransaction().isActive())
-			request.setIsActive(false);
+			em.getTransaction().begin();
+		request.setIsActive(false);
 		em.merge(request);
+		em.getTransaction().commit();
 		userCompletedRequests.add(request);
 		userActiveRequests.remove(request);
 		return "userCompletedRequests";
