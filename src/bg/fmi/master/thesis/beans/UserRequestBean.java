@@ -399,6 +399,7 @@ public class UserRequestBean implements Serializable {
 		msg.setMessageBody(message.getMessageBody());
 
 		message.setMessageBody(null);
+		msg.setTitle("RE:");
 
 		// TODO: Depends on the logged user
 		Query q = em.createQuery("select u from TUser u where u.id = 11");

@@ -36,13 +36,18 @@ public class TAgencyEventType implements java.io.Serializable{
 	private TEventType tEventType;
 	
 	
-	TAgencyEventType() {
+	public TAgencyEventType() {
 	}
 	
 	public TAgencyEventType(TAgency agency, TEventType tEventType) {
 		super();
 		this.agency = agency;
 		this.tEventType = tEventType;
+	}
+
+	public TAgencyEventType(TAgencyEventType tAgencyEventType) {
+		this.agency = tAgencyEventType.agency;
+		this.tEventType = tAgencyEventType.tEventType;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_AGENCY_EVENT_TYPE", allocationSize = 1)

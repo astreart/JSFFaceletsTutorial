@@ -33,6 +33,7 @@ public class RequestBean implements Serializable {
 	private FilterTypeBean filterTypeBean = new FilterTypeBean();
 	private Map<TFilterType, Object> eventDateValues = new HashMap<TFilterType, Object>();
 	private Map<TFilterType, Object> textFilterTypeValues = new HashMap<TFilterType, Object>();
+	private MessageBean messageBean = new MessageBean();
 
 	public TRequest gettRequest() {
 		return tRequest;
@@ -166,5 +167,9 @@ public class RequestBean implements Serializable {
 			dateIterator.remove();
 		}
 		em.getTransaction().commit();
+		
+		messageBean.createMessageToAll(newRequest);
 	}
+	
+	
 }

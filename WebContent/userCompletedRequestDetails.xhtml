@@ -107,20 +107,24 @@
 
  -->
 	<h:form>
-	<h3>Оценка и коментари за агенцията, организирала събтието</h3>
+		<h3>Оценка и коментари за агенцията, организирала събтието</h3>
 		<p:panelGrid columns="2" style="border:none;">
-			<h:outputLabel
-				value="Цялостното организиране" style="font-weight: bold;font-size: 16px" />
+			<h:outputLabel value="Цялостното организиране"
+				style="font-weight: bold;font-size: 16px" />
 			<p:rating
 				value="#{userRequestBean.completedRequestComment[userRequestBean.request]}"
 				stars="10" rendered="true" disabled="true">
 			</p:rating>
-			<h:outputText value="Положителен коментар" style="font-weight: bold;font-size: 16px" ></h:outputText>
+			<h:outputText value="Положителен коментар"
+				style="font-weight: bold;font-size: 16px"></h:outputText>
 			<h:outputText
-				value="#{userRequestBean.completedRequestPositiveComment[userRequestBean.request]}"></h:outputText>
-			<h:outputText value="Отрицателен коментар" style="font-weight: bold;font-size: 16px" ></h:outputText>
+				value="#{userRequestBean.completedRequestPositiveComment[userRequestBean.request] != null ? userRequestBean.completedRequestPositiveComment[userRequestBean.request]  : 'Няма коментар'}">
+			</h:outputText>
+			<h:outputText value="Отрицателен коментар"
+				style="font-weight: bold;font-size: 16px"></h:outputText>
 			<h:outputText
-				value="#{userRequestBean.completedRequestNegativeComment[userRequestBean.request]}"></h:outputText>
+				value="#{userRequestBean.completedRequestNegativeComment[userRequestBean.request] != null ? userRequestBean.completedRequestNegativeComment[userRequestBean.request]  : 'Няма коментар'}">
+			</h:outputText>
 		</p:panelGrid>
 		<br />
 	</h:form>

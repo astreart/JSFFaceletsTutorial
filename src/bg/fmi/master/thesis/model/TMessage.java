@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.model;
+п»їpackage bg.fmi.master.thesis.model;
 
 import static javax.persistence.GenerationType.SEQUENCE; 
 
@@ -22,58 +22,64 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 
 /*
- * Таблица, съхраняваща съобщенията
+ * РўР°Р±Р»РёС†Р°, СЃСЉС…СЂР°РЅСЏРІР°С‰Р° СЃСЉРѕР±С‰РµРЅРёСЏС‚Р°
  */
 @Entity
 @Table(name = "T_MESSAGE")
 public class TMessage implements java.io.Serializable{
 
 	/*
-	 * ИД на съобщението
+	 * РР” РЅР° СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 	 */
 	private long id;
 	
 	/*
-	 * Подател на съобщението
+	 * РџРѕРґР°С‚РµР» РЅР° СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 	 */
 	private TUser tUser;
 	
 	/*
-	 * Адресат(и)
+	 * РђРґСЂРµСЃР°С‚(Рё)
 	 */
 	private Set<TMessageUser> tMessageUsers = new HashSet<TMessageUser>(0);
 	
 	/*
-	 * Заявка, към която се отнася съобщението
+	 * Р—Р°СЏРІРєР°, РєСЉРј РєРѕСЏС‚Рѕ СЃРµ РѕС‚РЅР°СЃСЏ СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 	 */
 	private TRequest tRequest;
 
 	/*
-	 * Съдържание
+	 * РЎСЉРґСЉСЂР¶Р°РЅРёРµ
 	 */
 	private String messageBody;
 	
 	/*
-	 * Дата на изпращане
+	 * Р”Р°С‚Р° РЅР° РёР·РїСЂР°С‰Р°РЅРµ
 	 */
 	private Date dateSent;
 
 	/*
-	 * Група, към която спада съобщението
+	 * Р“СЂСѓРїР°, РєСЉРј РєРѕСЏС‚Рѕ СЃРїР°РґР° СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 	 */
 	private Long messageGroup;
+	
+	/**
+	 * Р—Р°РіР»Р°РІРёРµ РЅР° СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
+	 */
+	private String title;
 	
 	public TMessage() {
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String messageBody,
-			Date dateSent, Long messageGroup){
+			Date dateSent, Long messageGroup, String title){
 		this.tUser = tUser;
 		this.tMessageUsers = tMessageUsers;
 		this.tRequest = tRequest;
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
 		this.messageGroup = messageGroup;
+		this.title = title;
 	}
 	
 	public TMessage(TUser tUser, Set<TMessageUser> tMessageUsers, TRequest tRequest, String title, String messageBody,
@@ -84,6 +90,7 @@ public class TMessage implements java.io.Serializable{
 		this.messageBody = messageBody;
 		this.dateSent = dateSent;
 		this.messageGroup = messageGroup;
+		this.title = title;
 	}
 	
 	public TMessage(TMessage tMessage) {
@@ -93,6 +100,7 @@ public class TMessage implements java.io.Serializable{
 		this.messageBody = tMessage.messageBody;
 		this.dateSent = tMessage.dateSent;
 		this.messageGroup = tMessage.messageGroup;
+		this.title = tMessage.title;
 	}
 
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_MESSAGE", allocationSize = 1)
@@ -164,6 +172,14 @@ public class TMessage implements java.io.Serializable{
 		this.messageGroup = messageGroup;
 	}
 
+	@Column(name = "TITLE", nullable = false, length = 128)
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

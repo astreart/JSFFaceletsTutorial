@@ -43,6 +43,11 @@ public class TMessageUser implements java.io.Serializable{
 		this.tMessage = tMessage;
 	}
 
+	public TMessageUser(TMessageUser tMessageUser) {
+		this.tUser = tMessageUser.tUser;
+		this.tMessage = tMessageUser.tMessage;
+	}
+
 	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_MESSAGE_USER", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
