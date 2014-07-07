@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.beans;
+п»їpackage bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ import bg.fmi.master.thesis.model.TAgency;
 import bg.fmi.master.thesis.model.TMessage;
 import bg.fmi.master.thesis.model.TMessageUser;
 import bg.fmi.master.thesis.model.TRequest;
+import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "messageBean")
@@ -26,7 +27,7 @@ public class MessageBean implements Serializable {
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 
-		// Добавяме си съобщението
+		// Р”РѕР±Р°РІСЏРјРµ СЃРё СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 		TMessage newMessage = new TMessage(tMessage);
 		newMessage.setDateSent(tRequest.getRequestDate());
 		newMessage.setMessageBody(tRequest.getDescription());
@@ -40,8 +41,8 @@ public class MessageBean implements Serializable {
 
 		em.persist(newMessage);
 
-		// Намираме всички агенции, които организират събития от типа на
-		// събитието в запитването
+		// РќР°РјРёСЂР°РјРµ РІСЃРёС‡РєРё Р°РіРµРЅС†РёРё, РєРѕРёС‚Рѕ РѕСЂРіР°РЅРёР·РёСЂР°С‚ СЃСЉР±РёС‚РёСЏ РѕС‚ С‚РёРїР° РЅР°
+		// СЃСЉР±РёС‚РёРµС‚Рѕ РІ Р·Р°РїРёС‚РІР°РЅРµС‚Рѕ
 		Query queryAgencies = em
 				.createQuery("select agency "
 						+ "from TAgency agency join agency.tAgencyEventTypes et where et.tEventType = :eventType");
@@ -50,7 +51,7 @@ public class MessageBean implements Serializable {
 
 		TMessageUser newMessageUser = null;
 		for (TAgency agency : agencies) {
-			// Записваме на кои агенции е добавено съобщението
+			// Р—Р°РїРёСЃРІР°РјРµ РЅР° РєРѕРё Р°РіРµРЅС†РёРё Рµ РґРѕР±Р°РІРµРЅРѕ СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
 			newMessageUser = new TMessageUser(tMessageUser);
 			newMessageUser.settUser(agency.gettUser());
 			newMessageUser.settMessage(newMessage);
@@ -66,5 +67,34 @@ public class MessageBean implements Serializable {
 
 	public void settMessage(TMessage tMessage) {
 		this.tMessage = tMessage;
+	}
+
+	public void createMessageToAgency(TRequest tRequest, TUser tUserRequestSent) {
+
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+
+		// Р”РѕР±Р°РІСЏРјРµ СЃРё СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ
+		TMessage newMessage = new TMessage(tMessage);
+		newMessage.setDateSent(tRequest.getRequestDate());
+		newMessage.setMessageBody(tRequest.getDescription());
+		newMessage.settUser(tRequest.getAuthor());
+		newMessage.settRequest(tRequest);
+		newMessage.setTitle(tRequest.getTitle());
+
+		Query q = em.createQuery("select max(m.messageGroup) from TMessage m");
+		Long messageGroup = (Long) q.getSingleResult();
+		newMessage.setMessageGroup(messageGroup + 1);
+
+		em.persist(newMessage);
+
+		// Р—Р°РїРёСЃРІР°РјРµ СЃСЉРѕР±С‰РµРЅРёРµС‚Рѕ РїСЂРё РёР·РїСЂР°С‚РµРЅРёС‚Рµ СЃСЉРѕР±С‰РµРЅРёСЏ РґРѕ РѕРїСЂРµРґРµР»РµРЅР° Р°РіРµРЅС†РёСЏ
+		TMessageUser newMessageUser = new TMessageUser(tMessageUser);
+		newMessageUser.settUser(tUserRequestSent);
+		newMessageUser.settMessage(newMessage);
+		em.persist(newMessageUser);
+
+		em.getTransaction().commit();
+
 	}
 }

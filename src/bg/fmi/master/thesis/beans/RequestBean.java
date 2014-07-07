@@ -1,4 +1,4 @@
-package bg.fmi.master.thesis.beans;
+﻿package bg.fmi.master.thesis.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,7 @@ import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
 @ManagedBean(name = "requestBean")
-@RequestScoped
+@SessionScoped //от RequestScope разширен заради това на кого трябва да се прати съобщението
 public class RequestBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,6 +34,7 @@ public class RequestBean implements Serializable {
 	private Map<TFilterType, Object> eventDateValues = new HashMap<TFilterType, Object>();
 	private Map<TFilterType, Object> textFilterTypeValues = new HashMap<TFilterType, Object>();
 	private MessageBean messageBean = new MessageBean();
+	private TUser tUserRequestSent;
 
 	public TRequest gettRequest() {
 		return tRequest;
@@ -167,9 +168,19 @@ public class RequestBean implements Serializable {
 			dateIterator.remove();
 		}
 		em.getTransaction().commit();
-		
-		messageBean.createMessageToAll(newRequest);
+
+		if (tUserRequestSent == null)
+			messageBean.createMessageToAll(newRequest);
+		else
+			messageBean.createMessageToAgency(newRequest, tUserRequestSent);
 	}
-	
-	
+
+	public TUser gettUserRequestSent() {
+		return tUserRequestSent;
+	}
+
+	public void settUserRequestSent(TUser tUserRequestSent) {
+		this.tUserRequestSent = tUserRequestSent;
+	}
+
 }

@@ -39,6 +39,8 @@
 	<br />
 	<h:commandButton value="Изпрати запитване"
 		action="addRequest?faces-redirect=true">
+		<f:setPropertyActionListener target="#{requestBean.tUserRequestSent}"
+				value="${agencyBean.tAgency.tUser}" />
 	</h:commandButton>
 
 
