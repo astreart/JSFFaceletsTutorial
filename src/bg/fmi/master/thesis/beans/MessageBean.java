@@ -22,6 +22,7 @@ public class MessageBean implements Serializable {
 	private TMessage tMessage = new TMessage();
 	private TMessageUser tMessageUser = new TMessageUser();
 	private List<TAgency> agencies;
+	private SendEmail sendEmail = new SendEmail();
 
 	public void createMessageToAll(TRequest tRequest) {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -51,6 +52,9 @@ public class MessageBean implements Serializable {
 
 		TMessageUser newMessageUser = null;
 		for (TAgency agency : agencies) {
+			//Изпращаме съобщението			
+			sendEmail.sendEmailToUser("masterthesisfmi@gmail.com", "masterthesisfmi@gmail.com", tRequest.getTitle(), tRequest.getDescription());
+			
 			// Записваме на кои агенции е добавено съобщението
 			newMessageUser = new TMessageUser(tMessageUser);
 			newMessageUser.settUser(agency.gettUser());
@@ -87,7 +91,10 @@ public class MessageBean implements Serializable {
 		newMessage.setMessageGroup(messageGroup + 1);
 
 		em.persist(newMessage);
-
+		
+		//Изпращаме съобщението			
+		sendEmail.sendEmailToUser("masterthesisfmi@gmail.com", "masterthesisfmi@gmail.com", tRequest.getTitle(), tRequest.getDescription());
+		
 		// Записваме съобщението при изпратените съобщения до определена агенция
 		TMessageUser newMessageUser = new TMessageUser(tMessageUser);
 		newMessageUser.settUser(tUserRequestSent);
