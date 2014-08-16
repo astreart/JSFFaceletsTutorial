@@ -11,68 +11,16 @@
 	<ui:define name="content">
 		<h:form>
 			<h:panelGrid columns="2">
-				<h:outputText value="Name"></h:outputText>
-				<h:inputText value="#{loginBean.name}"></h:inputText>
-				<h:outputText value="Password"></h:outputText>
-				<h:inputSecret value="#{loginBean.password}"></h:inputSecret>
+				<h:outputLabel for="username" value="Име"></h:outputLabel>
+				<h:inputText value="#{loginBean.name}" required="true"
+					label="username"
+					requiredMessage="Моля, въведете потребителско име!"></h:inputText>
+				<h:outputLabel for="password" value="Парола"></h:outputLabel>
+				<h:inputSecret value="#{loginBean.password}" required="true"
+					label="password" requiredMessage="Моля, въведете парола!"></h:inputSecret>
 			</h:panelGrid>
-			<h:commandButton value="Login" action="login"></h:commandButton>
-
-			<p:inputText />
-
-		</h:form>
-
-		<h:link value="confirmDialog" outcome="confirmDialog" />
-		<br />
-		<h:link value="pprUpdate" outcome="pprUpdate" />
-		<br />
-		<h:link value="pprPartialTree" outcome="pprPartialTree" />
-		<br />
-		<h:link value="Select Boolean Button" outcome="selectBooleanButton" />
-		<br />
-		<h:link value="Calendar" outcome="calendarNavigator" />
-		<br />
-
-		<h:form id="form">
-
-			<p:editor id="editor" value="#{editorBean.value}" width="600" />
-
-			<h:panelGrid columns="2" style="margin-top:10px">
-				<p:commandButton id="submitButton" value="Submit" update="display"
-					oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
-				<p:commandButton id="clearButton" type="button" value="Clear"
-					onclick="PF('editor').clear()" icon="ui-icon-close" />
-			</h:panelGrid>
-
-			<p:dialog header="Content" widgetVar="dlg" showEffect="fade"
-				hideEffect="fade" modal="true">
-				<h:outputText id="display" value="#{editorBean.value}"
-					escape="false" />
-			</p:dialog>
-
-			<h3>Remaining Chars</h3>
-			<p:inputTextarea rows="5" cols="30" counter="counter" maxlength="10"
-				counterTemplate="{1} characters remaining." autoResize="false" />
-			<h:outputText id="counter" />
-
-			<h:outputText value="Readonly:" />
-			<p:rating value="#{pprBean.rating}" stars="5"
-				onRate="alert('You rated ' + value)" />
-
-			<p:growl id="growl" showDetail="true" />
-			<p:fieldset legend="Toggleable Fieldset" toggleable="true" toggleSpeed="500">
-				<p:ajax event="toggle" update="growl" />
-				<h:panelGrid columns="2" cellpadding="10">
-					<p:graphicImage
-						value="http://www.primefaces.org/showcase/images/godfather/godfather2.jpg" />
-					<h:outputText
-						value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
-                          In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
-                          killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows." />
-				</h:panelGrid>
-				</p:fieldset>
-
-				<br />
+			<h:commandButton value="Вход"
+				action="#{loginBean.login(loginBean.name, loginBean.password)}"></h:commandButton>
 		</h:form>
 
 	</ui:define>

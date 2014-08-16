@@ -17,27 +17,35 @@
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<navigation-rule>           
-        <navigation-case>
-            <from-outcome>cancelRequest</from-outcome>
-            <to-view-id>/userCancelledRequests.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>           
-        <navigation-case>
-            <from-outcome>userCompletedRequests</from-outcome>
-            <to-view-id>/userCompletedRequests.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    	<navigation-rule>           
-        <navigation-case>
-            <from-outcome>userActiveRequests</from-outcome>
-            <to-view-id>/userActiveRequests.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
+	<navigation-rule>
+		<display-name>welcome.xhtml</display-name>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>cancelRequest</from-outcome>
+			<to-view-id>/userCancelledRequests.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>userCompletedRequests</from-outcome>
+			<to-view-id>/userCompletedRequests.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>userActiveRequests</from-outcome>
+			<to-view-id>/userActiveRequests.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 	<converter>
 		<converter-id>tEventTypeConverter</converter-id>
 		<converter-class>bg.fmi.master.thesis.beans.TEventTypeConverter</converter-class>
