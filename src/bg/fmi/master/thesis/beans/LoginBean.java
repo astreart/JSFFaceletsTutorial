@@ -5,11 +5,14 @@
 
 package bg.fmi.master.thesis.beans;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -42,37 +45,28 @@ public class LoginBean {
 		this.password = password;
 	}
 
-	public String logout() {
+	public void logout() {
 		this.name = null;
 		this.password = null;
-		return "logout";
+		// return "logout";
 	}
 
-	public String login(String username, String password) {
+	public void login(String username, String password) {
 		EntityManager em = HibernateUtil.getEntityManager();
-		
-	System.out.println("username: " + username +", password: " + password);
 
-		/*Query validateUser = em
-				.createQuery("CALL valid_user1 (:username, :password) ");
-		validateUser.setParameter("username", username);
-		validateUser.setParameter("password", password);
-		
-		try {
-             Object result = (Object) validateUser.getSingleResult();
-     		 this.name = username;
-     		System.out.println(result.toString());
-        } catch (Exception e) {
-        }*/
-		
-		 
-	
-		Object valid = (Object)em.createNativeQuery("SELECT user_security.valid_user(:username, :password) FROM DUAL")
-                .setParameter("username", username)
-                .setParameter("password", password)
-                .getSingleResult();
-		System.out.println("valid: " + valid);
+		BigDecimal valid = (BigDecimal) em
+				.createNativeQuery(
+						"SELECT user_security.valid_user(:username, :password) FROM DUAL")
+				.setParameter("username", username)
+				.setParameter("password", password).getSingleResult();
 
-		return "login";
+		if (valid.intValue() == 0){
+			name = null;
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Въвели сте грешен потребител/ парола", " ");
+
+			FacesContext.getCurrentInstance().addMessage(null, message);
+
+		}
 	}
 }
