@@ -133,8 +133,11 @@ public class TUser implements java.io.Serializable {
 		this.email = tUser.email;
 	}
 
+	/*@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)*/
+	@SequenceGenerator(name = "generator", sequenceName = "SEQ_T_USER", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
 	@Column(name = "ID", unique = true, nullable = false)
 	public long getId() {
 		return id;
@@ -153,7 +156,7 @@ public class TUser implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "PASSWORD", nullable = false, length = 15)
+	@Column(name = "PASSWORD", nullable = false, length = 60)
 	public String getPassword() {
 		return password;
 	}
