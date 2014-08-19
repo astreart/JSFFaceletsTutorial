@@ -20,7 +20,7 @@
 					label="password" requiredMessage="Моля, въведете парола!"></h:inputSecret>
 			</h:panelGrid>
 			<h:commandButton value="Вход"
-				action="#{loginBean.login(loginBean.name, loginBean.password)}"></h:commandButton>
+				actionListener="#{loginBean.login(loginBean.name, loginBean.password)}"></h:commandButton>
 		</h:form>
 
 	</ui:define>

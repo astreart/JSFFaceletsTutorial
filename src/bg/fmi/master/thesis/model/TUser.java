@@ -131,6 +131,16 @@ public class TUser implements java.io.Serializable {
 		super();
 		this.username = tUser.username;
 		this.email = tUser.email;
+		this.password = tUser.password;
+		this.name = tUser.name;
+		this.phone = tUser.phone;
+		this.userRole = tUser.userRole;
+		this.userRequests = tUser.userRequests;
+		this.tAgencyRequests = tUser.tAgencyRequests;
+		this.sentMessages = tUser.sentMessages;
+		this.receivedMessages = tUser.receivedMessages;
+		this.tAgencies = tUser.tAgencies;
+		this.photo = tUser.photo;
 	}
 
 	/*@Id

@@ -10,7 +10,7 @@
 	<ui:define name="content">
 		<h:form>
 			<h:outputLabel value="Welcome #{loginBean.name}"></h:outputLabel>
-			<h:commandButton value="Изход" action="#{loginBean.logout()}"></h:commandButton>
+			<h:commandButton value="Изход" actionListener="#{loginBean.logout()}"></h:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>

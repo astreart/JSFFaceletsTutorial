@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:body>
+	<center>
+		<h:outputText value=" Регистрация на потребител"></h:outputText>
+	</center>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputText value="Потребителско име :"></h:outputText>
+			<h:inputText id="username" value="#{loginBean.tUser.username}"
+				required="true" requiredMessage="Моля, въведете потребителско име!"></h:inputText>
+
+			<h:outputText value="Парола:"></h:outputText>
+			<h:inputSecret id="password" value="#{loginBean.tUser.password}"
+				required="true" requiredMessage="Моля, въведете парола!"></h:inputSecret>
+
+			<h:outputText value="Повторете паролата:"></h:outputText>
+			<h:inputSecret id="confirmpassword"
+				value="#{loginBean.confirmpassword}" required="true"
+				requiredMessage="Моля, повторете паролата!"></h:inputSecret>
+
+			<h:outputText value="Име :"></h:outputText>
+			<h:inputText id="name" value="#{loginBean.tUser.name}"
+				required="true" requiredMessage="Моля, въведете вашето име!"></h:inputText>
+
+			<h:outputText value="Електронен адрес :"></h:outputText>
+			<h:inputText id="email" value="#{loginBean.tUser.email}"
+				required="true" requiredMessage="Моля, въведете вашия e-mail адрес!"></h:inputText>
+
+			<h:outputText value="Телефон :"></h:outputText>
+			<h:inputText id="phone" value="#{loginBean.tUser.phone}"
+				required="true" requiredMessage="Моля, въведете вашия телефон!"></h:inputText>
+
+			<h:outputText value="Роля :"></h:outputText>
+			<h:selectOneMenu id="role" value="#{loginBean.role}" required="true">
+				<f:selectItem itemLabel="Изберете роля" itemValue="" />
+				<f:selectItems value="#{loginBean.roles}" />
+			</h:selectOneMenu>
+			<h:outputText value="#{loginBean.role}" />
+
+			<h:commandButton type="submit" value="Регистрирай"
+				actionListener="#{loginBean.addUser()}"></h:commandButton>
+			<h:commandButton type="reset" value="Изчисти"></h:commandButton>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+
+</html>
