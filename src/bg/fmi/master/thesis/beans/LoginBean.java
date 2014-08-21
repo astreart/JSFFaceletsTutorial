@@ -94,18 +94,26 @@ public class LoginBean {
 		this.tUser = tUser;
 	}
 
-	/*public void addUser(String username, String password, String name,
-			String email, String phone, String role) {*/
 	public void addUser() {
-
+		FacesMessage message = null;
 		newUser = new TUser(tUser);
 
-		System.out.println("username: " + newUser.getUsername() );
-		System.out.println("password: " + newUser.getPassword() );
-		System.out.println("name: " + newUser.getName() );
-		System.out.println("phone: " + newUser.getPhone() );
-		System.out.println("email: " + newUser.getEmail() );
+		System.out.println("username: " + newUser.getUsername());
+		System.out.println("password: " + newUser.getPassword());
+		System.out.println("confirmpassword: " + confirmpassword);
+		System.out.println("name: " + newUser.getName());
+		System.out.println("phone: " + newUser.getPhone());
+		System.out.println("email: " + newUser.getEmail());
 		System.out.println("role: " + role);
+		
+		if (!newUser.getPassword().equals(confirmpassword))
+		{
+			 message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Паролите не съвпадат!", " ");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			return;
+
+		}
 
 		int role_id;
 
@@ -114,9 +122,9 @@ public class LoginBean {
 		} else {
 			role_id = 2;
 		}
-		
-		System.out.println("role_id: " + role_id );
-		
+
+		System.out.println("role_id: " + role_id);
+
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		Query query = em
@@ -134,7 +142,7 @@ public class LoginBean {
 		query.setParameter("p_name", newUser.getName());
 		query.setParameter("p_role_id", role_id);
 		query.executeUpdate();
-		
+
 		em.getTransaction().commit();
 	}
 
@@ -153,4 +161,5 @@ public class LoginBean {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
+
 }
