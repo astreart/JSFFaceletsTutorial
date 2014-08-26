@@ -6,9 +6,7 @@
 package bg.fmi.master.thesis.beans;
 
 import java.math.BigDecimal;
-import java.sql.CallableStatement;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -18,11 +16,6 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.hibernate.SQLQuery;
-
-import bg.fmi.master.thesis.model.TAgency;
-import bg.fmi.master.thesis.model.TComment;
-import bg.fmi.master.thesis.model.TRequest;
 import bg.fmi.master.thesis.model.TUser;
 import bg.fmi.master.thesis.util.HibernateUtil;
 
@@ -56,7 +49,6 @@ public class LoginBean {
 	public void logout() {
 		this.name = null;
 		this.password = null;
-		// return "logout";
 	}
 
 	public void login(String username, String password) {
@@ -105,10 +97,9 @@ public class LoginBean {
 		System.out.println("phone: " + newUser.getPhone());
 		System.out.println("email: " + newUser.getEmail());
 		System.out.println("role: " + role);
-		
-		if (!newUser.getPassword().equals(confirmpassword))
-		{
-			 message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+
+		if (!newUser.getPassword().equals(confirmpassword)) {
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Паролите не съвпадат!", " ");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return;

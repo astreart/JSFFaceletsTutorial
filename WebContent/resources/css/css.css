@@ -48,3 +48,13 @@ ui-datagrid ui-widget {
 	font-family: Segoe UI, Arial, sans-serif;
 	font-size: 1em;
 }
+
+.column1 {
+    width: 50%;
+    text-align: left;
+}
+
+.column2 {
+    width: 50%;
+    text-align: right;
+}
