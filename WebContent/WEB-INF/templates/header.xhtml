@@ -13,7 +13,8 @@
 			<p:graphicImage library="images" name="Connect2Agency.png" />
 
 			<h:form rendered="#{empty loginBean.name}">
-				<h:outputLabel for="username" value="Име:    "></h:outputLabel>
+			
+				<h:outputLabel for="username" value="Име: &#160;&#160;&#160;&#160;&#160;" escape="true" ></h:outputLabel>
 				<h:inputText value="#{loginBean.name}" required="true"
 					label="username"
 					requiredMessage="Моля, въведете потребителско име!"></h:inputText>
@@ -24,6 +25,9 @@
 				<br />
 				<h:outputText value=" " />
 				<br />
+				<p:commandButton value="Регистрация"
+					action="registration?faces-redirect=true">
+				</p:commandButton>
 				<p:commandButton value="Вход"
 					actionListener="#{loginBean.login(loginBean.name, loginBean.password)}"
 					ajax="false">
