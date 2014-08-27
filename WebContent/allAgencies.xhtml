@@ -6,62 +6,75 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
 	<ui:define name="content">
+		<div id="left"
+			style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
+			<br />
+		</div>
+		<div id="main" style="width: 920px; float: left;">
+			<f:view>
 
-		<h:head></h:head>
-		<f:view>
-			<h:form rendered="#{not empty loginBean.name}">
+				<h:form rendered="#{not empty loginBean.name}">
 
-				<h:outputStylesheet library="css" name="css.css" />
-				<center>
-					<h2>Агенции за организиране на събития</h2>
-				</center>
+					<h:outputStylesheet library="css" name="css.css" />
+					<center>
+						<h2>Агенции за организиране на събития</h2>
+					</center>
 
-				<p:dataGrid var="agency" value="#{agencyBean.agencyList}"
-					columns="1" rows="5" paginator="true" paginatorPosition="bottom"
-					lazy="false">
-					<p:growl id="growl" showDetail="true" />
-					<p:fieldset legend="${agency.tUser.name}" toggleable="true"
-						toggleSpeed="500" style="width:600px">
-						<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
-							update="growl" />
-						<br />
+					<p:dataGrid var="agency" value="#{agencyBean.agencyList}"
+						columns="1" rows="5" paginator="true" paginatorPosition="bottom"
+						lazy="false">
+						<p:growl id="growl" showDetail="true" />
+						<p:fieldset legend="${agency.tUser.name}" toggleable="true"
+							toggleSpeed="500" style="width:850px">
+							<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
+								update="growl" />
+							<br />
 
-						<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
-							<p:commandLink action="agencyDetail.jsf?faces-redirect=true">
-								<f:setPropertyActionListener target="#{agencyBean.tAgency}"
-									value="${agency}" />
-								<p:graphicImage value="#{agencyBean.image}"
-									alt="${agency.tUser.name}" width="200px" height="125px">
-									<f:param name="agencyId" value="#{agency.tUser.id}" />
-								</p:graphicImage>
-							</p:commandLink>
 							<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
-								<b>Агенция:</b>
-								<h:outputText value="${agency.tUser.name}" />
-								<b>Организира:</b>
-								<h:outputText value="#{agencyBean.agencyEventTypes[agency]}" />
-								<b>Град: </b>
-								<h:outputText value="${agency.city}" />
-								<b>Телефон за контакт:</b>
-								<h:outputText value="${agency.tUser.phone}" />
-								<b>Уеб сайт: </b>
-								<h:outputLink value="#{agency.website}" target="_blank">#{agency.website}</h:outputLink>
+								<p:commandLink action="agencyDetail.jsf?faces-redirect=true">
+									<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+										value="${agency}" />
+									<p:graphicImage value="#{agencyBean.image}"
+										alt="${agency.tUser.name}" width="200px" height="125px">
+										<f:param name="agencyId" value="#{agency.tUser.id}" />
+									</p:graphicImage>
+								</p:commandLink>
+								<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
+									<b>Агенция:</b>
+									<h:outputText value="${agency.tUser.name}" />
+									<b>Организира:</b>
+									<h:outputText value="#{agencyBean.agencyEventTypes[agency]}" />
+									<b>Град: </b>
+									<h:outputText value="${agency.city}" />
+									<b>Телефон за контакт:</b>
+									<h:outputText value="${agency.tUser.phone}" />
+									<b>Уеб сайт: </b>
+									<h:outputLink value="#{agency.website}" target="_blank">#{agency.website}</h:outputLink>
+								</h:panelGrid>
+
+								<h:commandButton value="Детайли"
+									action="agencyDetail?faces-redirect=true">
+									<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+										value="${agency}" />
+								</h:commandButton>
 							</h:panelGrid>
 
-							<h:commandButton value="Детайли"
-								action="agencyDetail?faces-redirect=true">
-								<f:setPropertyActionListener target="#{agencyBean.tAgency}"
-									value="${agency}" />
-							</h:commandButton>
-						</h:panelGrid>
+							<h:outputText value="#{ratingBean.rating[agency.tUserId]}" />
 
-						<h:outputText value="#{ratingBean.rating[agency.tUserId]}" />
+						</p:fieldset>
+					</p:dataGrid>
+				</h:form>
+			</f:view>
+		</div>
 
-					</p:fieldset>
-				</p:dataGrid>
-			</h:form>
-		</f:view>
+		<div id="right"
+			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 1800px; width: 150px; float: right;">
+			<br />
+		</div>
+
+
 
 	</ui:define>
 </ui:composition>
