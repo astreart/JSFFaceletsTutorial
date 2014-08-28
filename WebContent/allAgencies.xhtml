@@ -8,6 +8,7 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 
 	<ui:define name="content">
+	<div id = "container" style="min-height:100%;position:relative;">
 		<div id="left"
 			style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
 			<br />
@@ -65,17 +66,34 @@
 
 						</p:fieldset>
 					</p:dataGrid>
+					<hr/>
 				</h:form>
+				
+				<h:form rendered="#{empty loginBean.name}">
+						<div style="height: 430px">
+							<br /> <br />
+							<center>
+								<p:graphicImage library="images" name="lock-icon.png"
+									style="float:left;" />
+								<h2 style="color: red">
+									<br />
+									<br />
+									<br />За да имате достъп до тази страница,
+								</h2>
+								<h2 style="color: red">трябва да се логнете в приложението!</h2>
+							</center>
+							<br />
+						</div>
+						<hr />
+					</h:form>
 			</f:view>
 		</div>
+	    </div>
 
 		<div id="right"
 			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 1800px; width: 150px; float: right;">
 			<br />
 		</div>
-
-
-
 	</ui:define>
 </ui:composition>
 </html>

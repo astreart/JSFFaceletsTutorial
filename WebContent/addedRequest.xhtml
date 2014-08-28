@@ -7,8 +7,64 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head>
-</h:head>
-<h:form>Вие успешно направихте запитване за организиране на събитие! Благодарим Ви!</h:form>
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
+	<ui:define name="content">
+		<div id="container" style="min-height: 100%; position: relative;">
+			<div id="left"
+				style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 470px; width: 163px; float: left;">
+				<br />
+			</div>
+			<div id="main" style="width: 920px; float: left;">
+				<f:view>
+
+					<h:form rendered="#{not empty loginBean.name}">
+						<div style="height: 430px">
+							<br /> <br />
+							<center>
+								<p:graphicImage library="images" name="Tick.png"
+									style="float:left;width=250px; height=190px;" />
+								<h2>
+									<br />
+									<br />Вие успешно направихте запитване за организиране на
+									събитие!
+								</h2>
+								<h2>Благодарим Ви много!</h2>
+
+								<p:commandButton value="Отиди в активни запитвания"
+									action="userActiveRequests?faces-redirect=true">
+								</p:commandButton>
+							</center>
+							<br />
+						</div>
+						<hr />
+					</h:form>
+
+					<h:form rendered="#{empty loginBean.name}">
+						<div style="height: 430px">
+							<br /> <br />
+							<center>
+								<p:graphicImage library="images" name="lock-icon.png"
+									style="float:left;" />
+								<h2 style="color: red">
+									<br /> <br /> <br />За да имате достъп до тази страница,
+								</h2>
+								<h2 style="color: red">трябва да се логнете в приложението!</h2>
+							</center>
+							<br />
+						</div>
+						<hr />
+					</h:form>
+
+				</f:view>
+			</div>
+
+			<div id="right"
+				style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 470px; width: 150px; float: right;">
+				<br />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
 
 </html>
