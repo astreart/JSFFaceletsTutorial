@@ -7,93 +7,134 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head>
-</h:head>
-<h:form>Детайли за агенция за организиране на събития!
-<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
-		<h:outputLink value="#{agencyBean.tAgency.website}" target="_blank">
-			<p:graphicImage value="#{agencyBean.image}"
-				alt="${tAgency.tUser.name}" width="200px" height="125px">
-				<f:param name="agencyId" value="#{agencyBean.tAgency.tUser.id}" />
-			</p:graphicImage>
-		</h:outputLink>
-		<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
-			<b>Агенция:</b>
-			<h:outputText value="#{agencyBean.tAgency.tUser.name}, #{ratingBean.rating[agencyBean.tAgency.tUserId]}" />
-			<b>Организира:</b>
-			<h:outputText
-				value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />
-			<b>Град: </b>
-			<h:outputText value="${agencyBean.tAgency.city}" />
-			<b>Адрес: </b>
-			<h:outputText
-				value="#{agencyBean.tAgency.address!=null ? agencyBean.tAgency.address : '-'}" />
-			<b>Телефон за контакт:</b>
-			<h:outputText value="#{agencyBean.tAgency.tUser.phone}" />
-			<b>Уеб сайт: </b>
-			<h:outputLink value="#{agencyBean.tAgency.website}" target="_blank">#{agencyBean.tAgency.website}</h:outputLink>
-		</h:panelGrid>
-	</h:panelGrid>
-	<h:outputText value="#{agencyBean.tAgency.information}" />
-	<br />
-	<br />
-	<h:commandButton value="Изпрати запитване"
-		action="addRequest?faces-redirect=true">
-		<f:setPropertyActionListener target="#{requestBean.tUserRequestSent}"
-				value="${agencyBean.tAgency.tUser}" />
-	</h:commandButton>
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
+	<ui:define name="content">
+		<div id="container" style="min-height: 100%; position: relative;">
+			<div id="left"
+				style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 900px; width: 163px; float: left;">
+				<br />
+			</div>
+			<div id="main" style="width: 920px; float: left;background-color: white;">
+				<f:view>
+
+					<h:form rendered="#{not empty loginBean.name}">
+
+						Детайли за агенция за организиране на събития!
+							<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
+							<h:outputLink value="#{agencyBean.tAgency.website}"
+								target="_blank">
+								<p:graphicImage value="#{agencyBean.image}"
+									alt="${tAgency.tUser.name}" width="200px" height="125px">
+									<f:param name="agencyId" value="#{agencyBean.tAgency.tUser.id}" />
+								</p:graphicImage>
+							</h:outputLink>
+							<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
+								<b>Агенция:</b>
+								<h:outputText
+									value="#{agencyBean.tAgency.tUser.name}, #{ratingBean.rating[agencyBean.tAgency.tUserId]}" />
+								<b>Организира:</b>
+								<h:outputText
+									value="#{agencyBean.agencyEventTypes[agencyBean.tAgency]}" />
+								<b>Град: </b>
+								<h:outputText value="${agencyBean.tAgency.city}" />
+								<b>Адрес: </b>
+								<h:outputText
+									value="#{agencyBean.tAgency.address!=null ? agencyBean.tAgency.address : '-'}" />
+								<b>Телефон за контакт:</b>
+								<h:outputText value="#{agencyBean.tAgency.tUser.phone}" />
+								<b>Уеб сайт: </b>
+								<h:outputLink value="#{agencyBean.tAgency.website}"
+									target="_blank">#{agencyBean.tAgency.website}</h:outputLink>
+							</h:panelGrid>
+						</h:panelGrid>
+						<h:outputText value="#{agencyBean.tAgency.information}" />
+						<br />
+						<br />
+						<h:commandButton value="Изпрати запитване"
+							action="addRequest?faces-redirect=true">
+							<f:setPropertyActionListener
+								target="#{requestBean.tUserRequestSent}"
+								value="${agencyBean.tAgency.tUser}" />
+						</h:commandButton>
 
 
-	<br />
-	<br />
-	<p:dataTable id="comments" var="comment"
-		value="#{agencyBean.getCommentByAgency(agencyBean.tAgency)}"
-		paginator="true" rows="3" paginatorPosition="bottom"
-		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		emptyMessage="Няма коментари за тази агенция!">
+						<br />
+						<br />
+						<p:dataTable id="comments" var="comment"
+							value="#{agencyBean.getCommentByAgency(agencyBean.tAgency)}"
+							paginator="true" rows="3" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							emptyMessage="Няма коментари за тази агенция!">
 
-		<f:facet name="header">  
-            Коментари за агенция #{agencyBean.tAgency.tUser.name}
-        </f:facet>
+							<f:facet name="header">  
+					            Коментари за агенция #{agencyBean.tAgency.tUser.name}
+					        </f:facet>
+					
+												<p:column>
+									#{comment.tRequest.author.name}
+									 <br /> #{comment.commentDate}
+							</p:column>
 
-		<p:column>
-				#{comment.tRequest.author.name}
-				 <br /> #{comment.commentDate}
-		</p:column>
+							<p:column>
 
-		<p:column>
+								<p:row>
+									<p:column>
+										<p:graphicImage library="images" name="positive.png" />
+									</p:column>
+									<p:column>
+										<h:outputText
+											value="#{comment.positiveComment != null  ? comment.positiveComment : 'Няма положителен коментар към оценката'}"
+											style="#{comment.positiveComment != null ? '' : 'font-style:italic;'}" />
+									</p:column>
+								</p:row>
+								<hr />
+								<p:row>
+									<p:column>
+										<p:graphicImage library="images" name="negative.png" />
+									</p:column>
+									<p:column>
+										<h:outputText
+											value="#{comment.negativeComment != null  ? comment.negativeComment : 'Няма отрицателен коментар към оценката'}"
+											style="#{comment.negativeComment != null ? '' : 'font-style:italic;'}" />
+									</p:column>
+								</p:row>
+								<br />
+								<br />
+							</p:column>
 
-			<p:row>
-				<p:column>
-					<p:graphicImage library="images" name="positive.png" />
-				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{comment.positiveComment != null  ? comment.positiveComment : 'Няма положителен коментар към оценката'}"
-						style="#{comment.positiveComment != null ? '' : 'font-style:italic;'}" />
-				</p:column>
-			</p:row>
-			<hr />
-			<p:row>
-				<p:column>
-					<p:graphicImage library="images" name="negative.png" />
-				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{comment.negativeComment != null  ? comment.negativeComment : 'Няма отрицателен коментар към оценката'}"
-						style="#{comment.negativeComment != null ? '' : 'font-style:italic;'}" />
-				</p:column>
-			</p:row>
+							<p:column>
+								<center>Оценка:</center>
+								<center>#{comment.assessment}</center>
+							</p:column>
+
+						</p:dataTable>
+
+					</h:form>
+
+					<h:form rendered="#{empty loginBean.name}">
+						<div style="height: 430px; background-color: white;">
+							<br /> <br />
+							<center>
+								<p:graphicImage library="images" name="lock-icon.png"
+									style="float:left;" />
+								<h2 style="color: red">
+									<br /> <br /> <br />За да имате достъп до тази страница,
+								</h2>
+								<h2 style="color: red">трябва да се логнете в приложението!</h2>
+							</center>
+							<br />
+						</div>
+						<hr />
+					</h:form>
+				</f:view>
+			</div>
+		</div>
+
+		<div id="right"
+			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 900px; width: 150px; float: right;">
 			<br />
-			<br />
-		</p:column>
-
-		<p:column>
-			<center>Оценка:</center>
-			<center>#{comment.assessment}</center>
-		</p:column>
-
-	</p:dataTable>
-
-</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

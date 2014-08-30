@@ -18,7 +18,7 @@
 			<div id="main" style="width: 920px; float: left;">
 				<f:view>
 
-					<h:form rendered="#{not empty loginBean.name}">
+					<h:form>
 						<div style="height: 430px; background-color:white;">
 							<br /> <br />
 							<center>
@@ -26,8 +26,7 @@
 									style="float:left;width=250px; height=190px;" />
 								<h2>
 									<br />
-									<br />Вие успешно направихте запитване за организиране на
-									събитие!
+									<br />Вие успешно се регистрирахте в системата!
 								</h2>
 								<h2>Благодарим Ви много!</h2>
 
@@ -39,23 +38,6 @@
 						</div>
 						<hr />
 					</h:form>
-
-					<h:form rendered="#{empty loginBean.name}">
-						<div style="height: 430px; background-color:white;">
-							<br /> <br />
-							<center>
-								<p:graphicImage library="images" name="lock-icon.png"
-									style="float:left;" />
-								<h2 style="color: red">
-									<br /> <br /> <br />За да имате достъп до тази страница,
-								</h2>
-								<h2 style="color: red">трябва да се логнете в приложението!</h2>
-							</center>
-							<br />
-						</div>
-						<hr />
-					</h:form>
-
 				</f:view>
 			</div>
 

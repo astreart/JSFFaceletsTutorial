@@ -58,3 +58,8 @@ ui-datagrid ui-widget {
     width: 50%;
     text-align: right;
 }
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+    color: #666666!important;
+    text-decoration: none;
+}

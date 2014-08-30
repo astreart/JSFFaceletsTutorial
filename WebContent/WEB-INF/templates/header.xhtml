@@ -25,9 +25,8 @@
 				<br />
 				<h:outputText value=" " />
 				<br />
-				<p:commandButton value="Регистрация"
-					action="registration?faces-redirect=true">
-				</p:commandButton>
+				<p:button value="Регистрация" outcome="registration" />
+
 				<p:commandButton value="Вход"
 					actionListener="#{loginBean.login(loginBean.name, loginBean.password)}"
 					ajax="false">

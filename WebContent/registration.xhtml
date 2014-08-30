@@ -6,83 +6,137 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 
-<body
-	style="background-image: url('#{resource['images/background.png']}');">
 
-	<h:form
-		style="width: 100%; line-height: 5px; background-color: #f6d66f; color: black">
-		<h:outputStylesheet library="css" name="css.css" />
-		<h:panelGrid columns="2" width="100%" columnClasses="column1,column2">
-			<p:graphicImage library="images" name="Connect2Agency.png" />
-		</h:panelGrid>
+	<ui:define name="header">
+		<h:form
+			style="width: 100%; line-height: 5px; background-color: #f6d66f; color: black">
 
-	</h:form>
-	<h:form>
-		<center>
-			<br />
-			<h:outputText value=" Регистрация на потребител"
-				style="font-size: 20px; font-weight:bold"></h:outputText>
-			<br /> <br />
-
-			<h:panelGrid columns="2">
-				<h:outputText value="Потребителско име :"></h:outputText>
-				<h:inputText id="username" value="#{loginBean.tUser.username}"
-					required="true" requiredMessage="Моля, въведете потребителско име!"
-					style="height:16px;width:182px"></h:inputText>
-
-				<h:outputText value="Парола:"></h:outputText>
-				<h:inputSecret id="password" value="#{loginBean.tUser.password}"
-					required="true" requiredMessage="Моля, въведете парола!"
-					style="height:16px;width:182px"></h:inputSecret>
-
-				<h:outputText value="Повторете паролата:"></h:outputText>
-				<h:inputSecret id="confirmpassword"
-					value="#{loginBean.confirmpassword}" required="true"
-					requiredMessage="Моля, повторете паролата!"
-					style="height:16px;width:182px"></h:inputSecret>
-
-				<h:outputText value="Име :"></h:outputText>
-				<h:inputText id="name" value="#{loginBean.tUser.name}"
-					required="true" requiredMessage="Моля, въведете вашето име!"
-					style="height:16px;width:182px"></h:inputText>
-
-				<h:outputText value="Електронен адрес :"></h:outputText>
-				<h:inputText id="email" value="#{loginBean.tUser.email}"
-					required="true"
-					requiredMessage="Моля, въведете вашия e-mail адрес!"
-					validatorMessage="Невалиден e-mail адрес!"
-					style="height:16px;width:182px">
-					<f:validateRegex
-						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-				</h:inputText>
-
-				<h:outputText value="Телефон :"></h:outputText>
-				<h:inputText id="phone" value="#{loginBean.tUser.phone}"
-					required="true" requiredMessage="Моля, въведете вашия телефон!"
-					validatorMessage="Телефонният номер се състои само от цифри. Ако искате да въведете код,
-				заменяйте '+' с '00',  примерно вместо '+359' пишете '00359'!"
-					style="height:16px;width:182px">
-					<f:validateRegex pattern="[0-9]+" />
-				</h:inputText>
-
-				<h:outputText value="Роля :"></h:outputText>
-				<h:selectOneMenu id="role" value="#{loginBean.role}"
-					style="height:202x;width:187px">
-					<f:selectItem itemLabel="Изберете роля" itemValue="" />
-					<f:selectItems value="#{loginBean.roles}" />
-				</h:selectOneMenu>
-
-				<br />
-
-				<h:panelGroup columnClasses="column1,column2">
-					<h:commandButton type="reset" value="Изчисти"></h:commandButton>
-					<h:commandButton type="submit" value="Регистрирай"
-						actionListener="#{loginBean.addUser()}"></h:commandButton>
-				</h:panelGroup>
+			<h:outputStylesheet library="css" name="css.css" />
+			<h:panelGrid columns="2" width="100%" columnClasses="column1,column2">
+				<p:graphicImage library="images" name="Connect2Agency.png" />
 			</h:panelGrid>
-		</center>
-	</h:form>
-</body>
+		</h:form>
+
+		<h:form>
+			<p:tabMenu activeIndex="#{param.i}">
+				<p:menuitem value="Виж всички агенции" outcome="allAgencies">
+					<f:param name="i" value="0" />
+				</p:menuitem>
+				<p:menuitem value="Направи запитване" outcome="addRequest">
+					<f:param name="i" value="1" />
+				</p:menuitem>
+				<p:menuitem value="Активни запитвания" outcome="userActiveRequests">
+					<f:param name="i" value="2" />
+				</p:menuitem>
+				<p:menuitem value="Приключили запитвания"
+					outcome="userCompletedRequests">
+					<f:param name="i" value="3" />
+				</p:menuitem>
+				<p:menuitem value="Прекратени запитвания"
+					outcome="userCancelledRequests">
+					<f:param name="i" value="4" />
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+	</ui:define>
+
+
+
+
+	<ui:define name="content">
+		<div id="container" style="min-height: 100%; position: relative;">
+			<div id="left"
+				style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 470px; width: 163px; float: left;">
+				<br />
+			</div>
+			<div id="main" style="width: 920px; float: left;">
+				<f:view>
+
+					<h:form>
+
+						<div style="height: 430px; background-color: white;">
+							<center>
+								<br />
+								<br />
+								<h:outputText value=" Регистрация на потребител"
+									style="font-size: 20px; font-weight:bold"></h:outputText>
+								<br /> <br />
+
+								<h:panelGrid columns="2">
+									<h:outputText value="Потребителско име :"></h:outputText>
+									<h:inputText id="username" value="#{loginBean.tUser.username}"
+										required="true"
+										requiredMessage="Моля, въведете потребителско име!"
+										style="height:16px;width:182px"></h:inputText>
+
+									<h:outputText value="Парола:"></h:outputText>
+									<h:inputSecret id="password"
+										value="#{loginBean.tUser.password}" required="true"
+										requiredMessage="Моля, въведете парола!"
+										style="height:16px;width:182px"></h:inputSecret>
+
+									<h:outputText value="Повторете паролата:"></h:outputText>
+									<h:inputSecret id="confirmpassword"
+										value="#{loginBean.confirmpassword}" required="true"
+										requiredMessage="Моля, повторете паролата!"
+										style="height:16px;width:182px"></h:inputSecret>
+
+									<h:outputText value="Име :"></h:outputText>
+									<h:inputText id="name" value="#{loginBean.tUser.name}"
+										required="true" requiredMessage="Моля, въведете вашето име!"
+										style="height:16px;width:182px"></h:inputText>
+
+									<h:outputText value="Електронен адрес :"></h:outputText>
+									<h:inputText id="email" value="#{loginBean.tUser.email}"
+										required="true"
+										requiredMessage="Моля, въведете вашия e-mail адрес!"
+										validatorMessage="Невалиден e-mail адрес!"
+										style="height:16px;width:182px">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</h:inputText>
+
+									<h:outputText value="Телефон :"></h:outputText>
+									<h:inputText id="phone" value="#{loginBean.tUser.phone}"
+										required="true"
+										requiredMessage="Моля, въведете вашия телефон!"
+										validatorMessage="Телефонният номер се състои само от цифри. Ако искате да въведете код,
+				заменяйте '+' с '00',  примерно вместо '+359' пишете '00359'!"
+										style="height:16px;width:182px">
+										<f:validateRegex pattern="[0-9]+" />
+									</h:inputText>
+
+									<h:outputText value="Роля :"></h:outputText>
+									<h:selectOneMenu id="role" value="#{loginBean.role}"
+										style="height:202x;width:187px">
+										<f:selectItem itemLabel="Изберете роля" itemValue="" />
+										<f:selectItems value="#{loginBean.roles}" />
+									</h:selectOneMenu>
+
+									<br />
+
+									<h:panelGroup columnClasses="column1,column2">
+										<h:commandButton type="reset" value="Изчисти"></h:commandButton>
+										<h:commandButton type="submit" value="Регистрирай"
+											action="#{loginBean.addUser()}"></h:commandButton>
+									</h:panelGroup>
+
+								</h:panelGrid>
+								<h:messages style="color:red;margin:8px;text-align:left" />
+							</center>
+						</div>
+					</h:form>
+				</f:view>
+			</div>
+
+			<div id="right"
+				style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 570px; width: 150px; float: right;">
+				<br />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
 
 </html>

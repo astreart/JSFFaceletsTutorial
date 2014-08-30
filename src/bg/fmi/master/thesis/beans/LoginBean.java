@@ -5,6 +5,7 @@
 
 package bg.fmi.master.thesis.beans;
 
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +87,7 @@ public class LoginBean {
 		this.tUser = tUser;
 	}
 
-	public void addUser() {
+	public String addUser() {
 		FacesMessage message = null;
 		newUser = new TUser(tUser);
 
@@ -102,8 +103,7 @@ public class LoginBean {
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Паролите не съвпадат!", " ");
 			FacesContext.getCurrentInstance().addMessage(null, message);
-			return;
-
+			return null;
 		}
 
 		int role_id;
@@ -132,9 +132,15 @@ public class LoginBean {
 		query.setParameter("p_phone", newUser.getPhone());
 		query.setParameter("p_name", newUser.getName());
 		query.setParameter("p_role_id", role_id);
-		query.executeUpdate();
+
+		try {
+			query.executeUpdate();
+		} catch (Exception e) {
+			return null;
+		}
 
 		em.getTransaction().commit();
+		return "addedUser";
 	}
 
 	public String getRole() {

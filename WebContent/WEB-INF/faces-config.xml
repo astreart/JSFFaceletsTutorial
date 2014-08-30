@@ -41,6 +41,13 @@
 	</navigation-rule>
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>addedUser</from-outcome>
+			<to-view-id>/addedUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
 			<from-outcome>userActiveRequests</from-outcome>
 			<to-view-id>/userActiveRequests.xhtml</to-view-id>
 			<redirect />
