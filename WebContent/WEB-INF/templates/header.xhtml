@@ -7,12 +7,13 @@
 <body>
 	<h:form
 		style="width: 100%; line-height: 5px; background-color: #f6d66f; color: black">
-
-		<h:outputStylesheet library="css" name="css.css" />
+		 <p:growl id="messages" />  
+		 
+    	<h:outputStylesheet library="css" name="css.css" />
 		<h:panelGrid columns="2" width="100%" columnClasses="column1,column2">
 			<p:graphicImage library="images" name="Connect2Agency.png" />
 
-			<h:form rendered="#{empty loginBean.name}">
+			<h:form rendered="#{(facesContext.postback and facesContext.validationFailed) or empty loginBean.name}">
 			
 				<h:outputLabel for="username" value="Име: &#160;&#160;&#160;&#160;&#160;" escape="true" ></h:outputLabel>
 				<h:inputText value="#{loginBean.name}" required="true"
@@ -27,10 +28,11 @@
 				<br />
 				<p:button value="Регистрация" outcome="registration" />
 
-				<p:commandButton value="Вход"
+				<p:commandButton value="Вход" id ="login"
 					actionListener="#{loginBean.login(loginBean.name, loginBean.password)}"
 					ajax="false">
 				</p:commandButton>
+				
 			</h:form>
 
 
@@ -38,7 +40,7 @@
 				<h:outputLabel value="Здравейте,  #{loginBean.name}! "
 					style="font-size: 20px"></h:outputLabel>
 				<p:commandButton value="Изход"
-					actionListener="#{loginBean.logout()}" ajax="false"></p:commandButton>
+					actionListener="#{loginBean.logout()}" ajax="false" update="messages" ></p:commandButton>
 			</h:form>
 
 			<!-- <p:menuButton value="Options"
@@ -47,7 +49,10 @@
 				<p:menuitem value="Update" outcome="userCancelledRequests" />
 				<p:menuitem value="Delete" outcome="userCancelledRequests" />
 			</p:menuButton> -->
+			
 		</h:panelGrid>
+		 
+	
 	</h:form>
 
 	<h:form>
