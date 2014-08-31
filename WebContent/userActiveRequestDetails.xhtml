@@ -4,247 +4,284 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-<h:head></h:head>
-<f:view>
-	<h:form>
 
-		<h:outputStylesheet library="css" name="css.css" />
-		<h:outputScript library="js" name="timeoutDialog.js" />
-		
-		<h:panelGrid columns="1" cellpadding="3" cellspacing="1">
-			<h:outputText
-				value="#{(userRequestBean.request.title.toUpperCase())}"
-				style="font-weight: bold;" />
-			<p:row>
-				<p:column colspan="2">
-					<h:outputText value="Дата на запитването: "
-						style="font-weight: bold;" />
-				</p:column>
-				<p:column colspan="2">
-					<h:outputText value="#{userRequestBean.request.requestDate}" />
-				</p:column>
-			</p:row>
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 
-			<p:row>
-				<p:column colspan="2">
-					<h:outputText value="Категория: " style="font-weight: bold;" />
-				</p:column>
-				<p:column colspan="2">
-					<h:outputText
-						value="#{userRequestBean.request.tEventType.eventTypeName}" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column colspan="2">
-					<h:outputText value="Описание: " style="font-weight: bold;" />
-				</p:column>
-				<p:column colspan="2">
-					<h:outputText value="#{userRequestBean.request.description}" />
-				</p:column>
-			</p:row>
+	<ui:define name="content">
+		<div id="container" style="min-height: 100%; position: relative;">
+			<div id="left"
+				style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
+				<br />
+			</div>
+			<div id="main"
+				style="width: 920px; float: left; background-color: #feeebd;">
+				<ui:fragment rendered="#{not empty loginBean.name}">
+				
+					<h:form>
+						<h:panelGrid columns="1" cellpadding="3" cellspacing="1">
+							<h:outputText
+								value="#{(userRequestBean.request.title.toUpperCase())}"
+								style="font-weight: bold;text-decoration:underline;" />
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="&#160;Дата на запитването: "
+										style="font-weight: bold;" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText value="#{userRequestBean.request.requestDate}" />
+								</p:column>
+							</p:row>
 
-			<p:row>
-				<p:column colspan="2">
-					<h:outputText value="Статус: " style="font-weight: bold;" />
-				</p:column>
-				<p:column colspan="2">
-					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
-						style="#{userRequestBean.request.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
-				</p:column>
-			</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="&#160;Категория: " style="font-weight: bold;" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText
+										value="#{userRequestBean.request.tEventType.eventTypeName}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="&#160;Описание: " style="font-weight: bold;" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText value="#{userRequestBean.request.description}" />
+								</p:column>
+							</p:row>
 
-			<p:row>
-				<p:column colspan="2">
-					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? 'Заявката се изпълнява от агенция ' : ''}" />
-				</p:column>
-				<p:column colspan="2">
-					<h:outputText
-						value="#{userRequestBean.request.hiredAgency != null ? userRequestBean.request.hiredAgency.tUser.name : ''}"
-						style="font-weight: bold;" />
-				</p:column>
-			</p:row>
-		</h:panelGrid>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="&#160;Статус: " style="font-weight: bold;" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText
+										value="#{userRequestBean.request.hiredAgency != null ? 'В процес на изпълняване на заявката.' : 'В процес на наемане на агенция.'}"
+										style="#{userRequestBean.request.hiredAgency != null ? 'color: green;' : 'color:black;'}" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText
+										value="#{userRequestBean.request.hiredAgency != null ? '&#160;Заявката се изпълнява от агенция ' : ''}" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText
+										value="#{userRequestBean.request.hiredAgency != null ? userRequestBean.request.hiredAgency.tUser.name : ''}"
+										style="font-weight: bold;" />
+								</p:column>
+							</p:row>
+						</h:panelGrid>
+					</h:form>
+
+					<h:form
+						rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+							&#160;Виж детайли за агенция <h:commandLink
+							value="#{userRequestBean.request.hiredAgency.tUser.name}"
+							action="agencyDetail?faces-redirect=true">
+							<f:setPropertyActionListener target="#{agencyBean.tAgency}"
+								value="${userRequestBean.request.hiredAgency}" />
+						</h:commandLink>
+					</h:form>
+
+					<h:form
+						rendered="#{empty userRequestBean.request.hiredAgency.city}">
+		&#160;Ако желаете да спрете Вашето запитване, моля натиснете <p:commandLink
+							value="ТУК" action="#{userRequestBean.cancelRequest()}">
+						</p:commandLink> !
 	</h:form>
-
-	<h:form
-		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
-		Виж детайли за агенция <h:commandLink
-			value="#{userRequestBean.request.hiredAgency.tUser.name}"
-			action="agencyDetail?faces-redirect=true">
-			<f:setPropertyActionListener target="#{agencyBean.tAgency}"
-				value="${userRequestBean.request.hiredAgency}" />
-		</h:commandLink>
-	</h:form>
-
-	<h:form rendered="#{empty userRequestBean.request.hiredAgency.city}">
-		Ако желаете да спрете Вашето запитване, моля натиснете <p:commandLink
-			value="ТУК" action="#{userRequestBean.cancelRequest()}">
-		</p:commandLink>
-	</h:form>
-
-	<h:form
-		rendered="#{empty userRequestBean.request.hiredAgency.city and
+					<hr />
+					<h:form
+						rendered="#{empty userRequestBean.request.hiredAgency.city and
 	        not empty userRequestBean.requestAgencies[userRequestBean.request]}">
 	
-			Моля, изберете от падащото меню агенция 
+			&#160;Моля, изберете от падащото меню агенция 
 					<h:selectOneMenu value="#{userRequestBean.selectedAgencyId}"
-			panelStyle="width:150px" effect="fade" style="width:97%"
-			required="true"
-			requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
-			<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
-			<f:selectItems
-				value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
-				var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
-		</h:selectOneMenu>
-				, която да организира Вашето събитие и 
+							panelStyle="width:150px" effect="fade" style="width:97%"
+							required="true"
+							requiredMessage="Моля, изберете агенцията, която ще организира Вашето събитие!!!">
+							<f:selectItem itemLabel="Избери агенция" noSeletionOption="true" />
+							<f:selectItems
+								value="#{userRequestBean.requestAgencies[userRequestBean.request]}"
+								var="agency" itemLabel="#{agency[0]}" itemValue="#{agency[1]}" />
+						</h:selectOneMenu>
+				&#160;, която да организира Вашето събитие и 
 			<p:commandLink value="ПОТВЪРДЕТЕ"
-			action="#{userRequestBean.hireAgency()}">
-			<f:setPropertyActionListener target="#{userRequestBean.request}"
-				value="#{userRequestBean.request}" />
-		</p:commandLink>
+							action="#{userRequestBean.hireAgency()}">
+							<f:setPropertyActionListener target="#{userRequestBean.request}"
+								value="#{userRequestBean.request}" />
+						</p:commandLink> !
 	</h:form>
-
-	<h:form
-		rendered="#{empty userRequestBean.request.hiredAgency.city and empty userRequestBean.requestAgencies[userRequestBean.request]}">
-				За да може да наемете агенция, първо трябва да осъществите комуникация <br />
+					<hr />
+					<h:form
+						rendered="#{empty userRequestBean.request.hiredAgency.city and empty userRequestBean.requestAgencies[userRequestBean.request]}">
+				&#160;За да може да наемете агенция, първо трябва да осъществите комуникация <br />
 				с някоя от агенциите, организиращи събития от посочения тип!!!
 			</h:form>
 
 
-	<h:form
-		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
-		<p:growl id="messages" showDetail="true"></p:growl>
-		<h:outputLabel
-			value="Оценете цялостното организиране на вашето събитието* "
-			style="color:red;font-size: 16px" />
-		<p:rating
-			value="#{userRequestBean.requestComment[userRequestBean.request]}"
-			stars="10" rendered="true">
-			<p:ajax event="rate" listener="#{userRequestBean.onrate}"
-				update="messages" />
-		</p:rating>
-		<br />
-	</h:form>
+					<h:form
+						rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+						<p:growl id="messages" showDetail="true"></p:growl>
+						<h:outputLabel
+							value="&#160;Оценете цялостното организиране на вашето събитието* "
+							style="color:red;font-size: 16px" />
+						<p:rating
+							value="#{userRequestBean.requestComment[userRequestBean.request]}"
+							stars="10" rendered="true">
+							<p:ajax event="rate" listener="#{userRequestBean.onrate}"
+								update="messages" />
+						</p:rating>
+						<br />
+					</h:form>
 
-	<h:form
-		rendered="#{not empty userRequestBean.request.hiredAgency.city}">
-		<h:outputText
-			value="Напишете коментарu за организирането на вашето събитие*"
-			style="color:red;font-size: 16px" />
-		<p:tabView dynamic="true" cache="true">
-			<p:tab title="Положителен коментар">
-				<h:panelGrid columns="2" cellpadding="10">
-					<p:inputTextarea id="positiveComment" rows="5" cols="130"
-						autoResize="false"
-						value="#{userRequestBean.requestPositiveComment[userRequestBean.request]}" />
-					<p:watermark for="positiveComment"
-						value="Ако имате положителен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
-				</h:panelGrid>
-			</p:tab>
-			<p:tab title="Отрицателен коментар">
-				<h:panelGrid columns="2" cellpadding="10">
-					<p:inputTextarea id="negativeComment" rows="5" cols="130"
-						autoResize="false"
-						value="#{userRequestBean.requestNegativeComment[userRequestBean.request]}" />
-					<p:watermark for="negativeComment"
-						value="Ако имате отрицателен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
-				</h:panelGrid>
-			</p:tab>
-		</p:tabView>
-		<p:commandButton value="Публикувай коментарите"
-			action="#{userRequestBean.commentAgency}"
-			onclick="ratingDialog.show()" />
-		<p:dialog widgetVar="ratingDialog" header="Информация" width="400"
-			closable="true" resizable="false" showEffect="clip" hideEffect="clip"
-			modal="true" onShow="ratingDialogStartFunction();" onHide="ratingDialogStopFunction();">
-			<p:commandButton
-				value="Вашият коментар е записан! За да се счита вашата заявка за приключила, 
+					<h:form
+						rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+						<h:outputText
+							value="&#160;Напишете коментарu за организирането на вашето събитие*"
+							style="color:red;font-size: 16px" />
+						<p:tabView dynamic="true" cache="true">
+							<p:tab title="Положителен коментар">
+								<h:panelGrid columns="2" cellpadding="10">
+									<p:inputTextarea id="positiveComment" rows="5" cols="130"
+										autoResize="false"
+										value="#{userRequestBean.requestPositiveComment[userRequestBean.request]}" />
+									<p:watermark for="positiveComment"
+										value="Ако имате положителен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
+								</h:panelGrid>
+							</p:tab>
+							<p:tab title="Отрицателен коментар">
+								<h:panelGrid columns="2" cellpadding="10">
+									<p:inputTextarea id="negativeComment" rows="5" cols="130"
+										autoResize="false"
+										value="#{userRequestBean.requestNegativeComment[userRequestBean.request]}" />
+									<p:watermark for="negativeComment"
+										value="Ако имате отрицателен коментар за агенцията, която организира вашето събитие, моля напишете го тук..." />
+								</h:panelGrid>
+							</p:tab>
+						</p:tabView>
+						<p:commandButton value="Публикувай коментарите"
+							action="#{userRequestBean.commentAgency}"
+							onclick="ratingDialog.show()" />
+						<p:dialog widgetVar="ratingDialog" header="Информация" width="400"
+							closable="true" resizable="false" showEffect="clip"
+							hideEffect="clip" modal="true"
+							onShow="ratingDialogStartFunction();"
+							onHide="ratingDialogStopFunction();">
+							<p:commandButton
+								value="Вашият коментар е записан! За да се счита вашата заявка за приключила, 
 				трябва да маркирате заявката си като оценена!" />
-		</p:dialog>
-	</h:form>
-	<h:form>
-		<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
-			<h:outputText
-				value="Маркирай заявката си като оценена, за да се счита за приключила!" />
-			<p:selectBooleanCheckbox value="#{userRequestBean.isEvaluated}"
-				onLabel="Оценена" offLabel="Неоценена" />
-			<h:commandButton value="Запази"
-				action="#{userRequestBean.markRequestAsCompleted}" />
-		</h:panelGrid>
-	</h:form>
+						</p:dialog>
+					</h:form>
+					<h:form>
+						<h:panelGrid columns="4" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputText
+								value="Маркирай заявката си като оценена, за да се счита за приключила!" />
+							<p:selectBooleanCheckbox value="#{userRequestBean.isEvaluated}"
+								onLabel="Оценена" offLabel="Неоценена" />
+							<h:commandButton value="Запази"
+								action="#{userRequestBean.markRequestAsCompleted}" />
+						</h:panelGrid>
+					</h:form>
 
 
-	<h:form id="form"
-		rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">
-		<p:panel
-			header="Разменени съобщения с агенции за организиране на събития"
-			footer="" style="margin-bottom:20px">
-			<p:accordionPanel style="border:1px solid;" activeIndex="-1">
-				<c:forEach
-					items="#{userRequestBean.requestAgencies[userRequestBean.request]}"
-					var="agency">
-					<p:tab title="#{agency[0]}">
+					<h:form id="form"
+						rendered="#{not empty userRequestBean.requestAgencies[userRequestBean.request]}">
+						<p:panel
+							header="Разменени съобщения с агенции за организиране на събития"
+							footer="" style="margin-bottom:20px">
+							<p:accordionPanel style="border:1px solid;" activeIndex="-1">
+								<c:forEach
+									items="#{userRequestBean.requestAgencies[userRequestBean.request]}"
+									var="agency">
+									<p:tab title="#{agency[0]}">
 
-						<p:dataTable var="message"
-							value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
-							id="dataTable#{agency[1]}">
+										<p:dataTable var="message"
+											value="#{userRequestBean.showMessages(userRequestBean.request, agency[1])}"
+											id="dataTable#{agency[1]}">
 
-							<f:facet name="footer">
-								<p:commandButton
-									action="#{userRequestBean.setMessageToAgencyIdValue(agency[1])}"
-									onclick="tableDialog.show()" value="Изпрати съобщение" />
-							</f:facet>
+											<f:facet name="footer">
+												<p:commandButton
+													action="#{userRequestBean.setMessageToAgencyIdValue(agency[1])}"
+													onclick="tableDialog.show()" value="Изпрати съобщение" />
+											</f:facet>
 
-							<p:column headerText="Написано от"
-								style="text-align: center; width:200px;">
-								<p:row>
-									<h:outputText value="#{message[0]}," />
-								</p:row>
-								<br />
-								<p:row>
-									<h:outputText value="#{message[2]}" style="font-weight:bold">
-										<f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="GMT+3"
-											type="both" dateStyle="long" />
-									</h:outputText>
-								</p:row>
-							</p:column>
+											<p:column headerText="Написано от"
+												style="text-align: center; width:200px;">
+												<p:row>
+													<h:outputText value="#{message[0]}," />
+												</p:row>
+												<br />
+												<p:row>
+													<h:outputText value="#{message[2]}"
+														style="font-weight:bold">
+														<f:convertDateTime pattern="dd.MM.yyyy HH:mm"
+															timeZone="GMT+3" type="both" dateStyle="long" />
+													</h:outputText>
+												</p:row>
+											</p:column>
 
 
-							<p:column
-								headerText="Разменени съобщение с агенция #{agency[0]}, в отговор на направеното по-горе запитване"
-								style="text-align: left">
-								<h:outputText value="#{message[1]}" />
-							</p:column>
+											<p:column
+												headerText="Разменени съобщение с агенция #{agency[0]}, в отговор на направеното по-горе запитване"
+												style="text-align: left">
+												<h:outputText value="#{message[1]}" />
+											</p:column>
 
-						</p:dataTable>
-					</p:tab>
-				</c:forEach>
+										</p:dataTable>
+									</p:tab>
+								</c:forEach>
 
-			</p:accordionPanel>
+							</p:accordionPanel>
 
-			<p:dialog widgetVar="tableDialog" showEffect="explode"
-				hideEffect="explode" header="Напиши съобщение">
+							<p:dialog widgetVar="tableDialog" showEffect="explode"
+								hideEffect="explode" header="Напиши съобщение">
 
-				<h:panelGrid columns="1">
-					<p:inputTextarea rows="5" cols="32" autoResize="false"
-						value="#{userRequestBean.message.messageBody}" resetValues="true" />
-					<p:commandButton value="Публикувай съобщението на стената"
-						actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
-						oncomplete="tableDialog.hide()" update="form" />
-				</h:panelGrid>
-			</p:dialog>
+								<h:panelGrid columns="1">
+									<p:inputTextarea rows="5" cols="32" autoResize="false"
+										value="#{userRequestBean.message.messageBody}"
+										resetValues="true" />
+									<p:commandButton value="Публикувай съобщението на стената"
+										actionListener="#{userRequestBean.addMessage(userRequestBean.request)}"
+										oncomplete="tableDialog.hide()" update="form" />
+								</h:panelGrid>
+							</p:dialog>
 
-		</p:panel>
-	</h:form>
+						</p:panel>
+					</h:form>
 
-	<h:form id="form1"
-		rendered="#{empty userRequestBean.requestAgencies[userRequestBean.request]}">
-		<p:panel
-			header="Разменени съобщения с агенции за организиране на събития">
+					<h:form id="form1"
+						rendered="#{empty userRequestBean.requestAgencies[userRequestBean.request]}">
+						<p:panel
+							header="Разменени съобщения с агенции за организиране на събития">
 			Няма разменени съобщения с агенции за организиране на събития.</p:panel>
-	</h:form>
+					</h:form>
+				</ui:fragment>
+				<ui:fragment rendered="#{empty loginBean.name}">
+					<div style="height: 430px; background-color: white;">
+						<br /> <br />
+						<center>
+							<p:graphicImage library="images" name="lock-icon.png"
+								style="float:left;" />
+							<h2 style="color: red">
+								<br /> <br /> <br />За да имате достъп до тази страница,
+							</h2>
+							<h2 style="color: red">трябва да се логнете в приложението!</h2>
+						</center>
+						<br />
+					</div>
+					<hr />
+				</ui:fragment>
+			</div>
+		</div>
 
-</f:view>
+		<div id="right"
+			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 1800px; width: 150px; float: right;">
+			<br />
+		</div>
+	</ui:define>
+</ui:composition>
 </html>
+
