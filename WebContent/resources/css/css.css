@@ -63,3 +63,7 @@ ui-datagrid ui-widget {
     color: #666666!important;
     text-decoration: none;
 }
+
+div.ui-rating-star a, div.ui-rating-cancel a {
+  background-image: url("#{resource['images/myRating.png']}");                       
+}

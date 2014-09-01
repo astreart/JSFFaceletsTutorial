@@ -144,7 +144,7 @@
 						<p:tabView dynamic="true" cache="true">
 							<p:tab title="Положителен коментар">
 								<h:panelGrid columns="2" cellpadding="10">
-									<p:inputTextarea id="positiveComment" rows="5" cols="130"
+									<p:inputTextarea id="positiveComment" rows="5" cols="75"
 										autoResize="false"
 										value="#{userRequestBean.requestPositiveComment[userRequestBean.request]}" />
 									<p:watermark for="positiveComment"
@@ -153,7 +153,7 @@
 							</p:tab>
 							<p:tab title="Отрицателен коментар">
 								<h:panelGrid columns="2" cellpadding="10">
-									<p:inputTextarea id="negativeComment" rows="5" cols="130"
+									<p:inputTextarea id="negativeComment" rows="5" cols="75"
 										autoResize="false"
 										value="#{userRequestBean.requestNegativeComment[userRequestBean.request]}" />
 									<p:watermark for="negativeComment"
