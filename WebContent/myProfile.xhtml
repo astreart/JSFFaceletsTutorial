@@ -1,0 +1,71 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
+	<ui:define name="content">
+	<div id = "container" style="min-height:100%;position:relative;">
+		<div id="left"
+			style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
+			<br />
+		</div>
+		<div id="main" style="width: 920px; float: left;">
+			<f:view>
+
+				<h:form rendered="#{not empty loginBean.name}">
+
+					<h:outputStylesheet library="css" name="css.css" />
+					<center>
+						<h2>Моят профил</h2>
+					</center>
+
+						<p:dataGrid var="user" value="#{profileBean.userList}">
+							<p:panelGrid columns="2">
+							
+
+								<h:outputText value="Име: " />
+								<h:outputText value="#{user.name}" />
+
+								<h:outputText value="Телефон: " />
+								<h:outputText value="#{user.phone}" />
+
+								<h:outputText value="Имейл: " />
+								<h:outputText value="#{user.email}" />
+
+							</p:panelGrid>
+						</p:dataGrid>
+					<hr/>
+				</h:form>
+				
+				<h:form rendered="#{empty loginBean.name}">
+						<div style="height: 430px; background-color:white;">
+							<br /> <br />
+							<center>
+								<p:graphicImage library="images" name="lock-icon.png"
+									style="float:left;" />
+								<h2 style="color: red">
+									<br />
+									<br />
+									<br />За да имате достъп до тази страница,
+								</h2>
+								<h2 style="color: red">трябва да се логнете в приложението!</h2>
+							</center>
+							<br />
+						</div>
+						<hr />
+					</h:form>
+			</f:view>
+		</div>
+	    </div>
+
+		<div id="right"
+			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 1800px; width: 150px; float: right;">
+			<br />
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
