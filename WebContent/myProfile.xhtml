@@ -25,7 +25,13 @@
 
 						<p:dataGrid var="user" value="#{profileBean.userList}">
 							<p:panelGrid columns="2">
-							
+								<f:facet name="header">
+									<p:graphicImage value="#{profileBean.image}" alt="${user.name}"
+										width="200px" height="125px">
+
+									<f:param name="userId" value="#{user.id}" />
+									</p:graphicImage>
+								</f:facet>
 
 								<h:outputText value="Име: " />
 								<h:outputText value="#{user.name}" />
