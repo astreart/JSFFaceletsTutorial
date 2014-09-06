@@ -16,6 +16,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -31,7 +32,16 @@ public class ProfileBean implements Serializable {
 
 	private TAgency tAgency = new TAgency();
 	private List<TUser> userList;
+	private TUser selectedUser = new TUser();
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
+
+	public TUser getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(TUser selectedUser) {
+		this.selectedUser = selectedUser;
+	}
 
 	public ProfileBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -118,5 +128,13 @@ public class ProfileBean implements Serializable {
 						image));
 			}
 		}
+	}
+	
+	public void editUser() {
+
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.merge(selectedUser);
+		em.getTransaction().commit();
 	}
 }

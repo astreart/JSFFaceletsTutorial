@@ -8,55 +8,84 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 
 	<ui:define name="content">
-	<div id = "container" style="min-height:100%;position:relative;">
-		<div id="left"
-			style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
-			<br />
-		</div>
-		<div id="main" style="width: 920px; float: left;">
-			<f:view>
+		<div id="container" style="min-height: 100%; position: relative;">
+			<div id="left"
+				style="background-image: url('#{resource['images/left.png']}'); background-repeat: repeat-y; height: 1800px; width: 163px; float: left;">
+				<br />
+			</div>
+			<div id="main" style="width: 920px; float: left;">
+				<f:view>
 
-				<h:form rendered="#{not empty loginBean.name}">
+					<h:form rendered="#{not empty loginBean.name}">
 
-					<h:outputStylesheet library="css" name="css.css" />
-					<center>
-						<h2>Моят профил</h2>
-					</center>
+						<h:outputStylesheet library="css" name="css.css" />
+						<center>
+							<h2>Моят профил</h2>
+						</center>
 
 						<p:dataGrid var="user" value="#{profileBean.userList}">
 							<p:panelGrid columns="2">
 								<f:facet name="header">
 									<p:graphicImage value="#{profileBean.image}" alt="${user.name}"
-										width="200px" height="125px">
+										width="150px" height="150px">
 
-									<f:param name="userId" value="#{user.id}" />
+										<f:param name="userId" value="#{user.id}" />
 									</p:graphicImage>
 								</f:facet>
 
 								<h:outputText value="Име: " />
-								<h:outputText value="#{user.name}" />
+								<h:inputText value="#{user.name}" required="true"
+									requiredMessage="Моля, въведете вашето име!"
+									style="height:16px;width:182px" />
 
 								<h:outputText value="Телефон: " />
-								<h:outputText value="#{user.phone}" />
+								<h:inputText value="#{user.phone}" required="true"
+									requiredMessage="Моля, въведете вашия телефон!"
+									validatorMessage="Телефонният номер се състои само от цифри. Ако искате да въведете код,
+				заменяйте '+' с '00',  примерно вместо '+359' пишете '00359'!"
+									style="height:16px;width:182px">
+									<f:validateRegex pattern="[0-9]+" />
+								</h:inputText>
 
 								<h:outputText value="Имейл: " />
-								<h:outputText value="#{user.email}" />
+								<h:inputText value="#{user.email}" required="true"
+									requiredMessage="Моля, въведете вашия e-mail адрес!"
+									validatorMessage="Невалиден e-mail адрес!"
+									style="height:28px;width:182px">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</h:inputText>
+
+
+								<h:outputText value="Роля: " />
+								<h:outputText value="#{user.userRole.roleName}"
+									style="height:28px;width:182px">
+								</h:outputText>
+
+								<f:facet name="footer">
+									<h:panelGroup style="display:block; text-align:center">
+										<p:commandButton id="submit" value="Запази промените"
+											actionListener="#{profileBean.editUser()}" >
+											
+								<f:attribute name="profileBean.selectedUser" value="#{user}" />
+											</p:commandButton>
+									</h:panelGroup>
+								</f:facet>
+
 
 							</p:panelGrid>
 						</p:dataGrid>
-					<hr/>
-				</h:form>
-				
-				<h:form rendered="#{empty loginBean.name}">
-						<div style="height: 430px; background-color:white;">
+						<hr />
+					</h:form>
+
+					<h:form rendered="#{empty loginBean.name}">
+						<div style="height: 430px; background-color: white;">
 							<br /> <br />
 							<center>
 								<p:graphicImage library="images" name="lock-icon.png"
 									style="float:left;" />
 								<h2 style="color: red">
-									<br />
-									<br />
-									<br />За да имате достъп до тази страница,
+									<br /> <br /> <br />За да имате достъп до тази страница,
 								</h2>
 								<h2 style="color: red">трябва да се логнете в приложението!</h2>
 							</center>
@@ -64,9 +93,9 @@
 						</div>
 						<hr />
 					</h:form>
-			</f:view>
+				</f:view>
+			</div>
 		</div>
-	    </div>
 
 		<div id="right"
 			style="background-image: url('#{resource['images/right.png']}'); background-repeat: repeat-y; height: 1800px; width: 150px; float: right;">
