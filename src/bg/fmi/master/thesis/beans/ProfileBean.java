@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -34,6 +35,33 @@ public class ProfileBean implements Serializable {
 	private List<TUser> userList;
 	private TUser selectedUser = new TUser();
 	private Map<TAgency, String> agencyEventTypes = new HashMap<TAgency, String>();
+	private String oldPassword;
+	private String newPassword;
+	private String newPassword1;
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getNewPassword1() {
+		return newPassword1;
+	}
+
+	public void setNewPassword1(String newPassword1) {
+		this.newPassword1 = newPassword1;
+	}
 
 	public TUser getSelectedUser() {
 		return selectedUser;
@@ -129,12 +157,45 @@ public class ProfileBean implements Serializable {
 			}
 		}
 	}
-	
+
 	public void editUser() {
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		em.merge(selectedUser);
+		em.getTransaction().commit();
+	}
+
+	public void changePassword(String username) {
+		FacesMessage message = null;
+		if (!newPassword.equals(newPassword1)) {
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Паролите не съвпадат!", " ");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			return;
+		}
+
+		System.out.print(" User name: " + username + ", oldpass: "
+				+ oldPassword + ", newpass: " + newPassword);
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Query query = em
+				.createNativeQuery("BEGIN user_security.change_password(p_username => :p_username, "
+						+ "p_old_password => :p_old_password,"
+						+ "p_new_password => :p_new_password); END;");
+
+		query.setParameter("p_username", username);
+		query.setParameter("p_old_password", oldPassword);
+		query.setParameter("p_new_password", newPassword);
+
+		try {
+			query.executeUpdate();
+		} catch (Exception e) {
+			return;
+		}
+		message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Паролата е сменена успешно", " ");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 		em.getTransaction().commit();
 	}
 }

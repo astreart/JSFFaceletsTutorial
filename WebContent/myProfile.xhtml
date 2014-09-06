@@ -56,23 +56,59 @@
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 								</h:inputText>
 
-
 								<h:outputText value="Роля: " />
 								<h:outputText value="#{user.userRole.roleName}"
 									style="height:28px;width:182px">
 								</h:outputText>
 
-								<f:facet name="footer">
-									<h:panelGroup style="display:block; text-align:center">
-										<p:commandButton id="submit" value="Запази промените"
-											actionListener="#{profileBean.editUser()}" >
-											
-								<f:attribute name="profileBean.selectedUser" value="#{user}" />
-											</p:commandButton>
-									</h:panelGroup>
-								</f:facet>
+								<p:commandButton value="Смени парола">
+									<p:ajax event="click" onstart="PF('userDialog').show()" />
+								</p:commandButton>
 
+								<h:panelGroup style="display:block; text-align:center">
+									<p:commandButton id="submit" value="Запази промените"
+										actionListener="#{profileBean.editUser()}">
 
+										<f:attribute name="profileBean.selectedUser" value="#{user}" />
+									</p:commandButton>
+								</h:panelGroup>
+								<p:dialog id="dialog" header="Смяна на парола"
+									widgetVar="userDialog" resizable="false" showEffect="fade"
+									hideEffect="explode">
+
+									<p:growl id="messages" />
+
+									<h:panelGrid id="display" columns="2" cellpadding="4">
+
+										<h:outputText value="Потребителско име: " />
+										<h:outputText value="#{user.username}" />
+
+										<h:outputText value="Стара парола: *" />
+										<h:inputSecret value="#{profileBean.oldPassword}"
+											required="true" requiredMessage="Моля, въведете парола!" />
+
+										<h:outputText value="Нова парола: *" />
+										<h:inputSecret value="#{profileBean.newPassword}"
+											required="true"
+											requiredMessage="Моля, въведете новата паролата!" />
+
+										<h:outputText value="Повтори паролата: *" />
+										<h:inputSecret value="#{profileBean.newPassword1}"
+											required="true"
+											requiredMessage="Моля, повторете новата паролата!" />
+
+										<f:facet name="footer">
+											<h:panelGroup style="display:block; text-align:center">
+												<p:commandButton value="Запази" id="saveBtn"
+													actionListener="#{profileBean.changePassword(user.username)}"
+													oncomplete="PF('userDialog').hide()"
+													styleClass="ui-priority-primary" update="messages">
+												</p:commandButton>
+
+											</h:panelGroup>
+										</f:facet>
+									</h:panelGrid>
+								</p:dialog>
 							</p:panelGrid>
 						</p:dataGrid>
 						<hr />
