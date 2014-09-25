@@ -234,6 +234,16 @@ public class TRequest implements java.io.Serializable {
 	public void settRequestFilters(Set<TRequestFilter> tRequestFilters) {
 		this.tRequestFilters = tRequestFilters;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EVENT_TYPE_ID")
+	public TEventType gettEventType() {
+		return tEventType;
+	}
+
+	public void settEventType(TEventType tEventType) {
+		this.tEventType = tEventType;
+	}
 
 	@Override
 	public int hashCode() {
@@ -258,15 +268,5 @@ public class TRequest implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EVENT_TYPE_ID")
-	public TEventType gettEventType() {
-		return tEventType;
-	}
-
-	public void settEventType(TEventType tEventType) {
-		this.tEventType = tEventType;
 	}
 }

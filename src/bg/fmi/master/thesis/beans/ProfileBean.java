@@ -70,6 +70,30 @@ public class ProfileBean implements Serializable {
 	public void setSelectedUser(TUser selectedUser) {
 		this.selectedUser = selectedUser;
 	}
+	
+	public List<TUser> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<TUser> userList) {
+		this.userList = userList;
+	}
+
+	public TAgency gettAgency() {
+		return tAgency;
+	}
+
+	public void settAgency(TAgency tAgency) {
+		this.tAgency = tAgency;
+	}
+
+	public Map<TAgency, String> getAgencyEventTypes() {
+		return agencyEventTypes;
+	}
+
+	public void setAgencyEventTypes(Map<TAgency, String> agencyEventTypes) {
+		this.agencyEventTypes = agencyEventTypes;
+	}
 
 	public ProfileBean() {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -105,29 +129,6 @@ public class ProfileBean implements Serializable {
 		userList = q.getResultList();
 	}
 
-	public List<TUser> getUserList() {
-		return userList;
-	}
-
-	public void setUserList(List<TUser> userList) {
-		this.userList = userList;
-	}
-
-	public TAgency gettAgency() {
-		return tAgency;
-	}
-
-	public void settAgency(TAgency tAgency) {
-		this.tAgency = tAgency;
-	}
-
-	public Map<TAgency, String> getAgencyEventTypes() {
-		return agencyEventTypes;
-	}
-
-	public void setAgencyEventTypes(Map<TAgency, String> agencyEventTypes) {
-		this.agencyEventTypes = agencyEventTypes;
-	}
 
 	public StreamedContent getImage() throws IOException {
 		FacesContext context = FacesContext.getCurrentInstance();

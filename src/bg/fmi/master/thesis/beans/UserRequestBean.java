@@ -79,6 +79,145 @@ public class UserRequestBean implements Serializable {
 	public void setPositiveComment(String positiveComment) {
 		this.positiveComment = positiveComment;
 	}
+	
+	public List<TRequest> getUserActiveRequests() {
+		return userActiveRequests;
+	}
+
+	public void setUserActiveRequests(List<TRequest> userActiveRequests) {
+		this.userActiveRequests = userActiveRequests;
+	}
+
+	public TRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(TRequest request) {
+		this.request = request;
+	}
+
+	public Map<TRequest, List<TUser>> getRequestAgencies() {
+		return requestAgencies;
+	}
+
+	public void setRequestAgencies(Map<TRequest, List<TUser>> requestAgencies) {
+		this.requestAgencies = requestAgencies;
+	}
+
+	public String getSelectedAgencyId() {
+		return selectedAgencyId;
+	}
+
+	public void setSelectedAgencyId(String selectedAgencyId) {
+		this.selectedAgencyId = selectedAgencyId;
+	}
+
+	public TMessage getMessage() {
+		return message;
+	}
+
+	public void setMessage(TMessage message) {
+		this.message = message;
+	}
+
+	public void setMessageToAgencyIdValue(Long messageToAgencyId) {
+		this.messageToAgencyId = messageToAgencyId;
+	}
+
+	public List<TRequest> getUserCompletedRequests() {
+		return userCompletedRequests;
+	}
+
+	public void setUserCompletedRequests(List<TRequest> userCompletedRequests) {
+		this.userCompletedRequests = userCompletedRequests;
+	}
+
+	public List<TRequest> getUserCancelledRequests() {
+		return userCancelledRequests;
+	}
+
+	public void setUserCancelledRequests(List<TRequest> userCancelledRequests) {
+		this.userCancelledRequests = userCancelledRequests;
+	}
+
+	public Map<TRequest, List<TUser>> getCancelledRequestAgencies() {
+		return cancelledRequestAgencies;
+	}
+
+	public void setCancelledRequestAgencies(
+			Map<TRequest, List<TUser>> cancelledRequestAgencies) {
+		this.cancelledRequestAgencies = cancelledRequestAgencies;
+	}
+
+	public Map<TRequest, List<TUser>> getCompletedRequestAgencies() {
+		return completedRequestAgencies;
+	}
+
+	public void setCompletedRequestAgencies(
+			Map<TRequest, List<TUser>> completedRequestAgencies) {
+		this.completedRequestAgencies = completedRequestAgencies;
+	}
+
+	public Map<TRequest, Integer> getRequestComment() {
+		return requestComment;
+	}
+
+	public void setRequestComment(Map<TRequest, Integer> requestComment) {
+		this.requestComment = requestComment;
+	}
+
+	public Map<TRequest, Integer> getCompletedRequestComment() {
+		return completedRequestComment;
+	}
+
+	public void setCompletedRequestComment(
+			Map<TRequest, Integer> completedRequestComment) {
+		this.completedRequestComment = completedRequestComment;
+	}
+
+	public Boolean getIsEvaluated() {
+		return isEvaluated;
+	}
+
+	public void setIsEvaluated(Boolean isEvaluated) {
+		this.isEvaluated = isEvaluated;
+	}
+
+	public Map<TRequest, String> getRequestPositiveComment() {
+		return requestPositiveComment;
+	}
+
+	public void setRequestPositiveComment(
+			Map<TRequest, String> requestPositiveComment) {
+		this.requestPositiveComment = requestPositiveComment;
+	}
+
+	public Map<TRequest, String> getRequestNegativeComment() {
+		return requestNegativeComment;
+	}
+
+	public void setRequestNegativeComment(
+			Map<TRequest, String> requestNegativeComment) {
+		this.requestNegativeComment = requestNegativeComment;
+	}
+
+	public Map<TRequest, String> getCompletedRequestPositiveComment() {
+		return completedRequestPositiveComment;
+	}
+
+	public void setCompletedRequestPositiveComment(
+			Map<TRequest, String> completedRequestPositiveComment) {
+		this.completedRequestPositiveComment = completedRequestPositiveComment;
+	}
+
+	public Map<TRequest, String> getCompletedRequestNegativeComment() {
+		return completedRequestNegativeComment;
+	}
+
+	public void setCompletedRequestNegativeComment(
+			Map<TRequest, String> completedRequestNegativeComment) {
+		this.completedRequestNegativeComment = completedRequestNegativeComment;
+	}
 
 	public void onrate(RateEvent rateEvent) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -210,11 +349,7 @@ public class UserRequestBean implements Serializable {
 						+ "from TRequest req join req.requestComments comment "
 						+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
-				/*
-				 * try { assessment = (Integer)
-				 * queryAgencyRating.getSingleResult(); } catch
-				 * (NoResultException nre) { assessment = 0; }
-				 */try {
+				try {
 					TComment result = (TComment) queryAgencyRating
 							.getSingleResult();
 					assessment = result.getAssessment();
@@ -261,11 +396,6 @@ public class UserRequestBean implements Serializable {
 								+ "from TRequest req join req.requestComments comment "
 								+ "where req.id = :requestId ");
 				queryAgencyRating.setParameter("requestId", (Long) req.getId());
-				/*
-				 * try { assessment = (Integer)
-				 * queryAgencyRating.getSingleResult(); } catch
-				 * (NoResultException nre) { assessment = 0; }
-				 */
 				try {
 					TComment result = (TComment) queryAgencyRating
 							.getSingleResult();
@@ -415,144 +545,5 @@ public class UserRequestBean implements Serializable {
 
 		em.getTransaction().commit();
 
-	}
-
-	public List<TRequest> getUserActiveRequests() {
-		return userActiveRequests;
-	}
-
-	public void setUserActiveRequests(List<TRequest> userActiveRequests) {
-		this.userActiveRequests = userActiveRequests;
-	}
-
-	public TRequest getRequest() {
-		return request;
-	}
-
-	public void setRequest(TRequest request) {
-		this.request = request;
-	}
-
-	public Map<TRequest, List<TUser>> getRequestAgencies() {
-		return requestAgencies;
-	}
-
-	public void setRequestAgencies(Map<TRequest, List<TUser>> requestAgencies) {
-		this.requestAgencies = requestAgencies;
-	}
-
-	public String getSelectedAgencyId() {
-		return selectedAgencyId;
-	}
-
-	public void setSelectedAgencyId(String selectedAgencyId) {
-		this.selectedAgencyId = selectedAgencyId;
-	}
-
-	public TMessage getMessage() {
-		return message;
-	}
-
-	public void setMessage(TMessage message) {
-		this.message = message;
-	}
-
-	public void setMessageToAgencyIdValue(Long messageToAgencyId) {
-		this.messageToAgencyId = messageToAgencyId;
-	}
-
-	public List<TRequest> getUserCompletedRequests() {
-		return userCompletedRequests;
-	}
-
-	public void setUserCompletedRequests(List<TRequest> userCompletedRequests) {
-		this.userCompletedRequests = userCompletedRequests;
-	}
-
-	public List<TRequest> getUserCancelledRequests() {
-		return userCancelledRequests;
-	}
-
-	public void setUserCancelledRequests(List<TRequest> userCancelledRequests) {
-		this.userCancelledRequests = userCancelledRequests;
-	}
-
-	public Map<TRequest, List<TUser>> getCancelledRequestAgencies() {
-		return cancelledRequestAgencies;
-	}
-
-	public void setCancelledRequestAgencies(
-			Map<TRequest, List<TUser>> cancelledRequestAgencies) {
-		this.cancelledRequestAgencies = cancelledRequestAgencies;
-	}
-
-	public Map<TRequest, List<TUser>> getCompletedRequestAgencies() {
-		return completedRequestAgencies;
-	}
-
-	public void setCompletedRequestAgencies(
-			Map<TRequest, List<TUser>> completedRequestAgencies) {
-		this.completedRequestAgencies = completedRequestAgencies;
-	}
-
-	public Map<TRequest, Integer> getRequestComment() {
-		return requestComment;
-	}
-
-	public void setRequestComment(Map<TRequest, Integer> requestComment) {
-		this.requestComment = requestComment;
-	}
-
-	public Map<TRequest, Integer> getCompletedRequestComment() {
-		return completedRequestComment;
-	}
-
-	public void setCompletedRequestComment(
-			Map<TRequest, Integer> completedRequestComment) {
-		this.completedRequestComment = completedRequestComment;
-	}
-
-	public Boolean getIsEvaluated() {
-		return isEvaluated;
-	}
-
-	public void setIsEvaluated(Boolean isEvaluated) {
-		this.isEvaluated = isEvaluated;
-	}
-
-	public Map<TRequest, String> getRequestPositiveComment() {
-		return requestPositiveComment;
-	}
-
-	public void setRequestPositiveComment(
-			Map<TRequest, String> requestPositiveComment) {
-		this.requestPositiveComment = requestPositiveComment;
-	}
-
-	public Map<TRequest, String> getRequestNegativeComment() {
-		return requestNegativeComment;
-	}
-
-	public void setRequestNegativeComment(
-			Map<TRequest, String> requestNegativeComment) {
-		this.requestNegativeComment = requestNegativeComment;
-	}
-
-	public Map<TRequest, String> getCompletedRequestPositiveComment() {
-		return completedRequestPositiveComment;
-	}
-
-	public void setCompletedRequestPositiveComment(
-			Map<TRequest, String> completedRequestPositiveComment) {
-		this.completedRequestPositiveComment = completedRequestPositiveComment;
-	}
-
-	public Map<TRequest, String> getCompletedRequestNegativeComment() {
-		return completedRequestNegativeComment;
-	}
-
-	public void setCompletedRequestNegativeComment(
-			Map<TRequest, String> completedRequestNegativeComment) {
-		this.completedRequestNegativeComment = completedRequestNegativeComment;
 	}
 }

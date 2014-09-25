@@ -51,6 +51,38 @@ public class LoginBean {
 		this.name = null;
 		this.password = null;
 	}
+	
+	public String getConfirmpassword() {
+		return confirmpassword;
+	}
+
+	public void setConfirmpassword(String confirmpassword) {
+		this.confirmpassword = confirmpassword;
+	}
+
+	public TUser gettUser() {
+		return tUser;
+	}
+
+	public void settUser(TUser tUser) {
+		this.tUser = tUser;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
 
 	public void login(String username, String password) {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -69,22 +101,6 @@ public class LoginBean {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 		}
-	}
-
-	public String getConfirmpassword() {
-		return confirmpassword;
-	}
-
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
-	}
-
-	public TUser gettUser() {
-		return tUser;
-	}
-
-	public void settUser(TUser tUser) {
-		this.tUser = tUser;
 	}
 
 	public String addUser() {
@@ -132,21 +148,4 @@ public class LoginBean {
 		em.getTransaction().commit();
 		return "addedUser";
 	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public List<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
-
 }

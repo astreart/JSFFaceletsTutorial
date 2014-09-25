@@ -97,6 +97,15 @@ public class TFilterType implements java.io.Serializable {
 	public void setFilterTypeDesc(String filterTypeDesc) {
 		this.filterTypeDesc = filterTypeDesc;
 	}
+	
+	@Column(name = "FILTER_TYPE", length = 1)
+	public String getFilterType() {
+		return filterType;
+	}
+
+	public void setFilterType(String filterType) {
+		this.filterType = filterType;
+	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tFilterType")
 	public Set<TRequestFilter> gettRequestFilters() {
@@ -139,14 +148,5 @@ public class TFilterType implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Column(name = "FILTER_TYPE", length = 1)
-	public String getFilterType() {
-		return filterType;
-	}
-
-	public void setFilterType(String filterType) {
-		this.filterType = filterType;
 	}
 }

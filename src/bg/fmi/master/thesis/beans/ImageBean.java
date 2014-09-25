@@ -45,7 +45,6 @@ public class ImageBean {
 
 		fileName = event.getFile().getFileName();
 		File file = new File("F:\\PICTURE\\peizaji\\", fileName);
-		// File file = new File("C:\\Users\\Radi\\Desktop\\lekarstvo.jpg");
 		byte[] imageData = new byte[(int) file.length()];
 
 		try {

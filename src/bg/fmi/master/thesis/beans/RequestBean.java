@@ -84,6 +84,14 @@ public class RequestBean implements Serializable {
 			Map<TFilterType, Object> textFilterTypeValues) {
 		this.textFilterTypeValues = textFilterTypeValues;
 	}
+	
+	public TUser gettUserRequestSent() {
+		return tUserRequestSent;
+	}
+
+	public void settUserRequestSent(TUser tUserRequestSent) {
+		this.tUserRequestSent = tUserRequestSent;
+	}
 
 	public void addRequest() {
 
@@ -177,13 +185,4 @@ public class RequestBean implements Serializable {
 		else
 			messageBean.createMessageToAgency(newRequest, tUserRequestSent);
 	}
-
-	public TUser gettUserRequestSent() {
-		return tUserRequestSent;
-	}
-
-	public void settUserRequestSent(TUser tUserRequestSent) {
-		this.tUserRequestSent = tUserRequestSent;
-	}
-
 }

@@ -24,6 +24,14 @@ public class MessageBean implements Serializable {
 	private TMessageUser tMessageUser = new TMessageUser();
 	private List<TAgency> agencies;
 	private SendEmail sendEmail = new SendEmail();
+	
+	public TMessage gettMessage() {
+		return tMessage;
+	}
+
+	public void settMessage(TMessage tMessage) {
+		this.tMessage = tMessage;
+	}
 
 	public void createMessageToAll(TRequest tRequest) {
 		EntityManager em = HibernateUtil.getEntityManager();
@@ -64,14 +72,6 @@ public class MessageBean implements Serializable {
 		}
 
 		em.getTransaction().commit();
-	}
-
-	public TMessage gettMessage() {
-		return tMessage;
-	}
-
-	public void settMessage(TMessage tMessage) {
-		this.tMessage = tMessage;
 	}
 
 	public void createMessageToAgency(TRequest tRequest, TUser tUserRequestSent) {

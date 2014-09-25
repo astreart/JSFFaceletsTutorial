@@ -48,12 +48,6 @@ public class CommentBean implements Serializable {
 				.createQuery(" from TComment t");
 
 		setAllComments(query.getResultList());
-		/*for (TComment element : list) {
-			TAgency commentedAgency = (TAgency) element.getCommentedAgency();
-			String positiveComment = element.getCommentBody();
-			agencyComments.put(commentedAgency, positiveComment);
-		}
-*/
 	}
 
 	public List<TComment> getAllComments() {
