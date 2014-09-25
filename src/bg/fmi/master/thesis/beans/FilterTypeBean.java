@@ -9,8 +9,8 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import bg.fmi.master.thesis.model.TFilterType;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TFilterType;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "filterTypeBean")
 @RequestScoped

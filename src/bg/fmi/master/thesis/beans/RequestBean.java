@@ -15,14 +15,14 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import bg.fmi.master.thesis.model.TFilterType;
-import bg.fmi.master.thesis.model.TRequest;
-import bg.fmi.master.thesis.model.TRequestFilter;
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TFilterType;
+import bg.fmi.master.thesis.models.TRequest;
+import bg.fmi.master.thesis.models.TRequestFilter;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "requestBean")
-@SessionScoped //от RequestScope разширен заради това на кого трябва да се прати съобщението
+@SessionScoped
 public class RequestBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -102,6 +102,9 @@ public class RequestBean implements Serializable {
 		if (eventTypeBean.getSelectedEventType() != null) {
 			newRequest.settEventType(eventTypeBean.getSelectedEventType());
 		}
+		
+		newRequest.setIsActive(true);
+		newRequest.setIsCancelled(false);
 
 		try {
 			em.persist(newRequest);

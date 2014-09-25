@@ -18,9 +18,9 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import bg.fmi.master.thesis.model.TEventType;
-import bg.fmi.master.thesis.model.TImage;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TEventType;
+import bg.fmi.master.thesis.models.TImage;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "imageBean")
 @SessionScoped

@@ -23,9 +23,9 @@ import javax.persistence.Query;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import bg.fmi.master.thesis.model.TAgency;
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TAgency;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "profileBean")
 @SessionScoped
@@ -159,15 +159,25 @@ public class ProfileBean implements Serializable {
 	}
 
 	public void editUser() {
-
+		FacesMessage msg = null;
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		em.merge(selectedUser);
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Промените са запазени!", " ");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 		em.getTransaction().commit();
 	}
 
 	public void changePassword(String username) {
 		FacesMessage message = null;
+		
+		if (oldPassword.equals(null) && newPassword.equals(null) && newPassword1.equals(null)){
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Моля, попълнете всички задължителни полета!", " ");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			return;
+		}
 		if (!newPassword.equals(newPassword1)) {
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Паролите не съвпадат!", " ");
@@ -175,8 +185,6 @@ public class ProfileBean implements Serializable {
 			return;
 		}
 
-		System.out.print(" User name: " + username + ", oldpass: "
-				+ oldPassword + ", newpass: " + newPassword);
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();
 		Query query = em
@@ -194,7 +202,7 @@ public class ProfileBean implements Serializable {
 			return;
 		}
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Паролата е сменена успешно", " ");
+				"Паролата е сменена успешно!", " ");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		em.getTransaction().commit();
 	}

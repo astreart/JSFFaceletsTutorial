@@ -27,15 +27,15 @@ import javax.persistence.Query;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import bg.fmi.master.thesis.model.TAgency;
-import bg.fmi.master.thesis.model.TAgencyEventType;
-import bg.fmi.master.thesis.model.TComment;
-import bg.fmi.master.thesis.model.TEventType;
-import bg.fmi.master.thesis.model.TFilterType;
-import bg.fmi.master.thesis.model.TImage;
-import bg.fmi.master.thesis.model.TRequestFilter;
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TAgency;
+import bg.fmi.master.thesis.models.TAgencyEventType;
+import bg.fmi.master.thesis.models.TComment;
+import bg.fmi.master.thesis.models.TEventType;
+import bg.fmi.master.thesis.models.TFilterType;
+import bg.fmi.master.thesis.models.TImage;
+import bg.fmi.master.thesis.models.TRequestFilter;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "agencyBean")
 @SessionScoped

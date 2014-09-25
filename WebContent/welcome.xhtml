@@ -9,7 +9,7 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form>
-			<h:outputLabel value="Welcome #{loginBean.name}"></h:outputLabel>
+			<h:outputLabel value="Здравейте, #{loginBean.name}"></h:outputLabel>
 			<h:commandButton value="Изход" actionListener="#{loginBean.logout()}"></h:commandButton>
 		</h:form>
 	</ui:define>

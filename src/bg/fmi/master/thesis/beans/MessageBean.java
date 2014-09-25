@@ -8,12 +8,13 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import bg.fmi.master.thesis.model.TAgency;
-import bg.fmi.master.thesis.model.TMessage;
-import bg.fmi.master.thesis.model.TMessageUser;
-import bg.fmi.master.thesis.model.TRequest;
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TAgency;
+import bg.fmi.master.thesis.models.TMessage;
+import bg.fmi.master.thesis.models.TMessageUser;
+import bg.fmi.master.thesis.models.TRequest;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
+import bg.fmi.master.thesis.utils.SendEmail;
 
 @ManagedBean(name = "messageBean")
 @RequestScoped
@@ -95,7 +96,7 @@ public class MessageBean implements Serializable {
 		//Изпращаме съобщението			
 		sendEmail.sendEmailToUser("masterthesisfmi@gmail.com", "masterthesisfmi@gmail.com", tRequest.getTitle(), tRequest.getDescription());
 		
-		// Записваме съобщението при изпратените съобщения до определена агенция
+		// Записваме съобщението при изпратените съобщения до определена компания
 		TMessageUser newMessageUser = new TMessageUser(tMessageUser);
 		newMessageUser.settUser(tUserRequestSent);
 		newMessageUser.settMessage(newMessage);

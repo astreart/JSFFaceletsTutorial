@@ -18,8 +18,9 @@ import javax.persistence.Query;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
-import bg.fmi.master.thesis.model.TEventType;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TEventType;
+import bg.fmi.master.thesis.utils.EventTypeDataUtil;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "eventTypeBean")
 @ViewScoped
@@ -32,11 +33,11 @@ public class EventTypeBean implements Serializable {
 	private List<SelectItem> selectItems;
 
 	private TEventType selectedEventType;
-	private EventTypeDataModel eventTypeModel;
+	private EventTypeDataUtil eventTypeModel;
 	private List<TEventType> eventTypesList;
 
 	public EventTypeBean() {
-		eventTypeModel = new EventTypeDataModel(getEventTypesList());
+		eventTypeModel = new EventTypeDataUtil(getEventTypesList());
 
 		tEventTypeMap = new LinkedHashMap<Long, TEventType>();
 		for (TEventType eventType : eventTypeModel) {
@@ -83,7 +84,7 @@ public class EventTypeBean implements Serializable {
 		this.selectedEventType = selectedEventType;
 	}
 
-	public EventTypeDataModel getEventTypeModel() {
+	public EventTypeDataUtil getEventTypeModel() {
 		return eventTypeModel;
 	}
 

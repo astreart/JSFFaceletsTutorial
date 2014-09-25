@@ -17,8 +17,8 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "loginBean")
 @SessionScoped
@@ -28,7 +28,7 @@ public class LoginBean {
 	private String confirmpassword;
 	private TUser tUser = new TUser();
 	private String role;
-	private List<String> roles = Arrays.asList("Агенция", "Потребител");
+	private List<String> roles = Arrays.asList("Компания", "Клиент");
 	private TUser newUser;
 
 	public String getName() {
@@ -91,14 +91,6 @@ public class LoginBean {
 		FacesMessage message = null;
 		newUser = new TUser(tUser);
 
-		System.out.println("username: " + newUser.getUsername());
-		System.out.println("password: " + newUser.getPassword());
-		System.out.println("confirmpassword: " + confirmpassword);
-		System.out.println("name: " + newUser.getName());
-		System.out.println("phone: " + newUser.getPhone());
-		System.out.println("email: " + newUser.getEmail());
-		System.out.println("role: " + role);
-
 		if (!newUser.getPassword().equals(confirmpassword)) {
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Паролите не съвпадат!", " ");
@@ -108,13 +100,11 @@ public class LoginBean {
 
 		int role_id;
 
-		if (role == "Агенция") {
+		if (role == "Компания") {
 			role_id = 1;
 		} else {
 			role_id = 2;
 		}
-
-		System.out.println("role_id: " + role_id);
 
 		EntityManager em = HibernateUtil.getEntityManager();
 		em.getTransaction().begin();

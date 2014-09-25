@@ -67,3 +67,18 @@ ui-datagrid ui-widget {
 div.ui-rating-star a, div.ui-rating-cancel a {
   background-image: url("#{resource['images/myRating.png']}");                       
 }
+
+.containerInter {
+    display:table;
+    border:1px solid #000;
+}
+.leftInter {
+    display:table-cell;
+    width:300px;
+    background-color:white;
+}
+.rightInter {
+    display:table-cell;
+    width:480px;
+    background-color:white;
+}

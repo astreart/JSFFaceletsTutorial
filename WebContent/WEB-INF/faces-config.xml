@@ -55,7 +55,7 @@
 	</navigation-rule>
 	<converter>
 		<converter-id>tEventTypeConverter</converter-id>
-		<converter-class>bg.fmi.master.thesis.beans.TEventTypeConverter</converter-class>
+		<converter-class>bg.fmi.master.thesis.utils.TEventTypeConverter</converter-class>
 	</converter>
 	<managed-bean>
 		<managed-bean-name>EventTypeBean</managed-bean-name>
@@ -66,7 +66,7 @@
 		<renderer>
 			<component-family>org.primefaces.component</component-family>
 			<renderer-type>org.primefaces.component.SelectManyCheckboxRenderer</renderer-type>
-			<renderer-class>bg.fmi.master.thesis.util.MySelectManyCheckBoxRenderer</renderer-class>
+			<renderer-class>bg.fmi.master.thesis.utils.CheckBoxRendererUtil</renderer-class>
 		</renderer>
 	</render-kit>
 </faces-config>

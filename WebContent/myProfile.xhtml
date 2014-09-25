@@ -18,6 +18,8 @@
 
 					<h:form rendered="#{not empty loginBean.name}">
 
+					<div class="containerInter">
+    <div class="leftInter">
 						<h:outputStylesheet library="css" name="css.css" />
 						<center>
 							<h2>Моят профил</h2>
@@ -76,8 +78,6 @@
 									widgetVar="userDialog" resizable="false" showEffect="fade"
 									hideEffect="explode">
 
-									<p:growl id="messages" />
-
 									<h:panelGrid id="display" columns="2" cellpadding="4">
 
 										<h:outputText value="Потребителско име: " />
@@ -99,6 +99,7 @@
 
 										<f:facet name="footer">
 											<h:panelGroup style="display:block; text-align:center">
+												<p:growl id="messages" />
 												<p:commandButton value="Запази" id="saveBtn"
 													actionListener="#{profileBean.changePassword(user.username)}"
 													oncomplete="PF('userDialog').hide()"
@@ -111,7 +112,11 @@
 								</p:dialog>
 							</p:panelGrid>
 						</p:dataGrid>
-						<hr />
+						</div>
+    <div class="rightInter"></div>
+    	<hr />
+</div>
+					
 					</h:form>
 
 					<h:form rendered="#{empty loginBean.name}">

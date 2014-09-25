@@ -27,14 +27,14 @@ import org.primefaces.event.RateEvent;
 
 import com.sun.mail.handlers.message_rfc822;
 
-import bg.fmi.master.thesis.model.TAgency;
-import bg.fmi.master.thesis.model.TComment;
-import bg.fmi.master.thesis.model.TFilterType;
-import bg.fmi.master.thesis.model.TMessage;
-import bg.fmi.master.thesis.model.TRequest;
-import bg.fmi.master.thesis.model.TRequestFilter;
-import bg.fmi.master.thesis.model.TUser;
-import bg.fmi.master.thesis.util.HibernateUtil;
+import bg.fmi.master.thesis.models.TAgency;
+import bg.fmi.master.thesis.models.TComment;
+import bg.fmi.master.thesis.models.TFilterType;
+import bg.fmi.master.thesis.models.TMessage;
+import bg.fmi.master.thesis.models.TRequest;
+import bg.fmi.master.thesis.models.TRequestFilter;
+import bg.fmi.master.thesis.models.TUser;
+import bg.fmi.master.thesis.utils.HibernateUtil;
 
 @ManagedBean(name = "userRequestBean")
 @SessionScoped
@@ -241,7 +241,7 @@ public class UserRequestBean implements Serializable {
 		userCompletedRequests = queryCompletedRequests.getResultList();
 
 		for (TRequest req : userCompletedRequests) {
-			if (req.getHiredAgency() == null) {
+			//if (req.getHiredAgency() == null) {
 				Query queryAgencies = em
 						.createQuery("select agency.name, agency.id "
 								+ "from TUser agency join agency.sentMessages msg "
@@ -254,7 +254,8 @@ public class UserRequestBean implements Serializable {
 				List<TUser> agenciesAnsweredRequest = queryAgencies
 						.getResultList();
 				completedRequestAgencies.put(req, agenciesAnsweredRequest);
-			} else {
+			//} else {
+			if (req.getHiredAgency() != null) {
 				Query queryAgencyRating = em
 						.createQuery("select comment "
 								+ "from TRequest req join req.requestComments comment "

@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import bg.fmi.master.thesis.model.TAgency;
+import bg.fmi.master.thesis.models.TAgency;
 
 @ManagedBean(name = "agencyDetailBean")
 @SessionScoped

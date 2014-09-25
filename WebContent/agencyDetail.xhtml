@@ -18,7 +18,7 @@
 			<div id="main" style="width: 920px; float: left;background-color: white;">
 				<f:view>
 
-					<h:form rendered="#{not empty loginBean.name}">
+					<h:form>
 
 						<h3>Детайли за агенция за организиране на събития!</h3>
 							<h:panelGrid columns="2" cellpadding="3" cellspacing="1">
@@ -111,22 +111,7 @@
 						</p:dataTable>
 
 					</h:form>
-
-					<h:form rendered="#{empty loginBean.name}">
-						<div style="height: 430px; background-color: white;">
-							<br /> <br />
-							<center>
-								<p:graphicImage library="images" name="lock-icon.png"
-									style="float:left;" />
-								<h2 style="color: red">
-									<br /> <br /> <br />За да имате достъп до тази страница,
-								</h2>
-								<h2 style="color: red">трябва да се логнете в приложението!</h2>
-							</center>
-							<br />
-						</div>
-						<hr />
-					</h:form>
+					
 				</f:view>
 			</div>
 		</div>

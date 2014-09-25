@@ -138,6 +138,7 @@
 
 					<h:form
 						rendered="#{not empty userRequestBean.request.hiredAgency.city}">
+						<h:outputScript library="js" name="timeoutDialog.js" />
 						<h:outputText
 							value="&#160;Напишете коментарu за организирането на вашето събитие*"
 							style="color:red;font-size: 16px" />
